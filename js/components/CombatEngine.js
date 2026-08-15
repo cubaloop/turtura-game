@@ -1,22 +1,25 @@
-// Full Visual Battle Arena Component for Turtura (Visual Stage, Health Bars, Animations, Sound)
+// Full Backpack Brawl Battle Stage Component for Turtura
 class CombatEngine {
   constructor(containerId, getPlayerDeck) {
     this.container = document.getElementById(containerId);
     this.getPlayerDeck = getPlayerDeck;
     this.currentLevel = 1;
+    this.playerHp = 69;
+    this.playerMaxHp = 69;
+    this.enemyHp = 69;
+    this.enemyMaxHp = 69;
+    this.battleTimer = 4.8;
+    this.isBattleRunning = false;
+    this.showResultModal = false;
+    this.lastBattleWon = false;
     this.wagerCard = null;
 
     this.dungeonNodes = [
-      { level: 1, name: "Escarabajo Guardián", icon: "🪲", hp: 100, maxHp: 100, atk: 15, def: 10 },
-      { level: 2, name: "Tigre de las Sombras", icon: "🐅", hp: 150, maxHp: 150, atk: 25, def: 15 },
-      { level: 3, name: "Espectro Abisal", icon: "🦑", hp: 200, maxHp: 200, atk: 35, def: 20 },
-      { level: 4, name: "Águila de Tormenta", icon: "🦅", hp: 260, maxHp: 260, atk: 45, def: 25 },
-      { level: 5, name: "Behemoth Titánico", icon: "🦣", hp: 350, maxHp: 350, atk: 60, def: 35, isBoss: true },
-      { level: 6, name: "Virión Quimérico", icon: "🧪", hp: 420, maxHp: 420, atk: 75, def: 40 },
-      { level: 7, name: "Leviatán Abisal", icon: "🐋", hp: 500, maxHp: 500, atk: 90, def: 50 },
-      { level: 8, name: "Roc Caelum", icon: "🕊️", hp: 600, maxHp: 600, atk: 110, def: 60 },
-      { level: 9, name: "Kraken Tormentoso", icon: "🐙", hp: 750, maxHp: 750, atk: 135, def: 70, isBoss: true },
-      { level: 10, name: "Cámara Secreta: El Humano", icon: "👤", hp: 1200, maxHp: 1200, atk: 220, def: 100, isBoss: true, isSecretFinalBoss: true }
+      { level: 1, name: "Fatsmallboy", icon: "🧙‍♂️", hp: 69, maxHp: 69, atk: 12 },
+      { level: 2, name: "ShadowHunter99", icon: "🥷", hp: 85, maxHp: 85, atk: 18 },
+      { level: 3, name: "DragonSlayer", icon: "🛡️", hp: 110, maxHp: 110, atk: 25 },
+      { level: 4, name: "CalamityAbyss", icon: "🦑", hp: 140, maxHp: 140, atk: 35 },
+      { level: 5, name: "El Humano (Jefe Final)", icon: "👑", hp: 250, maxHp: 250, atk: 50, isBoss: true }
     ];
 
     this.init();
@@ -46,127 +49,116 @@ class CombatEngine {
     const deck = this.getPlayerDeck() || [];
     const currentNode = this.dungeonNodes.find(n => n.level === this.currentLevel) || this.dungeonNodes[0];
 
+    const safeEnemyHp = isNaN(currentNode.hp) ? 69 : currentNode.hp;
+    const safeEnemyMaxHp = isNaN(currentNode.maxHp) ? 69 : currentNode.maxHp;
+    const enemyHpPct = Math.floor((safeEnemyHp / safeEnemyMaxHp) * 100);
+    const playerHpPct = Math.floor((this.playerHp / this.playerMaxHp) * 100);
+
     this.container.innerHTML = `
-      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <div style="display: flex; flex-direction: column; gap: 1.25rem;">
         
-        <!-- INTERACTIVE ANIMATED DUNGEON PATH MAP -->
-        <div class="dungeon-map-container">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--accent-purple);">
-              🗺️ Camino de la Mazmorra (Progreso del Capítulo)
-            </h3>
-            <span style="font-size: 0.8rem; color: var(--accent-cyan); font-weight: 700;">Nodo Activo: Nv. ${this.currentLevel} / 10</span>
+        <!-- TOP BATTLE CONTROL BAR (BACKPACK BRAWL STYLE) -->
+        <div style="background: #1c110a; border: 2px solid var(--border-gold); border-radius: 16px; padding: 0.6rem 1.25rem; display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <span style="font-weight: 900; color: var(--accent-gold); font-size: 1.1rem;">🏆 5</span>
+            <span style="font-size: 1.1rem;">❤️ ❤️ ❤️ ❤️ 🖤</span>
           </div>
 
-          <div class="dungeon-path-trail">
-            ${this.dungeonNodes.map(node => {
-              const isCompleted = node.level < this.currentLevel;
-              const isCurrent = node.level === this.currentLevel;
-              const statusClass = isCompleted ? 'completed' : isCurrent ? 'current' : 'locked';
-
-              return `
-                <div class="dungeon-node ${statusClass}" data-node-level="${node.level}">
-                  <div style="font-size: 1.6rem;">${node.isSecretFinalBoss && node.level > this.currentLevel ? '🔒' : node.icon}</div>
-                  <div style="font-size: 0.6rem; font-weight: 800; margin-top: 2px;">Nv. ${node.level}</div>
-                </div>
-              `;
-            }).join('')}
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <span style="font-family: monospace; font-size: 1.2rem; font-weight: 900; color: var(--text-gold);">${this.battleTimer.toFixed(1)}s</span>
+            <button class="tab-btn" style="padding: 4px 10px; font-size: 0.8rem;">⚡ 3.0x</button>
           </div>
         </div>
 
-        <!-- VISUAL BATTLE STAGE ARENA -->
-        <div style="background: linear-gradient(180deg, #0b0f19 0%, #1e1b4b 100%); border: 2px solid var(--accent-cyan); border-radius: 24px; padding: 1.5rem; position: relative; overflow: hidden; box-shadow: 0 0 40px rgba(6,182,212,0.3);" id="battle-stage">
+        <!-- STAGE BATTLE CONTAINER (BACKPACK BRAWL GRID ARENA) -->
+        <div style="background: repeating-linear-gradient(0deg, #2a1b12, #2a1b12 15px, #21140c 15px, #21140c 30px); border: 3px solid var(--border-gold); border-radius: 24px; padding: 1.25rem; position: relative; box-shadow: inset 0 0 30px rgba(0,0,0,0.9);">
           
-          <!-- STAGE HEADER -->
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-            <div style="font-size: 1.2rem; font-weight: 800; color: #fff;">
-              ⚔️ ESCENARIO DE BATALLA - Nivel ${this.currentLevel}
+          <!-- TOP: OPPONENT INVENTORY GRID -->
+          <div style="margin-bottom: 1.5rem; text-align: center;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-red); margin-bottom: 0.5rem; text-transform: uppercase;">
+              🛡️ Mochila Rival: ${currentNode.name} (Nivel ${this.currentLevel})
             </div>
-            ${currentNode.isSecretFinalBoss ? '<span style="font-size:0.8rem; font-weight:800; color:#f43f5e; background:rgba(244,63,94,0.2); padding:4px 10px; border-radius:12px;">🚨 JEFE FINAL: EL HUMANO</span>' : ''}
+            <div class="backpack-grid-container" style="min-height: 140px; padding: 0.75rem; background: rgba(0,0,0,0.4);">
+              <div class="grid-slot" style="width: 100px; height: 120px;">🪓 <br/><span style="font-size:0.65rem; color:#fff;">Hacha Acero</span></div>
+              <div class="grid-slot" style="width: 100px; height: 120px;">🛡️ <br/><span style="font-size:0.65rem; color:#fff;">Escudo Madera</span></div>
+              <div class="grid-slot" style="width: 100px; height: 120px;">🌵 <br/><span style="font-size:0.65rem; color:#fff;">Cactus Raro</span></div>
+              <div class="grid-slot" style="width: 100px; height: 120px;">🗡️ <br/><span style="font-size:0.65rem; color:#fff;">Daga Rápida</span></div>
+            </div>
           </div>
 
-          <!-- ENEMY MONSTER VISUAL STAGE (TOP) -->
-          <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem; margin-bottom: 2rem;" id="enemy-stage-box">
-            <div style="font-size: 1.1rem; font-weight: 800; color: var(--accent-rose);">${currentNode.name}</div>
-            
-            <div id="enemy-avatar" style="font-size: 5rem; filter: drop-shadow(0 0 25px rgba(244,63,94,0.8)); transition: transform 0.2s ease;">
-              ${currentNode.icon}
+          <!-- MIDDLE: HERO PORTRAITS & HP/STAMINA BARS -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; background: rgba(0,0,0,0.6); padding: 1rem; border-radius: 18px; border: 2px solid #4a3222; margin-bottom: 1.5rem;">
+            <!-- PLAYER HERO -->
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+              <div style="font-size: 3rem; background: #3d2a20; border: 2px solid var(--border-gold); border-radius: 14px; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                🧔🏻‍♂️
+              </div>
+              <div style="flex: 1;">
+                <div style="font-weight: 900; font-size: 0.9rem; color: var(--accent-gold);">UniqueHonesty32</div>
+                <div style="width: 100%; background: #1a100a; border: 1px solid #5a3d2a; border-radius: 6px; height: 12px; margin: 3px 0; overflow: hidden;">
+                  <div style="width: ${playerHpPct}%; background: linear-gradient(90deg, #ef4444, #dc2626); height: 100%;"></div>
+                </div>
+                <div style="font-size: 0.7rem; font-weight: 800; color: #fff;">HP: ${this.playerHp} / ${this.playerMaxHp}</div>
+              </div>
             </div>
 
-            <!-- ENEMY HEALTH BAR -->
-            <div style="width: 320px; background: rgba(0,0,0,0.6); border: 2px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 4px; position: relative;">
-              <div id="enemy-hp-bar" style="height: 16px; background: linear-gradient(90deg, #f43f5e, #ef4444); border-radius: 8px; width: 100%; transition: width 0.4s ease;"></div>
-              <div id="enemy-hp-text" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: #fff;">
-                HP: ${currentNode.hp} / ${currentNode.maxHp}
+            <!-- ENEMY HERO -->
+            <div style="display: flex; gap: 0.75rem; align-items: center; flex-direction: row-reverse;">
+              <div style="font-size: 3rem; background: #3d2a20; border: 2px solid var(--accent-red); border-radius: 14px; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                ${currentNode.icon}
+              </div>
+              <div style="flex: 1; text-align: right;">
+                <div style="font-weight: 900; font-size: 0.9rem; color: var(--accent-red);">${currentNode.name}</div>
+                <div style="width: 100%; background: #1a100a; border: 1px solid #5a3d2a; border-radius: 6px; height: 12px; margin: 3px 0; overflow: hidden;">
+                  <div style="width: ${enemyHpPct}%; background: linear-gradient(90deg, #a855f7, #9333ea); height: 100%;"></div>
+                </div>
+                <div style="font-size: 0.7rem; font-weight: 800; color: #fff;">HP: ${safeEnemyHp} / ${safeEnemyMaxHp}</div>
               </div>
             </div>
           </div>
 
-          <!-- PLAYER DECK BATTLE FIELD (BOTTOM) -->
-          <div style="margin-top: 1rem;">
-            <div style="font-size: 0.85rem; font-weight: 800; color: var(--accent-cyan); margin-bottom: 0.75rem; text-transform: uppercase;">
-              🛡️ Tu Escuadrón de Batalla (${deck.length} Criaturas)
+          <!-- BOTTOM: PLAYER INVENTORY GRID -->
+          <div>
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-gold); margin-bottom: 0.5rem; text-transform: uppercase;">
+              🎒 Tu Mochila de Batalla (${deck.length} Criaturas Equipadas)
             </div>
-
-            <div style="display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 0.5rem;" id="player-deck-battlefield">
-              ${deck.map(card => `
-                <div class="creature-card ${card.rarity || 'common'} holographic" style="min-width: 120px; height: 170px; font-size: 0.7rem;">
-                  <div class="card-header">
-                    <span>${card.category}</span>
-                    <span>T${card.tier}</span>
-                  </div>
-                  <div class="card-art-container" style="height: 70px;">
-                    ${card.image ? `<img src="${card.image}" class="card-art-img" alt="${card.name}">` : `<span class="card-art-fallback" style="font-size:2rem;">${card.icon}</span>`}
-                  </div>
-                  <div class="card-name" style="font-size:0.7rem;">${card.name}</div>
-                  <div class="card-stats" style="font-size:0.65rem;">
-                    <span class="stat-atk">⚔️ ${card.atk}</span>
-                    <span class="stat-def">🛡️ ${card.def}</span>
-                  </div>
+            <div class="backpack-grid-container" style="min-height: 140px; padding: 0.75rem; background: rgba(0,0,0,0.4);">
+              ${deck.slice(0, 4).map(card => `
+                <div class="grid-slot" style="width: 100px; height: 120px;">
+                  <div style="font-size: 1.5rem;">${card.icon || '🪲'}</div>
+                  <div style="font-size: 0.65rem; font-weight: 800; color: #fff; text-align: center;">${card.name || 'Criatura'}</div>
+                  <div style="font-size: 0.6rem; color: var(--accent-gold);">⚔️ ${card.atk || 10}</div>
                 </div>
               `).join('')}
             </div>
           </div>
 
-          <!-- BATTLE ACTION BUTTON -->
-          <button class="fusion-action-btn" id="btn-start-battle" style="width: 100%; margin-top: 1.5rem; font-size: 1.1rem; padding: 0.85rem;">
-            LANZAR COMBATE ANIMADO ⚔️
-          </button>
+          <!-- ACTION BUTTON -->
+          <div style="margin-top: 1.5rem; text-align: center;">
+            <button class="rpg-btn-green" id="btn-start-battle" style="width: 100%;">
+              LANZAR COMBATE ANIMADO ⚔️
+            </button>
+          </div>
         </div>
 
-        <!-- ONLINE PVP 1VS1 WAGER ARENA -->
-        <div class="pvp-wager-panel">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--accent-rose);">🔥 Arena PvP de Apuestas 1vs1</h3>
-            <span class="card-category-badge" style="background: rgba(244,63,94,0.2); color: #f43f5e;">ONLINE LIVE</span>
-          </div>
-
-          <p style="font-size: 0.85rem; color: #cbd5e1;">
-            Apuesta una carta de tu mazo contra otro jugador online. ¡El ganador del duelo se queda con la carta apostada del rival!
-          </p>
-
-          <div class="wager-box">
-            <div style="text-align: center;">
-              <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 0.5rem;">TU CARTA APOSTADA</div>
-              <div id="wager-slot-player" style="border: 2px dashed rgba(255,255,255,0.2); width: 120px; height: 160px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto; cursor: pointer;">
-                ${this.wagerCard ? `<div style="text-align:center;">${this.wagerCard.icon}<br/><b>${this.wagerCard.name}</b></div>` : '<span style="font-size:0.75rem; color:#64748b; font-weight:700;">Haz Clic para Elegir</span>'}
+        <!-- DEFEAT / VICTORY MODAL (BACKPACK BRAWL RIBBON STYLE) -->
+        ${this.showResultModal ? `
+          <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11, 15, 25, 0.9); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+            <div style="background: linear-gradient(180deg, #3d1a10, #1c0e08); border: 3px solid var(--border-gold); border-radius: 24px; padding: 2rem; width: 380px; text-align: center; box-shadow: 0 0 50px rgba(0,0,0,0.9); position: relative;">
+              <div style="font-size: 4rem; filter: drop-shadow(0 0 20px rgba(239,68,68,0.8));">💀</div>
+              <div style="font-size: 2rem; font-weight: 900; color: #ef4444; margin: 0.5rem 0; text-transform: uppercase; letter-spacing: 2px;">
+                ${this.lastBattleWon ? '¡VICTORIA!' : '¡DERROTA!'}
               </div>
-            </div>
-
-            <div style="display: flex; align-items: center; font-size: 1.8rem; font-weight: 800; color: var(--accent-amber);">VS</div>
-
-            <div style="text-align: center;">
-              <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-rose); margin-bottom: 0.5rem;">APUESTA RIVAL</div>
-              <div style="border: 2px dashed rgba(244,63,94,0.4); width: 120px; height: 160px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto; background: rgba(0,0,0,0.3);">
-                <span style="font-size: 2.2rem; filter: blur(2px);">🃏</span>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                ${this.lastBattleWon ? '¡Has vencido al oponente y asegurado tus trofeos!' : 'Tus criaturas han caído en combate. Fusiona cartas para aumentar tu poder.'}
+              </p>
+              <div style="display: flex; gap: 0.75rem; justify-content: center;">
+                <button class="rpg-btn-green" id="btn-modal-heart" style="font-size: 0.85rem; padding: 0.6rem 1rem;">Obtén 1 ❤️</button>
+                <button class="rpg-btn-gold" id="btn-modal-next" style="font-size: 0.85rem; padding: 0.6rem 1rem;">Próxima Batalla ➔</button>
               </div>
             </div>
           </div>
-
-          <button class="fusion-action-btn" id="btn-start-pvp" ${!this.wagerCard ? 'disabled' : ''} style="background: linear-gradient(135deg, var(--accent-rose), var(--accent-purple));">
-            APOSTAR CARTA Y BUSCAR RIVAL PVP 🥊
-          </button>
-        </div>
+        ` : ''}
       </div>
     `;
 
@@ -178,57 +170,38 @@ class CombatEngine {
     if (btnBattle) {
       btnBattle.addEventListener('click', () => {
         this.playSynthSound(440, 'square', 0.15);
-
         const currentNode = this.dungeonNodes.find(n => n.level === this.currentLevel) || this.dungeonNodes[0];
-        const avatar = this.container.querySelector('#enemy-avatar');
-        const hpBar = this.container.querySelector('#enemy-hp-bar');
-        const hpText = this.container.querySelector('#enemy-hp-text');
-
-        // Animate enemy hit shake
-        if (avatar) {
-          avatar.style.transform = 'scale(1.2) rotate(15deg)';
-          setTimeout(() => avatar.style.transform = 'scale(1) rotate(0deg)', 300);
-        }
 
         let totalAtk = 0;
-        const deck = this.getPlayerDeck();
-        deck.forEach(c => totalAtk += c.atk);
+        const deck = this.getPlayerDeck() || [];
+        deck.forEach(c => totalAtk += (c.atk || 10));
 
-        const newHp = Math.max(0, currentNode.hp - totalAtk);
-        const hpPct = Math.floor((newHp / currentNode.maxHp) * 100);
-
-        if (hpBar) hpBar.style.width = `${hpPct}%`;
-        if (hpText) hpText.innerText = `HP: ${newHp} / ${currentNode.maxHp}`;
-
-        if (newHp <= 0 || totalAtk * 2 >= currentNode.hp) {
-          this.playSynthSound(880, 'sine', 0.3);
-          alert(`🏆 ¡VICTORIA! Haz derrotado al Guardián de Nivel ${this.currentLevel} (${currentNode.name}).`);
-          if (this.currentLevel < 10) this.currentLevel++;
-          this.render();
+        if (totalAtk * 2 >= (currentNode.hp || 50)) {
+          this.lastBattleWon = true;
+          if (this.currentLevel < 5) this.currentLevel++;
         } else {
-          this.playSynthSound(180, 'sawtooth', 0.25);
-          alert(`💀 DERROTA: El guardián repelió tu ataque. Fusiona tus cartas para aumentar tu ataque total.`);
+          this.lastBattleWon = false;
         }
+
+        this.showResultModal = true;
+        this.render();
       });
     }
 
-    const wagerSlot = this.container.querySelector('#wager-slot-player');
-    if (wagerSlot) {
-      wagerSlot.addEventListener('click', () => {
-        this.playSynthSound(523.25, 'sine', 0.1);
-        const deck = this.getPlayerDeck();
-        if (deck.length > 0) {
-          this.wagerCard = deck[0];
-          this.render();
-        }
+    const btnNext = this.container.querySelector('#btn-modal-next');
+    if (btnNext) {
+      btnNext.addEventListener('click', () => {
+        this.showResultModal = false;
+        this.render();
       });
     }
 
-    const btnPvp = this.container.querySelector('#btn-start-pvp');
-    if (btnPvp) {
-      btnPvp.addEventListener('click', () => {
-        this.playSynthSound(783.99, 'square', 0.2);
-        alert(`¡Duelo 1vs1 Iniciado! Has apostado tu carta '${this.wagerCard.name}'. Buscando oponente en la red...`);
+    const btnHeart = this.container.querySelector('#btn-modal-heart');
+    if (btnHeart) {
+      btnHeart.addEventListener('click', () => {
+        alert("❤️ Vida extra reclamada!");
+        this.showResultModal = false;
+        this.render();
       });
     }
   }
