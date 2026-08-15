@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Turtura - Juego TCG & RPG de Naturaleza</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Turtura - RPG de Criaturas & Fusión</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,48 +20,84 @@
   <!-- HEADER NAVIGATION -->
   <header class="game-header">
     <div class="game-title">
-      <span>🐢</span> TURTURA RPG
+      <span>🐢</span> TURTURA
     </div>
-    <nav class="nav-tabs">
-      <button class="tab-btn active" id="tab-btn-world" data-tab="world">
-        📖 Capítulos & Mundos
-      </button>
-      <button class="tab-btn" id="tab-btn-deck" data-tab="deck">
-        🎒 Mochila & Mazo
-      </button>
-      <button class="tab-btn" id="tab-btn-combat" data-tab="combat">
-        ⚔️ Batalla & Arena
-      </button>
-    </nav>
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <span id="user-badge-label" style="font-size: 0.85rem; font-weight: 800; color: var(--accent-gold);">🧔🏻‍♂️ Invitado</span>
+      <button class="tab-btn" id="btn-auth-open" style="padding: 4px 10px; font-size: 0.75rem;">🔑 Cuenta</button>
+    </div>
   </header>
 
   <!-- MAIN GAME CONTAINER -->
   <main class="main-container">
     
-    <!-- VIEW 1: CHAPTER HUB (4 THEMATIC GATES) -->
+    <!-- VIEW 1: CHAPTER HUB (4 THEMATIC GATES & CURRENCY BAR) -->
     <section id="view-world" class="view-section active">
       <div id="category-selector-container"></div>
     </section>
 
-    <!-- VIEW 2: POKÉMON SCARLET/VIOLET DECK & SUMMARY SHEET -->
+    <!-- VIEW 2: INVENTORY & 21-SLOT DECK -->
     <section id="view-deck" class="view-section">
       <div id="deck-container"></div>
     </section>
 
-    <!-- VIEW 3: STAGE COMBAT & ARENA -->
+    <!-- VIEW 3: STAGE COMBAT & TOWER OF BABEL -->
     <section id="view-combat" class="view-section">
       <div id="combat-container"></div>
     </section>
 
+    <!-- VIEW 4: HEROES / PROFILE -->
+    <section id="view-heroes" class="view-section">
+      <div style="background: rgba(20, 50, 25, 0.9); border: 3px solid var(--border-gold-3d); border-radius: 24px; padding: 2rem; text-align: center;">
+        <h2 style="color: var(--accent-gold); font-size: 1.8rem; font-weight: 900; margin-bottom: 1rem;">🪖 Perfil de Héroe & Estadísticas</h2>
+        <div id="hero-profile-box" style="font-size: 1rem; color: #fff;">Cargando perfil...</div>
+      </div>
+    </section>
+
+    <!-- VIEW 5: SHOP / TIENDA -->
+    <section id="view-shop" class="view-section">
+      <div style="background: rgba(20, 50, 25, 0.9); border: 3px solid var(--border-gold-3d); border-radius: 24px; padding: 2rem; text-align: center;">
+        <h2 style="color: var(--accent-gold); font-size: 1.8rem; font-weight: 900; margin-bottom: 1rem;">🛖 Mercado de Cartas & Cofres</h2>
+        <p style="color: #cbd5e1;">Mercado de intercambio de gemas y cartas en actualización.</p>
+      </div>
+    </section>
+
   </main>
 
+  <!-- STICKY 5-BUTTON BACKPACK BRAWL BOTTOM NAVIGATION BAR (IMAGEN 1 & 2) -->
+  <nav class="bottom-nav-bar">
+    <div class="bottom-nav-item" data-target-tab="shop">
+      <span class="nav-icon">🛖</span>
+      <span>Tienda</span>
+    </div>
+    <div class="bottom-nav-item" data-target-tab="heroes">
+      <span class="nav-icon">🪖</span>
+      <span>Héroes</span>
+    </div>
+    <div class="bottom-nav-item center-battle-btn active" data-target-tab="combat">
+      <span class="nav-icon">⚔️</span>
+      <span>Batalla</span>
+    </div>
+    <div class="bottom-nav-item" data-target-tab="deck">
+      <span class="nav-icon">🧪</span>
+      <span>Objetos</span>
+    </div>
+    <div class="bottom-nav-item" data-target-tab="world">
+      <span class="nav-icon">🛡️</span>
+      <span>Eventos</span>
+    </div>
+  </nav>
+
   <!-- MODALS -->
+  <div id="presenter-avatar-container"></div>
   <div id="card-modal-container"></div>
   <div id="reward-modal-container"></div>
 
   <!-- SCRIPT INTEGRATIONS -->
   <script src="js/data/creatures.js"></script>
   <script src="js/data/recipes.js"></script>
+  <script src="js/components/AuthSystem.js"></script>
+  <script src="js/components/PresenterAvatar.js"></script>
   <script src="js/components/CategorySelector.js"></script>
   <script src="js/components/BackpackGrid.js"></script>
   <script src="js/components/CombatEngine.js"></script>

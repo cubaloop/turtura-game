@@ -1,4 +1,4 @@
-// Component for Pokémon Style Top-Down RPG Overworld Map in Turtura
+// Component for Turtura Chapter Hub & Backpack Brawl Style Main Menu (Imagen 1 & 2)
 class CategorySelector {
   constructor(containerId, onSelectCategory) {
     this.container = document.getElementById(containerId);
@@ -14,136 +14,142 @@ class CategorySelector {
 
   render() {
     this.container.innerHTML = `
-      <div style="margin-bottom: 1.5rem; text-align: center;">
-        <h2 style="font-size: 2.2rem; font-weight: 900; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 3px; text-shadow: 2px 3px 0 #000;">
-          🗺️ MAPA DE MAZMORRAS Y MUNDO ABIERTO RPG
-        </h2>
-        <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">
-          Navega por las rutas y gimnasios del mundo abierto para desafiar a los maestros de mazmorra.
-        </p>
-      </div>
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        
+        <!-- TOP CURRENCY BAR (BACKPACK BRAWL IMAGEN 1 STYLE) -->
+        <div style="background: linear-gradient(180deg, #241710, #140d08); border: 3px solid var(--border-gold-3d); border-radius: 20px; padding: 0.75rem 1.25rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.8);">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div style="background: #0284c7; color: #fff; font-weight: 900; font-size: 1rem; width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 2px solid #fff;">
+              11
+            </div>
+            <div style="font-weight: 900; color: var(--accent-gold); font-size: 1.1rem; text-shadow: 1px 1px 0 #000;">
+              Valor y Gloria 🏆
+            </div>
+          </div>
 
-      <!-- POKÉMON GEN 4 STYLE TOP-DOWN OVERWORLD MAP CONTAINER -->
-      <div style="
-        background: #48bb78;
-        border: 4px solid #1c4522;
-        border-radius: 28px;
-        padding: 1.5rem;
-        position: relative;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 0 30px rgba(0,0,0,0.3);
-        min-height: 520px;
-        overflow: hidden;
-      ">
-        <!-- BORDER FOREST TREES -->
-        <div style="position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; font-size: 1.5rem; opacity: 0.85;">
-          <span>🌲 🌲 🌲 🌲 🌲 🌲 🌲 🌲 🌲 🌲 🌲 🌲 🌲 🌲</span>
+          <div style="display: flex; align-items: center; gap: 1.25rem; font-weight: 900; font-size: 0.95rem;">
+            <span style="color: #4ade80; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 10px; border: 1px solid #4ade80;">💎 123</span>
+            <span style="color: #fbbf24; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 10px; border: 1px solid #fbbf24;">🪙 74,851</span>
+          </div>
         </div>
 
-        <!-- DIRT PATHWAYS GRID LAYOUT -->
-        <div style="margin-top: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; position: relative; z-index: 10;">
+        <!-- CHAPTER GATES & TOWER OF BABEL HUB -->
+        <div style="text-align: center; margin-top: 0.5rem;">
+          <h2 style="font-size: 2.2rem; font-weight: 900; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 3px; text-shadow: 3px 3px 0 #000;">
+            🚪 COMPUERTAS MUNDIALES DE CAPÍTULOS
+          </h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">
+            Selecciona un capítulo activo para desafiar a los guardianes o explora las próximas eras.
+          </p>
+        </div>
+
+        <div class="chapters-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(265px, 1fr)); gap: 1.75rem;">
           
-          <!-- GYM 1: PUEBLO INICIAL (PLANETA TIERRA - ACTIVO) -->
-          <div class="chapter-card" id="chapter-earth" style="
-            background: #2d3748;
-            border: 3px solid #f6e05e;
-            border-radius: 20px;
-            padding: 1.25rem;
+          <!-- SLOT 1: CAPÍTULO I - PLANETA TIERRA (ACTIVA) -->
+          <div class="chapter-card active-chapter" id="chapter-earth" style="
+            background: radial-gradient(circle at top, #263820, #0d170b);
+            border: 4px solid #4ade80;
+            box-shadow: inset 0 0 20px rgba(74, 222, 128, 0.4), 0 10px 30px rgba(0, 0, 0, 0.8);
+            border-radius: 24px;
+            padding: 1.5rem;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
           ">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-              <span style="background: #38a169; color: #fff; font-size: 0.75rem; font-weight: 900; padding: 4px 10px; border-radius: 8px;">
-                🏡 GIMNASIO 1 (ACTIVO)
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <span style="background: rgba(74, 222, 128, 0.3); color: #86efac; font-size: 0.7rem; font-weight: 900; padding: 5px 12px; border-radius: 8px; border: 1px solid #4ade80;">
+                ● COMPUERTA EN VIVO
               </span>
-              <span style="font-size: 2rem;">🏠</span>
+              <span style="font-size: 1.8rem; filter: drop-shadow(0 0 10px #4ade80);">🌍</span>
             </div>
 
-            <h3 style="font-size: 1.3rem; font-weight: 900; color: #fff; margin-bottom: 0.4rem;">
-              Pueblo Inicial: Planeta Tierra
+            <h3 style="font-size: 1.45rem; font-weight: 900; color: #fff; margin-bottom: 0.5rem; text-shadow: 2px 2px 0 #000;">
+              Capítulo I: Planeta Tierra
             </h3>
-            <p style="font-size: 0.8rem; color: #e2e8f0; line-height: 1.3;">
-              Ruta principal. Desafía a los entrenadores iniciales y recolecta especímenes de Tierra, Aire, Agua y Microbios.
+            <p style="font-size: 0.85rem; color: #a7f3d0; line-height: 1.4;">
+              El ecosistema biológico primordial. Desafía a los 100 Pisos de la Torre de Babel con especies de <strong>Tierra 🌿, Aire 🦅, Agua 🦈 y Microbios 🦠</strong>.
             </p>
 
-            <button class="rpg-btn-green" style="margin-top: 1rem; width: 100%; font-size: 0.95rem; padding: 0.7rem;">
-              ENTRAR AL GIMNASIO ➔
+            <button class="rpg-btn-green" style="margin-top: 1.5rem; width: 100%; font-size: 1.05rem; padding: 0.85rem;">
+              ENTRAR AL MUNDO ➔
             </button>
           </div>
 
-          <!-- GYM 2: LA MUTACIÓN ABISAL (MISTERIO & COUNTDOWN) -->
-          <div class="chapter-card" style="
-            background: #4c1d95;
-            border: 3px solid #c084fc;
-            border-radius: 20px;
-            padding: 1.25rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+          <!-- SLOT 2: CAPÍTULO II - LA MUTACIÓN ABISAL (MISTERIO & COUNTDOWN) -->
+          <div class="chapter-card teaser-chapter" style="
+            background: radial-gradient(circle at top, #3b1b4a, #12071a);
+            border: 4px solid #c084fc;
+            box-shadow: inset 0 0 20px rgba(192, 132, 252, 0.4), 0 10px 30px rgba(0, 0, 0, 0.8);
+            border-radius: 24px;
+            padding: 1.5rem;
           ">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-              <span style="background: #7e22ce; color: #fff; font-size: 0.75rem; font-weight: 900; padding: 4px 10px; border-radius: 8px;">
-                🌌 GIMNASIO 2 (PRÓXIMAMENTE)
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <span style="background: rgba(192, 132, 252, 0.3); color: #c084fc; font-size: 0.7rem; font-weight: 900; padding: 5px 12px; border-radius: 8px; border: 1px solid #c084fc;">
+                🔮 PRÓXIMA ERA
               </span>
-              <span style="font-size: 2rem;">🔮</span>
+              <span style="font-size: 1.8rem;">🌌</span>
             </div>
 
-            <h3 style="font-size: 1.3rem; font-weight: 900; color: #fff; margin-bottom: 0.4rem;">
-              Ruta Abisal: La Mutación
+            <h3 style="font-size: 1.45rem; font-weight: 900; color: #fff; margin-bottom: 0.5rem;">
+              Capítulo II: La Mutación Abisal
             </h3>
-            <p style="font-size: 0.8rem; color: #e9d5ff; line-height: 1.3;">
-              Zona en penumbra. Silueta biomecánica oculta en la niebla del mapa.
+            <p style="font-size: 0.85rem; color: #e9d5ff; line-height: 1.4;">
+              Una entidad misteriosa en penumbra aguarda la apertura del portal global.
             </p>
 
-            <div style="background: rgba(0,0,0,0.7); border: 2px solid #c084fc; border-radius: 12px; padding: 0.6rem; text-align: center; margin-top: 0.75rem;">
-              <div style="font-size: 0.6rem; color: #c084fc; font-weight: 900; text-transform: uppercase;">DESBLOQUEO EN TIEMPO REAL</div>
-              <div id="global-countdown" style="font-family: monospace; font-size: 1.15rem; font-weight: 900; color: #fef08a;">
+            <div style="background: rgba(0,0,0,0.85); border: 2px solid #c084fc; border-radius: 14px; padding: 0.85rem; text-align: center; margin-top: 1rem;">
+              <div style="font-size: 0.65rem; color: #c084fc; font-weight: 900; text-transform: uppercase;">DESBLOQUEO PROMINENTE EN</div>
+              <div id="global-countdown" style="font-family: monospace; font-size: 1.35rem; font-weight: 900; color: #fef08a;">
                 05m 29d 22h 59m 59s
               </div>
             </div>
           </div>
 
-          <!-- GYM 3: CUEVA TITÁNICA (BLOQUEADO) -->
-          <div style="
-            background: #1a202c;
-            border: 3px solid #718096;
-            border-radius: 20px;
-            padding: 1.25rem;
-            opacity: 0.7;
+          <!-- SLOTS 3 Y 4: PUERTAS DE ACERO SELLADAS CON CINTA AMARILLA Y ARAÑAZOS -->
+          <div class="chapter-card steel-door" style="
+            background: linear-gradient(135deg, #1f2937, #111827);
+            border: 4px solid #dc2626;
+            border-radius: 24px;
+            position: relative;
+            min-height: 360px;
+            overflow: hidden;
           ">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-              <span style="background: #e53e3e; color: #fff; font-size: 0.75rem; font-weight: 900; padding: 4px 10px; border-radius: 8px;">
-                🔒 BLOQUEADO
-              </span>
-              <span style="font-size: 2rem;">🏰</span>
+            <div style="position: absolute; top: 15px; left: -30px; background: #facc15; color: #000; font-weight: 900; font-size: 0.7rem; padding: 4px 40px; transform: rotate(-25deg); border: 1px solid #000;">
+              ⚠️ DANGER / PELIGRO ⚠️
             </div>
-            <h3 style="font-size: 1.2rem; font-weight: 900; color: #cbd5e1;">Gimnasio 3: Cueva Titánica</h3>
-            <p style="font-size: 0.8rem; color: #a0aec0;">Ruta de montaña bloqueada por la Liga.</p>
+            <div class="steel-doors-overlay" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 0.75rem;">
+              <div style="font-size: 4rem; filter: drop-shadow(0 0 20px rgba(220,38,38,0.8));">🔒</div>
+              <div style="background: #dc2626; color: #fff; font-size: 0.8rem; font-weight: 900; padding: 4px 14px; border-radius: 6px;">
+                ¡PELIGRO! ZONA RESTRINGIDA
+              </div>
+              <p style="font-size: 0.8rem; color: #9ca3af; text-align: center; padding: 0 1rem; line-height: 1.3;">
+                Sellada con cintas de precaución y cadenas oxidadas. Requiere derrotar al Jefe Final de Babel.
+              </p>
+            </div>
           </div>
 
-          <!-- GYM 4: CASTILLO FINAL (BLOQUEADO) -->
-          <div style="
-            background: #1a202c;
-            border: 3px solid #718096;
-            border-radius: 20px;
-            padding: 1.25rem;
-            opacity: 0.7;
+          <div class="chapter-card steel-door" style="
+            background: linear-gradient(135deg, #1f2937, #111827);
+            border: 4px solid #dc2626;
+            border-radius: 24px;
+            position: relative;
+            min-height: 360px;
+            overflow: hidden;
           ">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-              <span style="background: #e53e3e; color: #fff; font-size: 0.75rem; font-weight: 900; padding: 4px 10px; border-radius: 8px;">
-                👑 JEFE FINAL
-              </span>
-              <span style="font-size: 2rem;">🏯</span>
+            <div style="position: absolute; top: 15px; right: -30px; background: #facc15; color: #000; font-weight: 900; font-size: 0.7rem; padding: 4px 40px; transform: rotate(25deg); border: 1px solid #000;">
+              ⚠️ DANGER / NO ENTER ⚠️
             </div>
-            <h3 style="font-size: 1.2rem; font-weight: 900; color: #cbd5e1;">Castillo del Maestro El Humano</h3>
-            <p style="font-size: 0.8rem; color: #a0aec0;">Cámara de campeones absolutos.</p>
+            <div class="steel-doors-overlay" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 0.75rem;">
+              <div style="font-size: 4rem; filter: drop-shadow(0 0 20px rgba(220,38,38,0.8));">🔒</div>
+              <div style="background: #dc2626; color: #fff; font-size: 0.8rem; font-weight: 900; padding: 4px 14px; border-radius: 6px;">
+                CÁMARA TITÁNICA BLOQUEADA
+              </div>
+              <p style="font-size: 0.8rem; color: #9ca3af; text-align: center; padding: 0 1rem; line-height: 1.3;">
+                Aislamiento por amenaza biológica. Reservada para Maestros Fusionadores.
+              </p>
+            </div>
           </div>
 
         </div>
-
-        <!-- WATER POND AT BOTTOM -->
-        <div style="position: absolute; bottom: 10px; left: 10px; right: 10px; background: #3182ce; border-radius: 16px; padding: 0.5rem; text-align: center; border: 2px solid #2b6cb0; font-size: 1.2rem;">
-          🌊 🌊 🌊 Estanque de Pesca Acuática 🌊 🌊 🌊
-        </div>
-
       </div>
     `;
 
