@@ -1,4 +1,4 @@
-/* AAA 100% Professional 3D Graphics & Glassmorphic Design System for Turtura */
+/* AAA 100% Professional 3D Graphics, Animated Background & Glassmorphic Design System for Turtura */
 :root {
   --bg-dark: #081409;
   --bg-glass: rgba(14, 34, 17, 0.82);
@@ -22,20 +22,28 @@
   user-select: none;
 }
 
-/* HIGH-RESOLUTION 3D NATURE LANDSCAPE BACKGROUND */
+/* ANIMATED FULL-SCREEN LUSH FANTASY NATURE BACKGROUND */
 body {
   background-color: #0d2110;
   background-image: url('../assets/nature_bg.jpg');
   background-attachment: fixed;
   background-position: center center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 110% 110%;
+  animation: bgPanZoom 25s ease-in-out infinite alternate;
   color: var(--text-primary);
   font-family: var(--font-family);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   perspective: 1200px;
+  overflow-x: hidden;
+}
+
+@keyframes bgPanZoom {
+  0% { background-position: 0% 0%; background-size: 108% 108%; }
+  50% { background-position: 100% 50%; background-size: 115% 115%; }
+  100% { background-position: 50% 100%; background-size: 110% 110%; }
 }
 
 /* 3D Glassmorphic Vector Header */

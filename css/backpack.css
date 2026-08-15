@@ -1,8 +1,16 @@
-/* Pokémon Scarlet & Violet Style Deck UI in Forest Green & Gold Nature Theme */
-.pokemon-sv-deck-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+/* 21-Slot Inventory Grid & Pop-out Side Fusion Drawer Styles */
+
+/* Main Backpack Wrapper with Flex Layout for Side Drawer */
+.backpack-flex-container {
+  display: flex;
   gap: 1.5rem;
+  align-items: flex-start;
+  position: relative;
+}
+
+/* 21-Slot Grid Container (7 Columns x 3 Rows) */
+.inventory-21-container {
+  flex: 1;
   background: linear-gradient(135deg, rgba(20, 50, 25, 0.92), rgba(12, 32, 16, 0.95));
   border: 3px solid #22c55e;
   border-radius: 24px;
@@ -10,164 +18,88 @@
   box-shadow: 0 12px 35px rgba(34, 197, 94, 0.3), inset 0 0 25px rgba(0, 0, 0, 0.8);
 }
 
-@media (max-width: 900px) {
-  .pokemon-sv-deck-container {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Left Panel: Battle Team & Storage Box */
-.sv-left-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.sv-team-section {
-  background: rgba(34, 197, 94, 0.15);
-  border: 2px solid #4ade80;
-  border-radius: 18px;
-  padding: 1rem;
-}
-
-.sv-team-title {
-  font-size: 0.85rem;
-  font-weight: 900;
-  color: #4ade80;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 0.75rem;
-  display: flex;
-  justify-content: space-between;
-}
-
-.sv-team-slots {
+.grid-21-slots {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   gap: 0.75rem;
-}
-
-.sv-box-section {
-  background: rgba(0, 0, 0, 0.5);
-  border: 2px solid rgba(134, 239, 172, 0.25);
-  border-radius: 18px;
-  padding: 1rem;
-}
-
-.sv-box-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 0.5rem;
-  margin-top: 0.75rem;
-}
-
-.sv-box-item {
-  aspect-ratio: 1;
-  background: #19381e;
-  border: 2px solid #2e6037;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.sv-box-item:hover, .sv-box-item.selected {
-  border-color: #f59e0b;
-  background: #28542e;
-  box-shadow: 0 0 14px rgba(245, 158, 11, 0.7);
-  transform: scale(1.08);
-}
-
-/* Right Panel: Pokémon SV Creature Summary Sheet in Green & Gold */
-.sv-right-panel {
-  background: linear-gradient(180deg, rgba(28, 62, 33, 0.95), rgba(16, 38, 20, 0.95));
-  border: 2px solid #4ade80;
-  border-radius: 20px;
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
-}
-
-.sv-summary-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
-  padding-bottom: 0.75rem;
-}
-
-.sv-summary-name {
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: #fff;
-}
-
-.sv-summary-level {
-  background: #15803d;
-  color: #fff;
-  font-weight: 900;
-  font-size: 0.85rem;
-  padding: 3px 10px;
-  border-radius: 12px;
-}
-
-.sv-stat-bar-group {
-  margin: 1rem 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.sv-stat-row {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 0.8rem;
-  font-weight: 800;
-}
-
-.sv-stat-label {
-  width: 50px;
-  color: #94a3b8;
-}
-
-.sv-stat-track {
-  flex: 1;
-  height: 10px;
-  background: #0f172a;
-  border-radius: 5px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.1);
-}
-
-.sv-stat-fill {
-  height: 100%;
-  border-radius: 5px;
-}
-
-.sv-moves-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
   margin-top: 1rem;
 }
 
-.sv-move-card {
-  background: #142a17;
-  border: 1px solid #2e6037;
-  border-radius: 10px;
-  padding: 8px 10px;
-  font-size: 0.75rem;
-  font-weight: 800;
-  color: #e2e8f0;
+@media (max-width: 1100px) {
+  .grid-21-slots {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .grid-21-slots {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.slot-21-item {
+  aspect-ratio: 1 / 1.35;
+  background: #142817;
+  border: 2px solid #2e6037;
+  outline: 1px dashed #4e8552;
+  outline-offset: -4px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.slot-21-item.occupied {
+  background: linear-gradient(180deg, #1c3d22, #102614);
+  border-color: #4ade80;
+}
+
+.slot-21-item:hover {
+  transform: translateY(-4px) scale(1.04);
+  border-color: #fbbf24;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.8);
+}
+
+/* Pop-out Side Fusion Drawer (Desplegable Lateral) */
+.side-fusion-drawer {
+  width: 320px;
+  background: linear-gradient(180deg, rgba(28, 62, 33, 0.96), rgba(14, 34, 17, 0.98));
+  border: 3px solid var(--border-gold-3d);
+  border-radius: 24px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: -10px 15px 35px rgba(0, 0, 0, 0.9);
+  position: relative;
+  transform: translateX(0);
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.side-fusion-drawer.closed {
+  width: 0;
+  padding: 0;
+  opacity: 0;
+  overflow: hidden;
+  border: none;
+  transform: translateX(50px);
+}
+
+/* Fusion Slot Items inside Drawer */
+.drawer-slot-box {
+  width: 100%;
+  height: 120px;
+  background: rgba(0,0,0,0.5);
+  border: 2px dashed #fbbf24;
+  border-radius: 16px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  text-align: center;
 }
 
 /* Stitched Wooden/Leather Grid Container Fallback */
@@ -198,29 +130,4 @@
   justify-content: center;
   box-shadow: inset 0 2px 6px rgba(0,0,0,0.7);
   transition: all 0.2s ease;
-}
-
-.fusion-chamber {
-  background: linear-gradient(180deg, rgba(28, 62, 33, 0.95), rgba(14, 34, 17, 0.95));
-  border: 3px solid var(--border-gold);
-  border-radius: 20px;
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.85rem;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-}
-
-.fusion-slots-container {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-}
-
-.fusion-plus {
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: var(--accent-gold);
-  text-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
 }
