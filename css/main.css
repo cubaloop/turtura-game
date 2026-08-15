@@ -1,17 +1,17 @@
-/* Backpack Brawl Inspired RPG Design System */
+/* CraftPix.net Fantasy Vector GUI Style Sheet for Turtura */
 :root {
-  --bg-dark: #120b08;
-  --bg-wood: #2a1d17;
-  --bg-wood-light: #3d2a20;
-  --bg-card: #261912;
-  --border-gold: #d97706;
+  --bg-dark: #0a0f1d;
+  --bg-panel: #141e33;
+  --bg-panel-light: #1e2c4a;
+  --border-gold: #fbbf24;
+  --border-cyan: #38bdf8;
   --accent-gold: #f59e0b;
-  --accent-green: #10b981;
-  --accent-red: #ef4444;
+  --accent-green: #22c55e;
+  --accent-red: #f43f5e;
   --accent-purple: #a855f7;
   --text-gold: #fef08a;
   --text-primary: #f8fafc;
-  --text-muted: #a89f91;
+  --text-muted: #94a3b8;
   --font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
@@ -23,7 +23,7 @@
 }
 
 body {
-  background: radial-gradient(circle at center, #2a1d17 0%, #120b08 100%);
+  background: radial-gradient(circle at center, #1b2845 0%, #090e1a 100%);
   color: var(--text-primary);
   font-family: var(--font-family);
   min-height: 100vh;
@@ -31,15 +31,15 @@ body {
   flex-direction: column;
 }
 
-/* Header RPG Bar */
+/* CraftPix Style Vector Header Bar */
 .game-header {
-  background: #1c130e;
-  border-bottom: 3px solid var(--border-gold);
-  padding: 0.8rem 1.5rem;
+  background: linear-gradient(180deg, #1e293b, #0f172a);
+  border-bottom: 4px solid var(--border-gold);
+  padding: 0.85rem 1.75rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.8), inset 0 -2px 0 rgba(255,255,255,0.1);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -48,46 +48,48 @@ body {
 .game-title {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 1.6rem;
+  gap: 0.6rem;
+  font-size: 1.8rem;
   font-weight: 900;
   color: var(--accent-gold);
-  text-shadow: 2px 2px 0px #000;
+  text-shadow: 2px 3px 0 #000, 0 0 10px rgba(245,158,11,0.5);
   letter-spacing: 2px;
 }
 
 .nav-tabs {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.85rem;
 }
 
+/* CraftPix Glossy Vector Tab Buttons */
 .tab-btn {
-  background: linear-gradient(180deg, #3d2a20, #22150e);
-  border: 2px solid var(--border-gold);
-  color: var(--text-gold);
-  padding: 0.6rem 1.2rem;
-  border-radius: 14px;
-  font-weight: 800;
+  background: linear-gradient(180deg, #334155, #1e293b);
+  border: 2px solid #64748b;
+  color: #e2e8f0;
+  padding: 0.65rem 1.35rem;
+  border-radius: 16px;
+  font-weight: 900;
+  font-size: 0.9rem;
   cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 4px 8px rgba(0,0,0,0.6);
-  transition: all 0.2s ease;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.25), 0 4px 10px rgba(0,0,0,0.6);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
 .tab-btn:hover, .tab-btn.active {
-  background: linear-gradient(180deg, #f59e0b, #b45309);
-  color: #000;
-  border-color: #fef08a;
-  transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+  background: linear-gradient(180deg, #38bdf8, #0284c7);
+  color: #fff;
+  border-color: #7dd3fc;
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.7), inset 0 2px 0 rgba(255,255,255,0.4);
 }
 
 .main-container {
   flex: 1;
-  padding: 1.5rem;
-  max-width: 1200px;
+  padding: 1.75rem;
+  max-width: 1240px;
   margin: 0 auto;
   width: 100%;
 }
@@ -102,57 +104,57 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes vortexSpin {
   0% { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(180deg) scale(1.15); filter: hue-rotate(90deg); }
+  50% { transform: rotate(180deg) scale(1.18); filter: hue-rotate(90deg); }
   100% { transform: rotate(360deg) scale(1); }
 }
 
 @keyframes floatUp {
   0% { opacity: 1; transform: translateY(0) scale(0.8); }
-  50% { opacity: 1; transform: translateY(-40px) scale(1.3); }
-  100% { opacity: 0; transform: translateY(-80px) scale(1); }
+  50% { opacity: 1; transform: translateY(-45px) scale(1.35); }
+  100% { opacity: 0; transform: translateY(-90px) scale(1); }
 }
 
-/* Chunky Bevelled 3D Buttons */
+/* CraftPix Glossy 3D Bevelled Vector Buttons */
 .rpg-btn-green {
-  background: linear-gradient(180deg, #22c55e, #15803d);
-  border: 2px solid #86efac;
+  background: linear-gradient(180deg, #4ade80, #16a34a);
+  border: 3px solid #bbf7d0;
   color: #fff;
   font-weight: 900;
   font-size: 1.1rem;
-  padding: 0.8rem 1.8rem;
-  border-radius: 16px;
+  padding: 0.85rem 1.9rem;
+  border-radius: 18px;
   cursor: pointer;
-  text-shadow: 1px 1px 2px #000;
-  box-shadow: inset 0 2px 0 rgba(255,255,255,0.4), 0 6px 0 #14532d, 0 8px 15px rgba(0,0,0,0.6);
+  text-shadow: 1px 2px 2px #000;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 7px 0 #14532d, 0 10px 20px rgba(0,0,0,0.7);
   transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 .rpg-btn-green:active {
-  transform: translateY(4px);
-  box-shadow: inset 0 2px 0 rgba(255,255,255,0.4), 0 2px 0 #14532d, 0 4px 8px rgba(0,0,0,0.6);
+  transform: translateY(5px);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 2px 0 #14532d, 0 4px 10px rgba(0,0,0,0.7);
 }
 
 .rpg-btn-gold {
-  background: linear-gradient(180deg, #f59e0b, #d97706);
-  border: 2px solid #fef08a;
-  color: #1c130e;
+  background: linear-gradient(180deg, #fbbf24, #d97706);
+  border: 3px solid #fef08a;
+  color: #1e1b4b;
   font-weight: 900;
   font-size: 1.1rem;
-  padding: 0.8rem 1.8rem;
-  border-radius: 16px;
+  padding: 0.85rem 1.9rem;
+  border-radius: 18px;
   cursor: pointer;
   text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-  box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 6px 0 #78350f, 0 8px 15px rgba(0,0,0,0.6);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.6), 0 7px 0 #78350f, 0 10px 20px rgba(0,0,0,0.7);
   transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 .rpg-btn-gold:active {
-  transform: translateY(4px);
-  box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 2px 0 #78350f, 0 4px 8px rgba(0,0,0,0.6);
+  transform: translateY(5px);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.6), 0 2px 0 #78350f, 0 4px 10px rgba(0,0,0,0.7);
 }
