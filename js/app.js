@@ -1,68 +1,118 @@
-// Main Application Controller for Turtura
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("🎮 Turtura inicializando con Inspección 3D y Animación de Premio...");
+// Main Application Controller for Turtura 2D RPG & TCG Game
+class TurturaApp {
+  constructor() {
+    this.initialCards = GAME_RULES.getRandomInitialCards();
+    this.cardModal = new CardModal('card-modal-container');
+    this.rewardModal = new RewardModal('reward-modal-container');
+    
+    this.backpackGrid = new BackpackGrid(
+      'deck-container',
+      this.initialCards,
+      this.handleFusionTrigger.bind(this),
+      this.cardModal,
+      this.rewardModal
+    );
 
-  const cardModal = new window.CardModal();
-  const rewardModal = new window.RewardModal();
+    this.combatEngine = new CombatEngine(
+      'combat-container',
+      () => this.backpackGrid.cards
+    );
 
-  // Generate 4 initial random cards for player
-  const initialCards = window.GAME_RULES.getRandomInitialCards();
-  console.log("🃏 Mano inicial generada:", initialCards);
+    // Initialize 2D Canvas Overworld Engine
+    this.overworldEngine = new OverworldEngine(
+      'overworld-canvas',
+      (gymId) => this.switchTab('combat'),
+      () => {
+        alert("🌿 ¡Una criatura silvestre ha aparecido en la hierba alta!");
+        this.switchTab('combat');
+      }
+    );
 
-  // Initialize Engines
-  const fusionEngine = new window.FusionEngine();
-
-  // Navigation Controller
-  const tabChapters = document.getElementById("tab-chapters");
-  const tabBackpack = document.getElementById("tab-backpack");
-  const tabCombat = document.getElementById("tab-combat");
-
-  const viewChapters = document.getElementById("view-chapters");
-  const viewBackpack = document.getElementById("view-backpack");
-  const viewCombat = document.getElementById("view-combat");
-
-  function switchTab(activeTab, activeView) {
-    [tabChapters, tabBackpack, tabCombat].forEach(t => t.classList.remove("active"));
-    [viewChapters, viewBackpack, viewCombat].forEach(v => v.classList.remove("active"));
-
-    activeTab.classList.add("active");
-    activeView.classList.add("active");
+    this.initTabs();
   }
 
-  tabChapters.addEventListener("click", () => switchTab(tabChapters, viewChapters));
-  tabBackpack.addEventListener("click", () => switchTab(tabBackpack, viewBackpack));
-  tabCombat.addEventListener("click", () => switchTab(tabCombat, viewCombat));
+  initTabs() {
+    const tabBtns = document.querySelectorAll('.nav-tabs .tab-btn');
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabId = btn.getAttribute('data-tab');
+        this.switchTab(tabId);
+      });
+    });
 
-  // Initialize Components
-  const categorySelector = new window.CategorySelector("container-category-selector", (categoryName) => {
-    console.log("Mundo seleccionado:", categoryName);
-    switchTab(tabBackpack, viewBackpack);
-  });
+    // Touch D-Pad Events for Mobile / On-Screen Controls
+    const dpadMap = {
+      'dpad-up': 'ArrowUp',
+      'dpad-down': 'ArrowDown',
+      'dpad-left': 'ArrowLeft',
+      'dpad-right': 'ArrowRight'
+    };
 
-  let backpackGrid;
-  backpackGrid = new window.BackpackGrid("container-backpack", initialCards, (cardA, cardB) => {
-    const statusMsg = document.getElementById("fusion-status-msg");
-    const check = fusionEngine.canFuse(cardA, cardB);
+    Object.keys(dpadMap).forEach(btnId => {
+      const btn = document.getElementById(btnId);
+      if (btn) {
+        btn.addEventListener('mousedown', () => {
+          this.overworldEngine.keys[dpadMap[btnId]] = true;
+          this.overworldEngine.player.isMoving = true;
+        });
+        btn.addEventListener('mouseup', () => {
+          this.overworldEngine.keys[dpadMap[btnId]] = false;
+          this.overworldEngine.player.isMoving = false;
+        });
+        btn.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          this.overworldEngine.keys[dpadMap[btnId]] = true;
+          this.overworldEngine.player.isMoving = true;
+        });
+        btn.addEventListener('touchend', (e) => {
+          e.preventDefault();
+          this.overworldEngine.keys[dpadMap[btnId]] = false;
+          this.overworldEngine.player.isMoving = false;
+        });
+      }
+    });
+  }
 
-    if (!check.allowed) {
-      if (statusMsg) statusMsg.innerHTML = `<span style="color:#f43f5e;">❌ ${check.reason}</span>`;
+  switchTab(tabId) {
+    document.querySelectorAll('.nav-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+
+    const targetBtn = document.getElementById(`tab-btn-${tabId}`);
+    const targetSection = document.getElementById(`view-${tabId}`);
+
+    if (targetBtn) targetBtn.classList.add('active');
+    if (targetSection) targetSection.classList.add('active');
+
+    if (tabId === 'deck') this.backpackGrid.render();
+    if (tabId === 'combat') this.combatEngine.render();
+  }
+
+  handleFusionTrigger(cardA, cardB) {
+    const fusionResult = GAME_RULES.getFusionResult(cardA, cardB);
+
+    if (!fusionResult.allowed) {
+      alert(fusionResult.reason || "Fusión no permitida.");
+      this.backpackGrid.isFusing = false;
+      this.backpackGrid.render();
       return;
     }
 
-    if (statusMsg) {
-      statusMsg.innerHTML = `<span style="color:#06b6d4;">🔥 Fusión iniciada. Tiempo restante: ${check.timerSeconds}s</span>`;
-    }
+    const timer = fusionResult.timerSeconds || 5;
 
-    fusionEngine.startFusion(cardA, cardB, (newCard) => {
-      console.log("✨ Fusión completada:", newCard);
-      backpackGrid.removeCards([cardA.instanceId, cardB.instanceId]);
-      backpackGrid.addCard(newCard);
-    }, (fusionId, pct, remainingSecs) => {
-      if (statusMsg) {
-        statusMsg.innerHTML = `<span style="color:#06b6d4;">⏳ Sintetizando criatura... ${pct}% (${remainingSecs}s)</span>`;
-      }
-    });
-  }, cardModal, rewardModal);
+    setTimeout(() => {
+      this.backpackGrid.removeCards([cardA.instanceId, cardB.instanceId]);
 
-  const combatEngine = new window.CombatEngine("container-combat", () => backpackGrid.cards);
+      const baseCreature = window.CREATURES_DB[fusionResult.targetCreatureId] || window.CREATURES_DB["tierra_t2_1"];
+      const newCard = {
+        instanceId: "card_" + Math.random().toString(36).substr(2, 9),
+        ...baseCreature
+      };
+
+      this.backpackGrid.addCard(newCard);
+    }, timer * 200); // Speeded up timer for immediate responsiveness
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  window.app = new TurturaApp();
 });
