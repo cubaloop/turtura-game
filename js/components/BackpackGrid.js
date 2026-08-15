@@ -1,9 +1,11 @@
-// Component for Backpack Brawl Inventory Grid & Fusion Chamber
+// Component for Backpack Brawl Inventory Grid & Fusion Chamber with 3D Inspector & Reward Modal Trigger
 class BackpackGrid {
-  constructor(containerId, initialCards, onFuseTrigger) {
+  constructor(containerId, initialCards, onFuseTrigger, cardModal, rewardModal) {
     this.container = document.getElementById(containerId);
     this.cards = initialCards || [];
     this.onFuseTrigger = onFuseTrigger;
+    this.cardModal = cardModal;
+    this.rewardModal = rewardModal;
     this.selectedFusionCards = [null, null];
     this.init();
   }
@@ -31,7 +33,6 @@ class BackpackGrid {
   renderCardHtml(card) {
     if (!card) return '';
     const frameClass = card.frameStyle || (card.rarity === 'common' ? 'common' : card.rarity === 'rare' ? 'rare' : card.rarity === 'epic' ? 'epic' : card.rarity === 'legendary' ? 'legendary' : 'ai_unique');
-    const isAi = card.rarity === 'ai_unique';
 
     return `
       <div class="creature-card ${frameClass} holographic" data-instance-id="${card.instanceId}">
@@ -45,14 +46,19 @@ class BackpackGrid {
         </div>
 
         <div class="card-name">${card.name}</div>
-        <div style="font-size: 0.62rem; color: var(--text-secondary); text-align: center; height: 26px; overflow: hidden; text-overflow: ellipsis; line-height: 1.1;">
+        <div style="font-size: 0.62rem; color: var(--text-secondary); text-align: center; height: 24px; overflow: hidden; text-overflow: ellipsis; line-height: 1.1;">
           ${card.ability}
         </div>
+
         <div class="card-stats">
           <span class="stat-atk">⚔️ ${card.atk}</span>
           <span class="stat-def">🛡️ ${card.def}</span>
           <span class="stat-spd">⚡ ${card.spd}</span>
         </div>
+
+        <button class="btn-inspect-3d" data-instance-id="${card.instanceId}" style="position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 0.65rem; padding: 2px 4px; border-radius: 4px; cursor: pointer; z-index: 5;">
+          3D 🔍
+        </button>
       </div>
     `;
   }
@@ -119,8 +125,10 @@ class BackpackGrid {
   attachEvents() {
     const gridCards = this.container.querySelectorAll('.backpack-grid-container .creature-card');
     gridCards.forEach(cardEl => {
-      cardEl.addEventListener('click', () => {
-        this.playSynthSound(587.33, 'sine', 0.08); // D5 pitch click sound
+      cardEl.addEventListener('click', (e) => {
+        if (e.target.classList.contains('btn-inspect-3d')) return;
+
+        this.playSynthSound(587.33, 'sine', 0.08);
         const instanceId = cardEl.getAttribute('data-instance-id');
         const cardObj = this.cards.find(c => c.instanceId === instanceId);
         if (!cardObj) return;
@@ -132,6 +140,19 @@ class BackpackGrid {
         }
 
         this.render();
+      });
+    });
+
+    // 3D Inspection Buttons
+    const inspectBtns = this.container.querySelectorAll('.btn-inspect-3d');
+    inspectBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const instanceId = btn.getAttribute('data-instance-id');
+        const cardObj = this.cards.find(c => c.instanceId === instanceId);
+        if (cardObj && this.cardModal) {
+          this.cardModal.open(cardObj);
+        }
       });
     });
 
@@ -147,7 +168,7 @@ class BackpackGrid {
     const btnStart = this.container.querySelector('#btn-start-fusion');
     if (btnStart) {
       btnStart.addEventListener('click', () => {
-        this.playSynthSound(880, 'square', 0.2); // High fusion chime sound
+        this.playSynthSound(880, 'square', 0.2);
         if (this.onFuseTrigger && this.selectedFusionCards[0] && this.selectedFusionCards[1]) {
           this.onFuseTrigger(this.selectedFusionCards[0], this.selectedFusionCards[1]);
         }
@@ -166,6 +187,7 @@ class BackpackGrid {
         };
         this.cards.push(newCard);
         this.render();
+        if (this.rewardModal) this.rewardModal.show(newCard);
       });
     }
   }
@@ -179,6 +201,7 @@ class BackpackGrid {
   addCard(newCard) {
     this.cards.push(newCard);
     this.render();
+    if (this.rewardModal) this.rewardModal.show(newCard);
   }
 }
 

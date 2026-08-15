@@ -1,6 +1,9 @@
 // Main Application Controller for Turtura
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("🎮 Turtura inicializando...");
+  console.log("🎮 Turtura inicializando con Inspección 3D y Animación de Premio...");
+
+  const cardModal = new window.CardModal();
+  const rewardModal = new window.RewardModal();
 
   // Generate 4 initial random cards for player
   const initialCards = window.GAME_RULES.getRandomInitialCards();
@@ -54,13 +57,12 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("✨ Fusión completada:", newCard);
       backpackGrid.removeCards([cardA.instanceId, cardB.instanceId]);
       backpackGrid.addCard(newCard);
-      alert(`🎉 ¡FUSIÓN COMPLETADA!\nObtuviste: ${newCard.name} (${newCard.category}) - Tier ${newCard.tier}`);
     }, (fusionId, pct, remainingSecs) => {
       if (statusMsg) {
         statusMsg.innerHTML = `<span style="color:#06b6d4;">⏳ Sintetizando criatura... ${pct}% (${remainingSecs}s)</span>`;
       }
     });
-  });
+  }, cardModal, rewardModal);
 
   const combatEngine = new window.CombatEngine("container-combat", () => backpackGrid.cards);
 });
