@@ -1,4 +1,4 @@
-/* AAA 100% Professional 3D Graphics & Section-Specific Nature Backgrounds System */
+/* AAA 100% Professional 3D Graphics & Full-Screen Background Design System */
 :root {
   --bg-dark: #081409;
   --bg-glass: rgba(14, 34, 17, 0.88);
@@ -22,9 +22,13 @@
   user-select: none;
 }
 
-/* BASE BODY STYLING */
+/* FULL-SCREEN DYNAMIC BACKGROUND ON BODY */
 body {
   background-color: #0d2110;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
   color: var(--text-primary);
   font-family: var(--font-family);
   min-height: 100vh;
@@ -33,23 +37,24 @@ body {
   perspective: 1200px;
   padding-bottom: 85px;
   overflow-x: hidden;
+  transition: background-image 0.5s ease-in-out;
 }
 
-/* SECTION-SPECIFIC DISTINCT NATURE BACKGROUNDS */
-#view-world.active {
-  background: radial-gradient(circle at center, rgba(14, 34, 17, 0.7), rgba(8, 20, 9, 0.95)), url('../assets/nature_bg.jpg') center/cover no-repeat fixed;
+/* SECTION-SPECIFIC FULL-SCREEN BACKGROUNDS */
+body.bg-world {
+  background-image: radial-gradient(circle at center, rgba(14, 34, 17, 0.55), rgba(8, 20, 9, 0.92)), url('../assets/nature_bg.jpg');
 }
 
-#view-deck.active {
-  background: radial-gradient(circle at top, rgba(20, 50, 25, 0.65), rgba(6, 18, 8, 0.92)), url('../assets/bengal_tiger.jpg') center/cover no-repeat fixed;
+body.bg-deck {
+  background-image: radial-gradient(circle at center, rgba(20, 50, 25, 0.6), rgba(6, 18, 8, 0.92)), url('../assets/bengal_tiger.jpg');
 }
 
-#view-combat.active {
-  background: radial-gradient(circle at bottom, rgba(30, 20, 10, 0.75), rgba(10, 6, 3, 0.95)), url('../assets/rock_behemoth.jpg') center/cover no-repeat fixed;
+body.bg-combat {
+  background-image: radial-gradient(circle at center, rgba(30, 20, 10, 0.7), rgba(10, 6, 3, 0.95)), url('../assets/rock_behemoth.jpg');
 }
 
-#view-shop.active {
-  background: radial-gradient(circle at center, rgba(40, 20, 50, 0.75), rgba(12, 5, 18, 0.95)), url('../assets/celestial_phoenix.jpg') center/cover no-repeat fixed;
+body.bg-shop {
+  background-image: radial-gradient(circle at center, rgba(40, 20, 50, 0.7), rgba(12, 5, 18, 0.95)), url('../assets/celestial_phoenix.jpg');
 }
 
 /* 3D Glassmorphic Vector Header */
@@ -89,7 +94,7 @@ body {
   background: linear-gradient(180deg, #241710, #140d08);
   border-top: 3px solid var(--border-gold-3d);
   display: flex;
-  justify-content: space-around;
+  justify-style: space-around;
   align-items: center;
   padding: 0 0.5rem;
   box-shadow: 0 -8px 25px rgba(0,0,0,0.9);
@@ -144,17 +149,17 @@ body {
 
 .main-container {
   flex: 1;
-  padding: 1.5rem;
-  max-width: 1240px;
+  padding: 1rem 1.5rem;
+  max-width: 1280px;
   margin: 0 auto;
   width: 100%;
 }
 
 .view-section {
   display: none;
-  min-height: calc(100vh - 160px);
-  border-radius: 28px;
-  padding: 1rem;
+  background: transparent;
+  border: none;
+  width: 100%;
 }
 
 .view-section.active {

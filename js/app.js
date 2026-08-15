@@ -36,6 +36,7 @@ class TurturaApp {
 
     this.initBottomNav();
     this.initAuthModal();
+    this.switchTab('deck'); // Default active tab is deck (Criaturas)
   }
 
   handleUserLoggedIn(user) {
@@ -82,6 +83,9 @@ class TurturaApp {
   }
 
   switchTab(tabId) {
+    // Dynamic full-screen body background class
+    document.body.className = `bg-${tabId}`;
+
     document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
 
     const targetSection = document.getElementById(`view-${tabId}`);
