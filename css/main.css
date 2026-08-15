@@ -1,8 +1,8 @@
-/* AAA 100% Professional 3D Graphics & Backpack Brawl Bottom Nav Design System */
+/* AAA 100% Professional 3D Graphics & Section-Specific Nature Backgrounds System */
 :root {
   --bg-dark: #081409;
-  --bg-glass: rgba(14, 34, 17, 0.82);
-  --bg-glass-card: rgba(22, 50, 26, 0.88);
+  --bg-glass: rgba(14, 34, 17, 0.88);
+  --bg-glass-card: rgba(22, 50, 26, 0.92);
   --border-gold-3d: #fbbf24;
   --border-green-3d: #4ade80;
   --accent-gold: #fef08a;
@@ -22,26 +22,39 @@
   user-select: none;
 }
 
-/* HIGH-RESOLUTION 3D NATURE LANDSCAPE BACKGROUND */
+/* BASE BODY STYLING */
 body {
   background-color: #0d2110;
-  background-image: url('../assets/nature_bg.jpg');
-  background-attachment: fixed;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
   color: var(--text-primary);
   font-family: var(--font-family);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   perspective: 1200px;
-  padding-bottom: 85px; /* Leave space for bottom nav bar */
+  padding-bottom: 85px;
+  overflow-x: hidden;
+}
+
+/* SECTION-SPECIFIC DISTINCT NATURE BACKGROUNDS */
+#view-world.active {
+  background: radial-gradient(circle at center, rgba(14, 34, 17, 0.7), rgba(8, 20, 9, 0.95)), url('../assets/nature_bg.jpg') center/cover no-repeat fixed;
+}
+
+#view-deck.active {
+  background: radial-gradient(circle at top, rgba(20, 50, 25, 0.65), rgba(6, 18, 8, 0.92)), url('../assets/bengal_tiger.jpg') center/cover no-repeat fixed;
+}
+
+#view-combat.active {
+  background: radial-gradient(circle at bottom, rgba(30, 20, 10, 0.75), rgba(10, 6, 3, 0.95)), url('../assets/rock_behemoth.jpg') center/cover no-repeat fixed;
+}
+
+#view-shop.active {
+  background: radial-gradient(circle at center, rgba(40, 20, 50, 0.75), rgba(12, 5, 18, 0.95)), url('../assets/celestial_phoenix.jpg') center/cover no-repeat fixed;
 }
 
 /* 3D Glassmorphic Vector Header */
 .game-header {
-  background: linear-gradient(180deg, rgba(28, 60, 32, 0.95), rgba(12, 30, 15, 0.95));
+  background: linear-gradient(180deg, rgba(28, 60, 32, 0.96), rgba(12, 30, 15, 0.98));
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 4px solid var(--border-gold-3d);
@@ -66,7 +79,7 @@ body {
   letter-spacing: 2px;
 }
 
-/* STICKY 5-BUTTON BACKPACK BRAWL BOTTOM NAVIGATION BAR (IMAGEN 1 & 2) */
+/* STICKY 4-BUTTON BACKPACK BRAWL BOTTOM NAVIGATION BAR */
 .bottom-nav-bar {
   position: fixed;
   bottom: 0;
@@ -114,7 +127,7 @@ body {
   filter: drop-shadow(0 0 10px #fbbf24);
 }
 
-/* Special Central Battle Button (Imagen 1 Style) */
+/* Special Central Battle Button */
 .bottom-nav-item.center-battle-btn {
   background: linear-gradient(180deg, #fbbf24, #d97706);
   color: #1e1b4b;
@@ -139,6 +152,9 @@ body {
 
 .view-section {
   display: none;
+  min-height: calc(100vh - 160px);
+  border-radius: 28px;
+  padding: 1rem;
 }
 
 .view-section.active {
@@ -149,18 +165,6 @@ body {
 @keyframes fadeIn3D {
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes vortexSpin {
-  0% { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(180deg) scale(1.2); filter: hue-rotate(90deg); }
-  100% { transform: rotate(360deg) scale(1); }
-}
-
-@keyframes floatUp {
-  0% { opacity: 1; transform: translateY(0) scale(0.8); }
-  50% { opacity: 1; transform: translateY(-50px) scale(1.4); }
-  100% { opacity: 0; transform: translateY(-100px) scale(1); }
 }
 
 /* AAA Chunky 3D Push Buttons */
