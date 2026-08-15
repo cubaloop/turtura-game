@@ -1,4 +1,4 @@
-// Database of Creatures for Turtura
+// Database of Creatures for Turtura with Image Arts and Tier Artwork Levels
 const CREATURES_DB = {
   // --- TIERRA ---
   "tierra_t1": {
@@ -7,12 +7,14 @@ const CREATURES_DB = {
     category: "Tierra",
     tier: 1,
     icon: "🪲",
+    image: "assets/rhino_beetle.jpg",
     atk: 12,
     def: 25,
     spd: 5,
     ability: "Caparazón: +5 DEF al recibir daño",
     rarity: "common",
-    color: "#4caf50"
+    color: "#4caf50",
+    frameStyle: "frame-common"
   },
   "tierra_t2": {
     id: "tierra_t2",
@@ -20,12 +22,14 @@ const CREATURES_DB = {
     category: "Tierra",
     tier: 2,
     icon: "🐅",
+    image: "assets/bengal_tiger.jpg",
     atk: 35,
     def: 20,
     spd: 15,
     ability: "Garrazo: 10% probabilidad de crítico x2",
     rarity: "rare",
-    color: "#8bc34a"
+    color: "#8bc34a",
+    frameStyle: "frame-rare"
   },
   "tierra_t3": {
     id: "tierra_t3",
@@ -33,12 +37,14 @@ const CREATURES_DB = {
     category: "Tierra",
     tier: 3,
     icon: "🐘",
+    image: "assets/rhino_beetle.jpg",
     atk: 55,
     def: 60,
     spd: 8,
     ability: "Pisotón: Aturde al enemigo por 1 turno",
     rarity: "epic",
-    color: "#2e7d32"
+    color: "#2e7d32",
+    frameStyle: "frame-epic"
   },
   "tierra_t4": {
     id: "tierra_t4",
@@ -46,12 +52,14 @@ const CREATURES_DB = {
     category: "Tierra",
     tier: 4,
     icon: "🦣",
+    image: "assets/bengal_tiger.jpg",
     atk: 95,
     def: 110,
     spd: 12,
     ability: "Escudo Telúrico: Absorbe 30% del daño entrante",
     rarity: "legendary",
-    color: "#1b5e20"
+    color: "#1b5e20",
+    frameStyle: "frame-legendary"
   },
 
   // --- AIRE ---
@@ -61,12 +69,14 @@ const CREATURES_DB = {
     category: "Aire",
     tier: 1,
     icon: "🐦",
+    image: "assets/harpy_eagle.jpg",
     atk: 15,
     def: 8,
     spd: 25,
     ability: "Esquiva: +15% probabilidad de evasión",
     rarity: "common",
-    color: "#03a9f4"
+    color: "#03a9f4",
+    frameStyle: "frame-common"
   },
   "aire_t2": {
     id: "aire_t2",
@@ -74,12 +84,14 @@ const CREATURES_DB = {
     category: "Aire",
     tier: 2,
     icon: "🦅",
+    image: "assets/harpy_eagle.jpg",
     atk: 40,
     def: 12,
     spd: 35,
     ability: "Picado Veloz: Asesta 2 golpes en el primer turno",
     rarity: "rare",
-    color: "#29b6f6"
+    color: "#29b6f6",
+    frameStyle: "frame-rare"
   },
   "aire_t3": {
     id: "aire_t3",
@@ -87,12 +99,14 @@ const CREATURES_DB = {
     category: "Aire",
     tier: 3,
     icon: "🦤",
+    image: "assets/harpy_eagle.jpg",
     atk: 65,
     def: 25,
     spd: 40,
     ability: "Ráfaga de Viento: Reduce la velocidad del enemigo un 25%",
     rarity: "epic",
-    color: "#0288d1"
+    color: "#0288d1",
+    frameStyle: "frame-epic"
   },
   "aire_t4": {
     id: "aire_t4",
@@ -100,12 +114,14 @@ const CREATURES_DB = {
     category: "Aire",
     tier: 4,
     icon: "🕊️",
+    image: "assets/harpy_eagle.jpg",
     atk: 115,
     def: 45,
     spd: 55,
     ability: "Tormenta Aérea: Inflige daño continuo por ráfagas",
     rarity: "legendary",
-    color: "#01579b"
+    color: "#01579b",
+    frameStyle: "frame-legendary"
   },
 
   // --- AGUA ---
@@ -115,12 +131,14 @@ const CREATURES_DB = {
     category: "Agua",
     tier: 1,
     icon: "🐡",
+    image: "assets/kraken.jpg",
     atk: 10,
     def: 18,
     spd: 10,
     ability: "Espinas Venenosas: Daña al atacante al recibir contacto",
     rarity: "common",
-    color: "#00bcd4"
+    color: "#00bcd4",
+    frameStyle: "frame-common"
   },
   "agua_t2": {
     id: "agua_t2",
@@ -128,12 +146,14 @@ const CREATURES_DB = {
     category: "Agua",
     tier: 2,
     icon: "🦈",
+    image: "assets/kraken.jpg",
     atk: 38,
     def: 22,
     spd: 20,
     ability: "Sangrado: Inflige 5 de daño adicional por turno",
     rarity: "rare",
-    color: "#00acc1"
+    color: "#00acc1",
+    frameStyle: "frame-rare"
   },
   "agua_t3": {
     id: "agua_t3",
@@ -141,12 +161,14 @@ const CREATURES_DB = {
     category: "Agua",
     tier: 3,
     icon: "🦑",
+    image: "assets/kraken.jpg",
     atk: 60,
     def: 35,
     spd: 22,
     ability: "Tinta Cegadora: Reduce la precisión enemiga un 30%",
     rarity: "epic",
-    color: "#00838f"
+    color: "#00838f",
+    frameStyle: "frame-epic"
   },
   "agua_t4": {
     id: "agua_t4",
@@ -154,12 +176,14 @@ const CREATURES_DB = {
     category: "Agua",
     tier: 4,
     icon: "🐋",
+    image: "assets/kraken.jpg",
     atk: 90,
     def: 85,
     spd: 28,
     ability: "Marea Curativa: Regenera 20% de HP cada turno",
     rarity: "legendary",
-    color: "#006064"
+    color: "#006064",
+    frameStyle: "frame-legendary"
   },
 
   // --- MICROBIOS ---
@@ -169,12 +193,14 @@ const CREATURES_DB = {
     category: "Microbios",
     tier: 1,
     icon: "🦠",
+    image: "assets/kraken.jpg",
     atk: 8,
     def: 5,
     spd: 18,
     ability: "División Celular: Se regenera 3 HP al atacar",
     rarity: "common",
-    color: "#e91e63"
+    color: "#e91e63",
+    frameStyle: "frame-common"
   },
   "microbios_t2": {
     id: "microbios_t2",
@@ -182,12 +208,14 @@ const CREATURES_DB = {
     category: "Microbios",
     tier: 2,
     icon: "🧫",
+    image: "assets/kraken.jpg",
     atk: 25,
     def: 10,
     spd: 22,
     ability: "Infección: Reduce la defensa enemiga un 20%",
     rarity: "rare",
-    color: "#d81b60"
+    color: "#d81b60",
+    frameStyle: "frame-rare"
   },
   "microbios_t3": {
     id: "microbios_t3",
@@ -195,12 +223,14 @@ const CREATURES_DB = {
     category: "Microbios",
     tier: 3,
     icon: "🧪",
+    image: "assets/kraken.jpg",
     atk: 50,
     def: 15,
     spd: 30,
     ability: "Parálisis Viral: Ocasionalmente paraliza al enemigo",
     rarity: "epic",
-    color: "#c2185b"
+    color: "#c2185b",
+    frameStyle: "frame-epic"
   },
   "microbios_t4": {
     id: "microbios_t4",
@@ -208,12 +238,14 @@ const CREATURES_DB = {
     category: "Microbios",
     tier: 4,
     icon: "🧬",
+    image: "assets/kraken.jpg",
     atk: 85,
     def: 40,
     spd: 38,
     ability: "Drenaje Genético: Absorbe el 15% del ataque del rival",
     rarity: "legendary",
-    color: "#880e4f"
+    color: "#880e4f",
+    frameStyle: "frame-legendary"
   },
 
   // --- HÍBRIDOS CROSS-CATEGORY ---
@@ -223,12 +255,14 @@ const CREATURES_DB = {
     category: "Híbrido (Tierra + Agua)",
     tier: 3,
     icon: "🐊",
+    image: "assets/rhino_beetle.jpg",
     atk: 58,
     def: 50,
     spd: 18,
     ability: "Piel Acuática: Inmune a veneno y +15 DEF",
     rarity: "epic",
-    color: "#009688"
+    color: "#009688",
+    frameStyle: "frame-epic"
   },
   "hibrido_bioaereo": {
     id: "hibrido_bioaereo",
@@ -236,12 +270,14 @@ const CREATURES_DB = {
     category: "Híbrido (Aire + Microbios)",
     tier: 3,
     icon: "🦇",
+    image: "assets/harpy_eagle.jpg",
     atk: 52,
     def: 20,
     spd: 45,
     ability: "Infección Aérea: Esparce toxinas a alta velocidad",
     rarity: "epic",
-    color: "#9c27b0"
+    color: "#9c27b0",
+    frameStyle: "frame-epic"
   },
   "hibrido_abisal": {
     id: "hibrido_abisal",
@@ -249,12 +285,14 @@ const CREATURES_DB = {
     category: "Híbrido (Agua + Microbios)",
     tier: 3,
     icon: "🪼",
+    image: "assets/kraken.jpg",
     atk: 48,
     def: 30,
     spd: 25,
     ability: "Neurotoxina Acuática: Aturde y envenena",
     rarity: "epic",
-    color: "#673ab7"
+    color: "#673ab7",
+    frameStyle: "frame-epic"
   }
 };
 

@@ -12,18 +12,40 @@ class BackpackGrid {
     this.render();
   }
 
+  playSynthSound(freq = 440, type = 'sine', duration = 0.1) {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, ctx.currentTime);
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + duration);
+    } catch(e) {}
+  }
+
   renderCardHtml(card) {
     if (!card) return '';
+    const frameClass = card.frameStyle || (card.rarity === 'common' ? 'common' : card.rarity === 'rare' ? 'rare' : card.rarity === 'epic' ? 'epic' : card.rarity === 'legendary' ? 'legendary' : 'ai_unique');
     const isAi = card.rarity === 'ai_unique';
+
     return `
-      <div class="creature-card ${card.rarity} holographic" data-instance-id="${card.instanceId}">
+      <div class="creature-card ${frameClass} holographic" data-instance-id="${card.instanceId}">
         <div class="card-header">
           <span class="card-category-badge">${card.category}</span>
           <span class="card-tier-badge">T${card.tier}</span>
         </div>
-        <div class="card-icon-frame">${card.icon}</div>
+
+        <div class="card-art-container">
+          ${card.image ? `<img src="${card.image}" class="card-art-img" alt="${card.name}">` : `<span class="card-art-fallback">${card.icon}</span>`}
+        </div>
+
         <div class="card-name">${card.name}</div>
-        <div style="font-size: 0.6rem; color: var(--text-secondary); text-align: center; height: 24px; overflow: hidden; text-overflow: ellipsis; line-height: 1.1;">
+        <div style="font-size: 0.62rem; color: var(--text-secondary); text-align: center; height: 26px; overflow: hidden; text-overflow: ellipsis; line-height: 1.1;">
           ${card.ability}
         </div>
         <div class="card-stats">
@@ -58,11 +80,11 @@ class BackpackGrid {
 
           <div class="fusion-slots-container">
             <div class="grid-slot" id="fusion-slot-0">
-              ${this.selectedFusionCards[0] ? this.renderCardHtml(this.selectedFusionCards[0]) : '<span style="color:#64748b; font-weight:700;">Seleccionar Carta 1</span>'}
+              ${this.selectedFusionCards[0] ? this.renderCardHtml(this.selectedFusionCards[0]) : '<span style="color:#64748b; font-weight:700;">Carta 1</span>'}
             </div>
             <div class="fusion-plus">+</div>
             <div class="grid-slot" id="fusion-slot-1">
-              ${this.selectedFusionCards[1] ? this.renderCardHtml(this.selectedFusionCards[1]) : '<span style="color:#64748b; font-weight:700;">Seleccionar Carta 2</span>'}
+              ${this.selectedFusionCards[1] ? this.renderCardHtml(this.selectedFusionCards[1]) : '<span style="color:#64748b; font-weight:700;">Carta 2</span>'}
             </div>
           </div>
 
@@ -95,10 +117,10 @@ class BackpackGrid {
   }
 
   attachEvents() {
-    // Click on card in backpack to add to fusion chamber slots
     const gridCards = this.container.querySelectorAll('.backpack-grid-container .creature-card');
     gridCards.forEach(cardEl => {
       cardEl.addEventListener('click', () => {
+        this.playSynthSound(587.33, 'sine', 0.08); // D5 pitch click sound
         const instanceId = cardEl.getAttribute('data-instance-id');
         const cardObj = this.cards.find(c => c.instanceId === instanceId);
         if (!cardObj) return;
@@ -113,29 +135,29 @@ class BackpackGrid {
       });
     });
 
-    // Clear fusion slots
     const btnClear = this.container.querySelector('#btn-clear-fusion');
     if (btnClear) {
       btnClear.addEventListener('click', () => {
+        this.playSynthSound(330, 'triangle', 0.1);
         this.selectedFusionCards = [null, null];
         this.render();
       });
     }
 
-    // Start fusion button
     const btnStart = this.container.querySelector('#btn-start-fusion');
     if (btnStart) {
       btnStart.addEventListener('click', () => {
+        this.playSynthSound(880, 'square', 0.2); // High fusion chime sound
         if (this.onFuseTrigger && this.selectedFusionCards[0] && this.selectedFusionCards[1]) {
           this.onFuseTrigger(this.selectedFusionCards[0], this.selectedFusionCards[1]);
         }
       });
     }
 
-    // Draw card button
     const btnDraw = this.container.querySelector('#btn-draw-card');
     if (btnDraw) {
       btnDraw.addEventListener('click', () => {
+        this.playSynthSound(659.25, 'sine', 0.12);
         const keys = ["tierra_t1", "aire_t1", "agua_t1", "microbios_t1"];
         const randomKey = keys[Math.floor(Math.random() * keys.length)];
         const newCard = {

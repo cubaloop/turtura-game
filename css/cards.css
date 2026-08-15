@@ -1,60 +1,97 @@
-/* Card Rarity & Holographic Shimmer Styles */
+/* Pokémon & Backpack Brawl Style Card Design & Progression */
 .creature-card {
-  width: 140px;
-  height: 200px;
-  background: #1e293b;
-  border-radius: 16px;
-  border: 2px solid #475569;
+  width: 155px;
+  height: 225px;
+  background: #0f172a;
+  border-radius: 18px;
+  border: 3px solid #475569;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0.6rem;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  padding: 0.5rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
   cursor: grab;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
 }
 
 .creature-card:active {
   cursor: grabbing;
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
 .creature-card:hover {
-  transform: translateY(-4px) scale(1.02);
-  z-index: 10;
+  transform: translateY(-8px) scale(1.04);
+  z-index: 20;
 }
 
-/* Rarities */
-.creature-card.common { border-color: #4caf50; }
-.creature-card.rare { border-color: #03a9f4; box-shadow: 0 0 12px rgba(3, 169, 244, 0.3); }
-.creature-card.epic { border-color: #8b5cf6; box-shadow: 0 0 16px rgba(139, 92, 246, 0.4); }
-.creature-card.legendary { border-color: #f59e0b; box-shadow: 0 0 20px rgba(245, 158, 11, 0.5); }
-.creature-card.ai_unique {
-  border: 2px solid transparent;
-  background: linear-gradient(#151c2c, #151c2c) padding-box,
-              linear-gradient(135deg, #06b6d4, #ec4899, #f59e0b) border-box;
-  box-shadow: 0 0 25px rgba(236, 72, 153, 0.6);
-  animation: borderRotate 4s linear infinite;
+/* Tier 1 (Common) - Clean Metallic Frame */
+.creature-card.common {
+  border-color: #4caf50;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
 }
 
-/* Holographic Shimmer */
-.creature-card.holographic::after {
+/* Tier 2 (Rare) - Glowing Blue Energy Frame */
+.creature-card.rare {
+  border-color: #03a9f4;
+  box-shadow: 0 0 16px rgba(3, 169, 244, 0.4);
+}
+
+/* Tier 3 (Epic) - Radiant Purple Aura */
+.creature-card.epic {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 22px rgba(139, 92, 246, 0.5);
+}
+.creature-card.epic::before {
+  content: "";
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  background: linear-gradient(45deg, #8b5cf6, #ec4899, #8b5cf6);
+  z-index: -1;
+  border-radius: 20px;
+  animation: auraPulse 2.5s infinite linear;
+}
+
+/* Tier 4 (Legendary) - Gold Dragon Frame + Holographic Foil */
+.creature-card.legendary {
+  border: 3px solid #f59e0b;
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.7);
+}
+.creature-card.legendary::after {
   content: "";
   position: absolute;
   top: -50%; left: -50%; width: 200%; height: 200%;
   background: linear-gradient(
     45deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.08) 45%,
-    rgba(255, 255, 255, 0.3) 50%,
-    rgba(255, 255, 255, 0.08) 55%,
+    rgba(245, 158, 11, 0.15) 45%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(245, 158, 11, 0.15) 55%,
     transparent 100%
   );
   transform: rotate(30deg);
   pointer-events: none;
-  animation: shimmer 3s infinite linear;
+  animation: shimmer 2.5s infinite linear;
+}
+
+/* Tier 5 (AI Unique) - Cosmic Rainbow Border & Particle Glow */
+.creature-card.ai_unique {
+  border: 3px solid transparent;
+  background: linear-gradient(#0f172a, #0f172a) padding-box,
+              linear-gradient(135deg, #06b6d4, #ec4899, #f59e0b, #10b981) border-box;
+  box-shadow: 0 0 35px rgba(236, 72, 153, 0.8);
+  animation: borderRotate 3s linear infinite;
+}
+
+@keyframes borderRotate {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes auraPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 @keyframes shimmer {
@@ -66,81 +103,152 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 2;
 }
 
 .card-category-badge {
   font-size: 0.65rem;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 800;
   padding: 2px 6px;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .card-tier-badge {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 800;
   color: var(--accent-amber);
+  text-shadow: 0 0 8px rgba(245, 158, 11, 0.8);
 }
 
-.card-icon-frame {
-  font-size: 2.8rem;
-  text-align: center;
-  margin: 0.2rem 0;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+.card-art-container {
+  width: 100%;
+  height: 90px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  position: relative;
+  background: #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px 0;
+}
+
+.card-art-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.creature-card:hover .card-art-img {
+  transform: scale(1.1);
+}
+
+.card-art-fallback {
+  font-size: 3rem;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
 }
 
 .card-name {
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-size: 0.78rem;
+  font-weight: 800;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #f8fafc;
+  z-index: 2;
 }
 
 .card-stats {
   display: flex;
   justify-content: space-around;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.65);
   padding: 4px;
   border-radius: 8px;
-  font-size: 0.65rem;
-  font-weight: 700;
+  font-size: 0.68rem;
+  font-weight: 800;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 2;
 }
 
 .stat-atk { color: #f43f5e; }
 .stat-def { color: #3b82f6; }
 .stat-spd { color: #10b981; }
 
-/* Fusion Progress Overlay */
-.fusion-overlay {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(15, 23, 42, 0.9);
+/* Interactive Dungeon Path Node Styles */
+.dungeon-map-container {
+  background: linear-gradient(180deg, #0f172a, #1e1b4b);
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  border-radius: 20px;
+  padding: 1.5rem;
+  overflow-x: auto;
+  position: relative;
+}
+
+.dungeon-path-trail {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 1.5rem 1rem;
+  min-width: 900px;
+  position: relative;
+}
+
+.dungeon-node {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background: #1e293b;
+  border: 3px solid #475569;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  z-index: 20;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 5;
 }
 
-.fusion-spinner {
-  width: 32px;
-  height: 32px;
-  border: 3px solid rgba(6, 182, 212, 0.2);
-  border-top-color: var(--accent-cyan);
-  border-radius: 50%;
-  animation: spin 1s infinite linear;
+.dungeon-node.completed {
+  border-color: var(--accent-emerald);
+  background: rgba(16, 185, 129, 0.2);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.dungeon-node.current {
+  border-color: var(--accent-rose);
+  background: rgba(244, 63, 94, 0.25);
+  box-shadow: 0 0 25px rgba(244, 63, 94, 0.7);
+  animation: nodePulse 1.5s infinite ease-in-out;
 }
 
-.fusion-timer-text {
-  font-size: 0.75rem;
-  font-weight: 800;
-  color: var(--accent-cyan);
+.dungeon-node.locked {
+  border-color: #334155;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@keyframes nodePulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(244, 63, 94, 0.6); }
+  50% { transform: scale(1.12); box-shadow: 0 0 35px rgba(244, 63, 94, 0.9); }
+}
+
+.dungeon-node-line {
+  position: absolute;
+  top: 50%;
+  height: 4px;
+  background: #334155;
+  z-index: 1;
+  transform: translateY(-50%);
+}
+
+.dungeon-node-line.active {
+  background: linear-gradient(90deg, var(--accent-emerald), var(--accent-rose));
 }
