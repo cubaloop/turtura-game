@@ -1,6 +1,7 @@
-// Main Application Controller for Turtura RPG Game & Backpack Brawl Nav Engine
+// Main Application Controller for Turtura RPG Game & Backpack Brawl Engine
 class TurturaApp {
   constructor() {
+    this.animatedBackground = new AnimatedBackground('animated-nature-canvas');
     this.authSystem = new AuthSystem(this.handleUserLoggedIn.bind(this));
     this.initialCards = this.authSystem.currentUser ? this.authSystem.currentUser.cards : GAME_RULES.getRandomInitialCards();
     
@@ -89,17 +90,6 @@ class TurturaApp {
     if (tabId === 'world') this.categorySelector.render();
     if (tabId === 'deck') this.backpackGrid.render();
     if (tabId === 'combat') this.combatEngine.render();
-    if (tabId === 'heroes') {
-      const box = document.getElementById('hero-profile-box');
-      if (box) {
-        const u = this.authSystem.currentUser || { displayName: "Invitado", level: 1, gems: 123, coins: 74851 };
-        box.innerHTML = `
-          <div style="font-weight: 900; font-size: 1.3rem; color: #fbbf24; margin-bottom: 0.5rem;">${u.displayName}</div>
-          <div style="font-size: 0.9rem; color: #cbd5e1;">Nivel de Héroe: ${u.level || 1}</div>
-          <div style="font-size: 0.9rem; color: #4ade80; margin-top: 4px;">Gemas: ${u.gems || 123} 💎 | Monedas: ${u.coins || 74851} 🪙</div>
-        `;
-      }
-    }
   }
 
   handleFusionTrigger(cardA, cardB) {
