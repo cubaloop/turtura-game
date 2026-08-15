@@ -11,11 +11,13 @@
 /* 21-Slot Grid Container (7 Columns x 3 Rows) */
 .inventory-21-container {
   flex: 1;
-  background: linear-gradient(135deg, rgba(20, 50, 25, 0.92), rgba(12, 32, 16, 0.95));
+  background: linear-gradient(135deg, rgba(20, 50, 25, 0.94), rgba(12, 32, 16, 0.97));
   border: 3px solid #22c55e;
   border-radius: 24px;
   padding: 1.5rem;
-  box-shadow: 0 12px 35px rgba(34, 197, 94, 0.3), inset 0 0 25px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 12px 35px rgba(34, 197, 94, 0.35), inset 0 0 30px rgba(0, 0, 0, 0.85);
+  position: relative;
+  overflow: hidden;
 }
 
 .grid-21-slots {
