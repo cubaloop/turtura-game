@@ -1,4 +1,4 @@
-// Full Backpack Brawl Battle Stage Component for Turtura
+// AAA Visual Combat Engine Component for Turtura with Floating Combat Text, Collision, & Screen Shake
 class CombatEngine {
   constructor(containerId, getPlayerDeck) {
     this.container = document.getElementById(containerId);
@@ -9,7 +9,6 @@ class CombatEngine {
     this.enemyHp = 69;
     this.enemyMaxHp = 69;
     this.battleTimer = 4.8;
-    this.isBattleRunning = false;
     this.showResultModal = false;
     this.lastBattleWon = false;
     this.wagerCard = null;
@@ -57,8 +56,8 @@ class CombatEngine {
     this.container.innerHTML = `
       <div style="display: flex; flex-direction: column; gap: 1.25rem;">
         
-        <!-- TOP BATTLE CONTROL BAR (BACKPACK BRAWL STYLE) -->
-        <div style="background: #1c110a; border: 2px solid var(--border-gold); border-radius: 16px; padding: 0.6rem 1.25rem; display: flex; justify-content: space-between; align-items: center;">
+        <!-- TOP BATTLE CONTROL BAR -->
+        <div style="background: #1c110a; border: 2px solid var(--border-gold); border-radius: 16px; padding: 0.6rem 1.25rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.6);">
           <div style="display: flex; align-items: center; gap: 1rem;">
             <span style="font-weight: 900; color: var(--accent-gold); font-size: 1.1rem;">🏆 5</span>
             <span style="font-size: 1.1rem;">❤️ ❤️ ❤️ ❤️ 🖤</span>
@@ -70,9 +69,12 @@ class CombatEngine {
           </div>
         </div>
 
-        <!-- STAGE BATTLE CONTAINER (BACKPACK BRAWL GRID ARENA) -->
-        <div style="background: repeating-linear-gradient(0deg, #2a1b12, #2a1b12 15px, #21140c 15px, #21140c 30px); border: 3px solid var(--border-gold); border-radius: 24px; padding: 1.25rem; position: relative; box-shadow: inset 0 0 30px rgba(0,0,0,0.9);">
+        <!-- STAGE BATTLE CONTAINER (BACKPACK BRAWL ARENA) -->
+        <div id="battle-arena-container" style="background: repeating-linear-gradient(0deg, #2a1b12, #2a1b12 15px, #21140c 15px, #21140c 30px); border: 3px solid var(--border-gold); border-radius: 24px; padding: 1.25rem; position: relative; box-shadow: inset 0 0 30px rgba(0,0,0,0.9); transition: transform 0.1s ease;">
           
+          <!-- FLOATING COMBAT DAMAGE TEXT CONTAINER -->
+          <div id="floating-damage-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 100; display: flex; align-items: center; justify-content: center;"></div>
+
           <!-- TOP: OPPONENT INVENTORY GRID -->
           <div style="margin-bottom: 1.5rem; text-align: center;">
             <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-red); margin-bottom: 0.5rem; text-transform: uppercase;">
@@ -86,7 +88,7 @@ class CombatEngine {
             </div>
           </div>
 
-          <!-- MIDDLE: HERO PORTRAITS & HP/STAMINA BARS -->
+          <!-- MIDDLE: HERO PORTRAITS & HP BARS -->
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; background: rgba(0,0,0,0.6); padding: 1rem; border-radius: 18px; border: 2px solid #4a3222; margin-bottom: 1.5rem;">
             <!-- PLAYER HERO -->
             <div style="display: flex; gap: 0.75rem; align-items: center;">
@@ -143,18 +145,18 @@ class CombatEngine {
 
         <!-- DEFEAT / VICTORY MODAL (BACKPACK BRAWL RIBBON STYLE) -->
         ${this.showResultModal ? `
-          <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11, 15, 25, 0.9); z-index: 1000; display: flex; align-items: center; justify-content: center;">
-            <div style="background: linear-gradient(180deg, #3d1a10, #1c0e08); border: 3px solid var(--border-gold); border-radius: 24px; padding: 2rem; width: 380px; text-align: center; box-shadow: 0 0 50px rgba(0,0,0,0.9); position: relative;">
-              <div style="font-size: 4rem; filter: drop-shadow(0 0 20px rgba(239,68,68,0.8));">💀</div>
-              <div style="font-size: 2rem; font-weight: 900; color: #ef4444; margin: 0.5rem 0; text-transform: uppercase; letter-spacing: 2px;">
+          <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11, 15, 25, 0.92); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+            <div style="background: linear-gradient(180deg, #3d1a10, #1c0e08); border: 4px solid var(--border-gold); border-radius: 24px; padding: 2rem; width: 390px; text-align: center; box-shadow: 0 0 60px rgba(0,0,0,0.9); position: relative;">
+              <div style="font-size: 4.5rem; filter: drop-shadow(0 0 25px rgba(239,68,68,0.8));">💀</div>
+              <div style="font-size: 2.2rem; font-weight: 900; color: #ef4444; margin: 0.5rem 0; text-transform: uppercase; letter-spacing: 2px; text-shadow: 2px 2px 0 #000;">
                 ${this.lastBattleWon ? '¡VICTORIA!' : '¡DERROTA!'}
               </div>
               <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
                 ${this.lastBattleWon ? '¡Has vencido al oponente y asegurado tus trofeos!' : 'Tus criaturas han caído en combate. Fusiona cartas para aumentar tu poder.'}
               </p>
               <div style="display: flex; gap: 0.75rem; justify-content: center;">
-                <button class="rpg-btn-green" id="btn-modal-heart" style="font-size: 0.85rem; padding: 0.6rem 1rem;">Obtén 1 ❤️</button>
-                <button class="rpg-btn-gold" id="btn-modal-next" style="font-size: 0.85rem; padding: 0.6rem 1rem;">Próxima Batalla ➔</button>
+                <button class="rpg-btn-green" id="btn-modal-heart" style="font-size: 0.85rem; padding: 0.6rem 1.1rem;">Obtén 1 ❤️</button>
+                <button class="rpg-btn-gold" id="btn-modal-next" style="font-size: 0.85rem; padding: 0.6rem 1.1rem;">Próxima Batalla ➔</button>
               </div>
             </div>
           </div>
@@ -165,26 +167,58 @@ class CombatEngine {
     this.attachEvents();
   }
 
+  triggerScreenShake() {
+    const arena = this.container.querySelector('#battle-arena-container');
+    if (!arena) return;
+    arena.style.transform = 'translate(6px, -6px)';
+    setTimeout(() => arena.style.transform = 'translate(-6px, 6px)', 50);
+    setTimeout(() => arena.style.transform = 'translate(4px, -4px)', 100);
+    setTimeout(() => arena.style.transform = 'translate(0px, 0px)', 150);
+  }
+
+  triggerFloatingDamage(damageText) {
+    const overlay = this.container.querySelector('#floating-damage-overlay');
+    if (!overlay) return;
+
+    const dmgEl = document.createElement('div');
+    dmgEl.innerText = damageText;
+    dmgEl.style.cssText = `
+      font-size: 3rem;
+      font-weight: 900;
+      color: #ef4444;
+      text-shadow: 0 0 15px #ef4444, 2px 2px 0 #000;
+      animation: floatUp 1s forwards ease-out;
+    `;
+    overlay.appendChild(dmgEl);
+    setTimeout(() => dmgEl.remove(), 1000);
+  }
+
   attachEvents() {
     const btnBattle = this.container.querySelector('#btn-start-battle');
     if (btnBattle) {
       btnBattle.addEventListener('click', () => {
         this.playSynthSound(440, 'square', 0.15);
-        const currentNode = this.dungeonNodes.find(n => n.level === this.currentLevel) || this.dungeonNodes[0];
-
+        this.triggerScreenShake();
+        
         let totalAtk = 0;
         const deck = this.getPlayerDeck() || [];
         deck.forEach(c => totalAtk += (c.atk || 10));
 
-        if (totalAtk * 2 >= (currentNode.hp || 50)) {
-          this.lastBattleWon = true;
-          if (this.currentLevel < 5) this.currentLevel++;
-        } else {
-          this.lastBattleWon = false;
-        }
+        this.triggerFloatingDamage(`-${totalAtk * 2}`);
 
-        this.showResultModal = true;
-        this.render();
+        const currentNode = this.dungeonNodes.find(n => n.level === this.currentLevel) || this.dungeonNodes[0];
+
+        setTimeout(() => {
+          if (totalAtk * 2 >= (currentNode.hp || 50)) {
+            this.lastBattleWon = true;
+            if (this.currentLevel < 5) this.currentLevel++;
+          } else {
+            this.lastBattleWon = false;
+          }
+
+          this.showResultModal = true;
+          this.render();
+        }, 800);
       });
     }
 

@@ -34,11 +34,15 @@ class BackpackGrid {
   renderCardHtml(card) {
     if (!card) return '';
     const frameClass = card.frameStyle || (card.rarity === 'common' ? 'common' : card.rarity === 'rare' ? 'rare' : card.rarity === 'epic' ? 'epic' : 'legendary');
+    const gemColor = card.gemColor || '#10b981';
 
     return `
-      <div class="creature-card ${frameClass} holographic" data-instance-id="${card.instanceId}">
+      <div class="creature-card ${frameClass}" data-instance-id="${card.instanceId}">
         <div class="card-header">
-          <span class="card-category-badge">${card.category}</span>
+          <div style="display: flex; align-items: center; gap: 4px;">
+            <div class="card-type-gem" style="background: ${gemColor};"></div>
+            <span class="card-category-badge">${card.category}</span>
+          </div>
           <span class="card-tier-badge">T${card.tier}</span>
         </div>
 
@@ -96,7 +100,6 @@ class BackpackGrid {
             flex-direction: column;
             gap: 1rem;
           ">
-            <!-- SWIRLING VORTEX SPINNER -->
             <div style="
               width: 110px; height: 110px;
               border-radius: 50%;
@@ -130,7 +133,7 @@ class BackpackGrid {
 
           <div style="display: flex; gap: 1rem;">
             <button class="rpg-btn-green" id="btn-start-fusion" ${(!this.selectedFusionCards[0] || !this.selectedFusionCards[1]) ? 'disabled' : ''}>
-              ACTIVAR VÓRTISE DE FUSIÓN 🔥
+              ACTIVAR VÓRTICE DE FUSIÓN 🔥
             </button>
             <button class="tab-btn" id="btn-clear-fusion" style="padding: 0.6rem 1rem;">
               Limpiar
@@ -173,7 +176,6 @@ class BackpackGrid {
       });
     });
 
-    // 3D Inspection Buttons
     const inspectBtns = this.container.querySelectorAll('.btn-inspect-3d');
     inspectBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
