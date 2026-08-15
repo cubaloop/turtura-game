@@ -1,10 +1,15 @@
-// Main Application Controller for Turtura 2D RPG & TCG Game
+// Main Application Controller for Turtura RPG Game
 class TurturaApp {
   constructor() {
     this.initialCards = GAME_RULES.getRandomInitialCards();
     this.cardModal = new CardModal('card-modal-container');
     this.rewardModal = new RewardModal('reward-modal-container');
     
+    this.categorySelector = new CategorySelector(
+      'category-selector-container',
+      (category) => this.switchTab('combat')
+    );
+
     this.backpackGrid = new BackpackGrid(
       'deck-container',
       this.initialCards,
@@ -18,16 +23,6 @@ class TurturaApp {
       () => this.backpackGrid.cards
     );
 
-    // Initialize 2D Canvas Overworld Engine
-    this.overworldEngine = new OverworldEngine(
-      'overworld-canvas',
-      (gymId) => this.switchTab('combat'),
-      () => {
-        alert("🌿 ¡Una criatura silvestre ha aparecido en la hierba alta!");
-        this.switchTab('combat');
-      }
-    );
-
     this.initTabs();
   }
 
@@ -38,38 +33,6 @@ class TurturaApp {
         const tabId = btn.getAttribute('data-tab');
         this.switchTab(tabId);
       });
-    });
-
-    // Touch D-Pad Events for Mobile / On-Screen Controls
-    const dpadMap = {
-      'dpad-up': 'ArrowUp',
-      'dpad-down': 'ArrowDown',
-      'dpad-left': 'ArrowLeft',
-      'dpad-right': 'ArrowRight'
-    };
-
-    Object.keys(dpadMap).forEach(btnId => {
-      const btn = document.getElementById(btnId);
-      if (btn) {
-        btn.addEventListener('mousedown', () => {
-          this.overworldEngine.keys[dpadMap[btnId]] = true;
-          this.overworldEngine.player.isMoving = true;
-        });
-        btn.addEventListener('mouseup', () => {
-          this.overworldEngine.keys[dpadMap[btnId]] = false;
-          this.overworldEngine.player.isMoving = false;
-        });
-        btn.addEventListener('touchstart', (e) => {
-          e.preventDefault();
-          this.overworldEngine.keys[dpadMap[btnId]] = true;
-          this.overworldEngine.player.isMoving = true;
-        });
-        btn.addEventListener('touchend', (e) => {
-          e.preventDefault();
-          this.overworldEngine.keys[dpadMap[btnId]] = false;
-          this.overworldEngine.player.isMoving = false;
-        });
-      }
     });
   }
 
@@ -83,6 +46,7 @@ class TurturaApp {
     if (targetBtn) targetBtn.classList.add('active');
     if (targetSection) targetSection.classList.add('active');
 
+    if (tabId === 'world') this.categorySelector.render();
     if (tabId === 'deck') this.backpackGrid.render();
     if (tabId === 'combat') this.combatEngine.render();
   }
@@ -109,7 +73,7 @@ class TurturaApp {
       };
 
       this.backpackGrid.addCard(newCard);
-    }, timer * 200); // Speeded up timer for immediate responsiveness
+    }, timer * 200);
   }
 }
 

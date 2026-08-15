@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Turtura - Juego TCG & Motor 2D RPG</title>
+  <title>Turtura - Juego TCG & RPG de Naturaleza</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,11 +20,11 @@
   <!-- HEADER NAVIGATION -->
   <header class="game-header">
     <div class="game-title">
-      <span>🐢</span> TURTURA 2D RPG
+      <span>🐢</span> TURTURA RPG
     </div>
     <nav class="nav-tabs">
       <button class="tab-btn active" id="tab-btn-world" data-tab="world">
-        🗺️ Mundo 2D
+        📖 Capítulos & Mundos
       </button>
       <button class="tab-btn" id="tab-btn-deck" data-tab="deck">
         🎒 Mochila & Mazo
@@ -38,35 +38,9 @@
   <!-- MAIN GAME CONTAINER -->
   <main class="main-container">
     
-    <!-- VIEW 1: 2D CANVAS OVERWORLD MAP ENGINE -->
+    <!-- VIEW 1: CHAPTER HUB (4 THEMATIC GATES) -->
     <section id="view-world" class="view-section active">
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
-        
-        <!-- CANVAS ELEMENT FOR 2D GAME ENGINE -->
-        <div style="position: relative; border-radius: 28px; overflow: hidden; border: 4px solid var(--border-gold); box-shadow: 0 15px 40px rgba(0,0,0,0.8);">
-          <canvas id="overworld-canvas"></canvas>
-
-          <!-- MOBILE / ON-SCREEN TOUCH D-PAD CONTROLS -->
-          <div style="position: absolute; bottom: 15px; left: 15px; display: grid; grid-template-columns: repeat(3, 40px); grid-template-rows: repeat(3, 40px); gap: 4px; z-index: 20;">
-            <div></div>
-            <button class="tab-btn" id="dpad-up" style="padding:0; justify-content:center;">▲</button>
-            <div></div>
-            <button class="tab-btn" id="dpad-left" style="padding:0; justify-content:center;">◀</button>
-            <div style="background: rgba(0,0,0,0.4); border-radius: 8px;"></div>
-            <button class="tab-btn" id="dpad-right" style="padding:0; justify-content:center;">▶</button>
-            <div></div>
-            <button class="tab-btn" id="dpad-down" style="padding:0; justify-content:center;">▼</button>
-            <div></div>
-          </div>
-        </div>
-
-        <div style="display: flex; gap: 1rem;">
-          <span style="font-size: 0.85rem; color: var(--text-gold); font-weight: 800;">
-            💡 Camina hacia la puerta del <strong>Gimnasio I</strong> o camina sobre la <strong>Hierba Alta 🌿</strong> para iniciar combates silvestres.
-          </span>
-        </div>
-
-      </div>
+      <div id="category-selector-container"></div>
     </section>
 
     <!-- VIEW 2: POKÉMON SCARLET/VIOLET DECK & SUMMARY SHEET -->
@@ -88,7 +62,6 @@
   <!-- SCRIPT INTEGRATIONS -->
   <script src="js/data/creatures.js"></script>
   <script src="js/data/recipes.js"></script>
-  <script src="js/engine/OverworldEngine.js"></script>
   <script src="js/components/CategorySelector.js"></script>
   <script src="js/components/BackpackGrid.js"></script>
   <script src="js/components/CombatEngine.js"></script>

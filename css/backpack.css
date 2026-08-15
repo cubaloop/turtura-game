@@ -1,13 +1,13 @@
-/* Pokémon Scarlet & Violet Style Battle Team & PC Box Layout */
+/* Pokémon Scarlet & Violet Style Deck UI in Forest Green & Gold Nature Theme */
 .pokemon-sv-deck-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
-  background: linear-gradient(135deg, #0b1e36, #122847);
-  border: 3px solid #00d2ff;
+  background: linear-gradient(135deg, rgba(20, 50, 25, 0.92), rgba(12, 32, 16, 0.95));
+  border: 3px solid #22c55e;
   border-radius: 24px;
   padding: 1.5rem;
-  box-shadow: 0 12px 35px rgba(0, 210, 255, 0.25), inset 0 0 25px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 12px 35px rgba(34, 197, 94, 0.3), inset 0 0 25px rgba(0, 0, 0, 0.8);
 }
 
 @media (max-width: 900px) {
@@ -16,7 +16,7 @@
   }
 }
 
-/* Left Panel: Battle Team & Box Storage */
+/* Left Panel: Battle Team & Storage Box */
 .sv-left-panel {
   display: flex;
   flex-direction: column;
@@ -24,8 +24,8 @@
 }
 
 .sv-team-section {
-  background: rgba(0, 210, 255, 0.1);
-  border: 2px solid #00d2ff;
+  background: rgba(34, 197, 94, 0.15);
+  border: 2px solid #4ade80;
   border-radius: 18px;
   padding: 1rem;
 }
@@ -33,7 +33,7 @@
 .sv-team-title {
   font-size: 0.85rem;
   font-weight: 900;
-  color: #00d2ff;
+  color: #4ade80;
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-bottom: 0.75rem;
@@ -48,8 +48,8 @@
 }
 
 .sv-box-section {
-  background: rgba(0, 0, 0, 0.4);
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(134, 239, 172, 0.25);
   border-radius: 18px;
   padding: 1rem;
 }
@@ -63,8 +63,8 @@
 
 .sv-box-item {
   aspect-ratio: 1;
-  background: #172a46;
-  border: 2px solid #2d4c78;
+  background: #19381e;
+  border: 2px solid #2e6037;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -75,16 +75,16 @@
 }
 
 .sv-box-item:hover, .sv-box-item.selected {
-  border-color: #00d2ff;
-  background: #20406d;
-  box-shadow: 0 0 12px rgba(0, 210, 255, 0.6);
+  border-color: #f59e0b;
+  background: #28542e;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.7);
   transform: scale(1.08);
 }
 
-/* Right Panel: Pokémon SV Creature Summary Sheet */
+/* Right Panel: Pokémon SV Creature Summary Sheet in Green & Gold */
 .sv-right-panel {
-  background: linear-gradient(180deg, #162b47, #0e1d33);
-  border: 2px solid #38bdf8;
+  background: linear-gradient(180deg, rgba(28, 62, 33, 0.95), rgba(16, 38, 20, 0.95));
+  border: 2px solid #4ade80;
   border-radius: 20px;
   padding: 1.25rem;
   display: flex;
@@ -97,7 +97,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
   padding-bottom: 0.75rem;
 }
 
@@ -108,7 +108,7 @@
 }
 
 .sv-summary-level {
-  background: #0284c7;
+  background: #15803d;
   color: #fff;
   font-weight: 900;
   font-size: 0.85rem;
@@ -158,8 +158,8 @@
 }
 
 .sv-move-card {
-  background: #0f172a;
-  border: 1px solid #334155;
+  background: #142a17;
+  border: 1px solid #2e6037;
   border-radius: 10px;
   padding: 8px 10px;
   font-size: 0.75rem;
@@ -175,8 +175,8 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.85rem;
-  background: #1a100a;
-  border: 3px solid #4a3222;
+  background: #142616;
+  border: 3px solid #366039;
   border-radius: 20px;
   padding: 1.25rem;
   box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
@@ -188,9 +188,9 @@
 .grid-slot {
   width: 145px;
   height: 215px;
-  background: repeating-linear-gradient(0deg, #2c1e16, #2c1e16 10px, #251811 10px, #251811 20px);
-  border: 2px solid #5a3d2a;
-  outline: 1px dashed #7a543b;
+  background: repeating-linear-gradient(0deg, #1f3d22, #1f3d22 10px, #18301a 10px, #18301a 20px);
+  border: 2px solid #366039;
+  outline: 1px dashed #4e8552;
   outline-offset: -5px;
   border-radius: 16px;
   display: flex;
@@ -201,7 +201,7 @@
 }
 
 .fusion-chamber {
-  background: linear-gradient(180deg, #382417, #1c110a);
+  background: linear-gradient(180deg, rgba(28, 62, 33, 0.95), rgba(14, 34, 17, 0.95));
   border: 3px solid var(--border-gold);
   border-radius: 20px;
   padding: 1.25rem;

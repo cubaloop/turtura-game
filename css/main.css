@@ -1,17 +1,17 @@
-/* CraftPix.net Fantasy Vector GUI & Nature Background Style Sheet for Turtura */
+/* Vibrant Fantasy Nature & Gold Style Sheet for Turtura */
 :root {
-  --bg-dark: #0a0f1d;
-  --bg-panel: rgba(20, 30, 51, 0.88);
-  --bg-panel-light: rgba(30, 44, 74, 0.9);
-  --border-gold: #fbbf24;
-  --border-cyan: #38bdf8;
-  --accent-gold: #f59e0b;
-  --accent-green: #22c55e;
+  --bg-dark: #09170a;
+  --bg-panel: rgba(18, 38, 20, 0.88);
+  --bg-panel-light: rgba(28, 56, 30, 0.9);
+  --border-gold: #f59e0b;
+  --border-green: #22c55e;
+  --accent-gold: #fef08a;
+  --accent-green: #4ade80;
   --accent-red: #f43f5e;
-  --accent-purple: #a855f7;
+  --accent-purple: #c084fc;
   --text-gold: #fef08a;
-  --text-primary: #f8fafc;
-  --text-muted: #94a3b8;
+  --text-primary: #ffffff;
+  --text-muted: #cbd5e1;
   --font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
@@ -22,9 +22,9 @@
   user-select: none;
 }
 
-/* LUSH FANTASY NATURE BACKGROUND FOR ALL MENUS */
+/* VIBRANT FULL-SCREEN LUSH FANTASY NATURE BACKGROUND (NO BLUE OVERLAY) */
 body {
-  background: linear-gradient(rgba(10, 15, 29, 0.75), rgba(10, 15, 29, 0.85)), url('../assets/nature_bg.jpg') no-repeat center center fixed;
+  background: linear-gradient(rgba(10, 28, 12, 0.55), rgba(10, 28, 12, 0.7)), url('../assets/nature_bg.jpg') no-repeat center center fixed;
   background-size: cover;
   color: var(--text-primary);
   font-family: var(--font-family);
@@ -33,16 +33,16 @@ body {
   flex-direction: column;
 }
 
-/* CraftPix Style Vector Header Bar with Nature Tint */
+/* CraftPix Style Vector Header Bar with Green Nature Tint */
 .game-header {
-  background: linear-gradient(180deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+  background: linear-gradient(180deg, rgba(20, 45, 22, 0.95), rgba(10, 28, 12, 0.95));
   backdrop-filter: blur(10px);
   border-bottom: 4px solid var(--border-gold);
   padding: 0.85rem 1.75rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.8), inset 0 -2px 0 rgba(255,255,255,0.1);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.8), inset 0 -2px 0 rgba(255,255,255,0.2);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -54,8 +54,8 @@ body {
   gap: 0.6rem;
   font-size: 1.8rem;
   font-weight: 900;
-  color: var(--accent-gold);
-  text-shadow: 2px 3px 0 #000, 0 0 10px rgba(245,158,11,0.5);
+  color: #fef08a;
+  text-shadow: 2px 3px 0 #000, 0 0 15px rgba(245,158,11,0.8);
   letter-spacing: 2px;
 }
 
@@ -66,16 +66,16 @@ body {
 
 /* CraftPix Glossy Vector Tab Buttons */
 .tab-btn {
-  background: linear-gradient(180deg, rgba(51, 65, 85, 0.9), rgba(30, 41, 59, 0.9));
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.8), rgba(21, 128, 61, 0.85));
   backdrop-filter: blur(6px);
-  border: 2px solid #64748b;
-  color: #e2e8f0;
+  border: 2px solid #86efac;
+  color: #ffffff;
   padding: 0.65rem 1.35rem;
   border-radius: 16px;
   font-weight: 900;
   font-size: 0.9rem;
   cursor: pointer;
-  box-shadow: inset 0 2px 0 rgba(255,255,255,0.25), 0 4px 10px rgba(0,0,0,0.6);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.4), 0 4px 10px rgba(0,0,0,0.6);
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   display: flex;
   align-items: center;
@@ -83,11 +83,11 @@ body {
 }
 
 .tab-btn:hover, .tab-btn.active {
-  background: linear-gradient(180deg, #38bdf8, #0284c7);
-  color: #fff;
-  border-color: #7dd3fc;
+  background: linear-gradient(180deg, #fbbf24, #d97706);
+  color: #1c130e;
+  border-color: #fef08a;
   transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 0 20px rgba(56, 189, 248, 0.7), inset 0 2px 0 rgba(255,255,255,0.4);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.8), inset 0 2px 0 rgba(255,255,255,0.5);
 }
 
 .main-container {
