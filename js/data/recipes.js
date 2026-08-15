@@ -1,44 +1,19 @@
-// Fusion Rules, Timers, Compatibility Matrix, and RNG Rates for Turtura
+// Fusion Rules, Recipe Upgrade Logic, and RNG for Turtura
 const GAME_RULES = {
-  // Fusion timers by target tier (in seconds)
   FUSION_TIMERS: {
     2: 15,    // Tier 1 -> Tier 2: 15 seconds
     3: 60,    // Tier 2 -> Tier 3: 60 seconds (1 minute)
-    4: 300,   // Tier 3 -> Tier 4: 300 seconds (5 minutes)
-    5: 900    // Tier 4 -> Tier 5 (Unique AI): 900 seconds (15 minutes)
+    4: 300,   // Tier 3 -> Tier 4: 5 minutes
+    5: 900    // Tier 4 -> Tier 5 (AI Unique): 15 minutes
   },
 
-  // Compatibility matrix between categories
-  COMPATIBILITY_MATRIX: {
-    "Tierra+Tierra": { allowed: true, resultType: "same_category", resultId: "tierra_t2" },
-    "Aire+Aire": { allowed: true, resultType: "same_category", resultId: "aire_t2" },
-    "Agua+Agua": { allowed: true, resultType: "same_category", resultId: "agua_t2" },
-    "Microbios+Microbios": { allowed: true, resultType: "same_category", resultId: "microbios_t2" },
-    
-    // Cross-category hybrids
-    "Tierra+Agua": { allowed: true, resultType: "hybrid", resultId: "hibrido_anfibio" },
-    "Agua+Tierra": { allowed: true, resultType: "hybrid", resultId: "hibrido_anfibio" },
-    "Aire+Microbios": { allowed: true, resultType: "hybrid", resultId: "hibrido_bioaereo" },
-    "Microbios+Aire": { allowed: true, resultType: "hybrid", resultId: "hibrido_bioaereo" },
-    "Agua+Microbios": { allowed: true, resultType: "hybrid", resultId: "hibrido_abisal" },
-    "Microbios+Agua": { allowed: true, resultType: "hybrid", resultId: "hibrido_abisal" },
-
-    // Incompatible pairs (returns false)
-    "Tierra+Aire": { allowed: false, reason: "Incompatible: Tierra y Aire repelen sus energías elementalmente." },
-    "Aire+Tierra": { allowed: false, reason: "Incompatible: Tierra y Aire repelen sus energías elementalmente." }
-  },
-
-  // Helper to check fusion result
+  // Check fusion compatibility and return target EVOLVED creature
   getFusionResult: function(cardA, cardB) {
+    if (!cardA || !cardB) return { allowed: false, reason: "Selecciona 2 criaturas." };
+    if (cardA.instanceId === cardB.instanceId) return { allowed: false, reason: "No puedes fusionar la misma carta consigo misma." };
+
     if (cardA.tier !== cardB.tier) {
-      return { allowed: false, reason: "Solo se pueden fusionar criaturas del mismo Tier/Nivel." };
-    }
-
-    const key = `${cardA.category}+${cardB.category}`;
-    const rule = this.COMPATIBILITY_MATRIX[key];
-
-    if (!rule || !rule.allowed) {
-      return { allowed: false, reason: rule ? rule.reason : "Combinación inestable de elementos." };
+      return { allowed: false, reason: `No se pueden fusionar Tiers distintos (Tier ${cardA.tier} vs Tier ${cardB.tier}).` };
     }
 
     // Tier 4 + Tier 4 = AI Genesis Tier 5 Unique Creature!
@@ -51,36 +26,61 @@ const GAME_RULES = {
       };
     }
 
-    // Tier upgrade in same category
+    // Determine target tier
     const nextTier = cardA.tier + 1;
-    let targetId = rule.resultId;
+    const sameCategory = cardA.category === cardB.category;
 
-    if (rule.resultType === "same_category") {
-      const catLower = cardA.category.toLowerCase();
-      targetId = `${catLower}_t${nextTier}`;
+    // Find all target creatures in the database matching the target tier
+    const dbKeys = Object.keys(window.CREATURES_DB);
+    let candidateKeys;
+
+    if (sameCategory) {
+      candidateKeys = dbKeys.filter(k => {
+        const c = window.CREATURES_DB[k];
+        return c.category === cardA.category && c.tier === nextTier && c.id !== cardA.id && c.id !== cardB.id;
+      });
+    } else {
+      // Cross category fusion creates a hybrid or next tier creature
+      candidateKeys = dbKeys.filter(k => {
+        const c = window.CREATURES_DB[k];
+        return c.tier === nextTier && c.id !== cardA.id && c.id !== cardB.id;
+      });
     }
+
+    if (!candidateKeys || candidateKeys.length === 0) {
+      // Fallback to any creature of next tier
+      candidateKeys = dbKeys.filter(k => window.CREATURES_DB[k].tier === nextTier);
+    }
+
+    // Select a distinct evolved creature so it NEVER repeats the input cards!
+    const selectedKey = candidateKeys[Math.floor(Math.random() * candidateKeys.length)];
 
     return {
       allowed: true,
       isAiUnique: false,
       targetTier: nextTier,
-      targetCreatureId: targetId,
+      targetCreatureId: selectedKey,
       timerSeconds: this.FUSION_TIMERS[nextTier] || 15
     };
   },
 
-  // Initial 4 random cards generator algorithm
+  // Initial 4 random cards generator algorithm (4 distinct Tier 1 cards)
   getRandomInitialCards: function() {
-    const tier1Keys = ["tierra_t1", "aire_t1", "agua_t1", "microbios_t1"];
+    const tier1Keys = Object.keys(window.CREATURES_DB).filter(k => window.CREATURES_DB[k].tier === 1);
     const initialHand = [];
-    for (let i = 0; i < 4; i++) {
+    const usedKeys = new Set();
+
+    while (initialHand.length < 4 && tier1Keys.length > 0) {
       const randomIndex = Math.floor(Math.random() * tier1Keys.length);
-      const creatureId = tier1Keys[randomIndex];
-      const baseCreature = window.CREATURES_DB[creatureId];
-      initialHand.push({
-        instanceId: "card_" + Math.random().toString(36).substr(2, 9),
-        ...baseCreature
-      });
+      const key = tier1Keys[randomIndex];
+      if (!usedKeys.has(key)) {
+        usedKeys.add(key);
+        const baseCreature = window.CREATURES_DB[key];
+        initialHand.push({
+          instanceId: "card_" + Math.random().toString(36).substr(2, 9),
+          ...baseCreature
+        });
+      }
     }
     return initialHand;
   }
