@@ -1,4 +1,4 @@
-// Component for Backpack Brawl Inventory Grid & Fusion Chamber with 3D Inspector & Reward Modal Trigger
+// Component for Backpack Brawl Inventory Grid & Elemental Fusion Chamber with Energy Vortex Animation
 class BackpackGrid {
   constructor(containerId, initialCards, onFuseTrigger, cardModal, rewardModal) {
     this.container = document.getElementById(containerId);
@@ -7,6 +7,7 @@ class BackpackGrid {
     this.cardModal = cardModal;
     this.rewardModal = rewardModal;
     this.selectedFusionCards = [null, null];
+    this.isFusing = false;
     this.init();
   }
 
@@ -32,7 +33,7 @@ class BackpackGrid {
 
   renderCardHtml(card) {
     if (!card) return '';
-    const frameClass = card.frameStyle || (card.rarity === 'common' ? 'common' : card.rarity === 'rare' ? 'rare' : card.rarity === 'epic' ? 'epic' : card.rarity === 'legendary' ? 'legendary' : 'ai_unique');
+    const frameClass = card.frameStyle || (card.rarity === 'common' ? 'common' : card.rarity === 'rare' ? 'rare' : card.rarity === 'epic' ? 'epic' : 'legendary');
 
     return `
       <div class="creature-card ${frameClass} holographic" data-instance-id="${card.instanceId}">
@@ -46,7 +47,7 @@ class BackpackGrid {
         </div>
 
         <div class="card-name">${card.name}</div>
-        <div style="font-size: 0.62rem; color: var(--text-secondary); text-align: center; height: 24px; overflow: hidden; text-overflow: ellipsis; line-height: 1.1;">
+        <div style="font-size: 0.62rem; color: var(--text-muted); text-align: center; height: 24px; overflow: hidden; text-overflow: ellipsis; line-height: 1.1;">
           ${card.ability}
         </div>
 
@@ -56,7 +57,7 @@ class BackpackGrid {
           <span class="stat-spd">⚡ ${card.spd}</span>
         </div>
 
-        <button class="btn-inspect-3d" data-instance-id="${card.instanceId}" style="position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 0.65rem; padding: 2px 4px; border-radius: 4px; cursor: pointer; z-index: 5;">
+        <button class="btn-inspect-3d" data-instance-id="${card.instanceId}" style="position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,0.7); border: 1px solid var(--border-gold); color: var(--text-gold); font-size: 0.65rem; padding: 2px 5px; border-radius: 6px; cursor: pointer; z-index: 5; font-weight: 800;">
           3D 🔍
         </button>
       </div>
@@ -69,38 +70,67 @@ class BackpackGrid {
         <div class="inventory-header">
           <div class="inventory-title">
             <span>🎒 Mochila de Criaturas (Inventario)</span>
-            <span style="font-size: 0.85rem; color: var(--accent-cyan); background: rgba(6,182,212,0.1); padding: 4px 10px; border-radius: 20px;">
+            <span style="font-size: 0.85rem; color: var(--accent-gold); background: rgba(245,158,11,0.15); padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border-gold);">
               ${this.cards.length} / 12 Criaturas
             </span>
           </div>
-          <button class="tab-btn" id="btn-draw-card" style="font-size: 0.85rem;">
+          <button class="rpg-btn-gold" id="btn-draw-card" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
             🎲 Recibir Carta (+1)
           </button>
         </div>
 
-        <!-- FUSION CHAMBER -->
-        <div class="fusion-chamber">
-          <div style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-purple);">
-            🧪 Cámara de Fusión Elemental
+        <!-- ELEMENTAL FUSION CHAMBER WITH SWIRLING ENERGY VORTEX -->
+        <div class="fusion-chamber" style="position: relative; overflow: hidden;">
+          <div style="font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-gold); text-shadow: 1px 1px 0 #000;">
+            🧪 Cámara de Fusión & Vórtice Elemental
+          </div>
+
+          <!-- SWIRLING VORTEX CONTAINER -->
+          <div id="elemental-vortex-portal" style="
+            display: ${this.isFusing ? 'flex' : 'none'};
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(18, 11, 8, 0.95);
+            z-index: 50;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+          ">
+            <!-- SWIRLING VORTEX SPINNER -->
+            <div style="
+              width: 110px; height: 110px;
+              border-radius: 50%;
+              border: 5px solid transparent;
+              border-top-color: var(--accent-gold);
+              border-right-color: #10b981;
+              border-bottom-color: #06b6d4;
+              border-left-color: #a855f7;
+              animation: vortexSpin 1s linear infinite;
+              box-shadow: 0 0 35px rgba(245, 158, 11, 0.8);
+            "></div>
+
+            <div id="vortex-timer-label" style="font-size: 1.1rem; font-weight: 900; color: var(--text-gold); letter-spacing: 2px;">
+              SINTETIZANDO CRIATURA ÚNICA...
+            </div>
           </div>
 
           <div class="fusion-slots-container">
             <div class="grid-slot" id="fusion-slot-0">
-              ${this.selectedFusionCards[0] ? this.renderCardHtml(this.selectedFusionCards[0]) : '<span style="color:#64748b; font-weight:700;">Carta 1</span>'}
+              ${this.selectedFusionCards[0] ? this.renderCardHtml(this.selectedFusionCards[0]) : '<span style="color:#a89f91; font-weight:800; font-size:0.8rem;">Carta 1</span>'}
             </div>
             <div class="fusion-plus">+</div>
             <div class="grid-slot" id="fusion-slot-1">
-              ${this.selectedFusionCards[1] ? this.renderCardHtml(this.selectedFusionCards[1]) : '<span style="color:#64748b; font-weight:700;">Carta 2</span>'}
+              ${this.selectedFusionCards[1] ? this.renderCardHtml(this.selectedFusionCards[1]) : '<span style="color:#a89f91; font-weight:800; font-size:0.8rem;">Carta 2</span>'}
             </div>
           </div>
 
-          <div id="fusion-status-msg" style="font-size: 0.85rem; font-weight: 700; color: var(--accent-amber); min-height: 20px; text-align: center;">
+          <div id="fusion-status-msg" style="font-size: 0.85rem; font-weight: 800; color: var(--accent-gold); min-height: 22px; text-align: center;">
             Selecciona 2 cartas de tu mochila para probar su compatibilidad de fusión.
           </div>
 
           <div style="display: flex; gap: 1rem;">
-            <button class="fusion-action-btn" id="btn-start-fusion" ${(!this.selectedFusionCards[0] || !this.selectedFusionCards[1]) ? 'disabled' : ''}>
-              INICIAR FUSIÓN 🔥
+            <button class="rpg-btn-green" id="btn-start-fusion" ${(!this.selectedFusionCards[0] || !this.selectedFusionCards[1]) ? 'disabled' : ''}>
+              ACTIVAR VÓRTISE DE FUSIÓN 🔥
             </button>
             <button class="tab-btn" id="btn-clear-fusion" style="padding: 0.6rem 1rem;">
               Limpiar
@@ -108,7 +138,7 @@ class BackpackGrid {
           </div>
         </div>
 
-        <!-- BACKPACK GRID -->
+        <!-- STITCHED WOODEN BACKPACK GRID -->
         <div class="backpack-grid-container" id="backpack-grid">
           ${this.cards.map((card, idx) => `
             <div class="grid-slot" data-slot-index="${idx}">
@@ -170,6 +200,8 @@ class BackpackGrid {
       btnStart.addEventListener('click', () => {
         this.playSynthSound(880, 'square', 0.2);
         if (this.onFuseTrigger && this.selectedFusionCards[0] && this.selectedFusionCards[1]) {
+          this.isFusing = true;
+          this.render();
           this.onFuseTrigger(this.selectedFusionCards[0], this.selectedFusionCards[1]);
         }
       });
@@ -179,11 +211,12 @@ class BackpackGrid {
     if (btnDraw) {
       btnDraw.addEventListener('click', () => {
         this.playSynthSound(659.25, 'sine', 0.12);
-        const keys = ["tierra_t1", "aire_t1", "agua_t1", "microbios_t1"];
+        const keys = ["tierra_t1_1", "aire_t1_1", "agua_t1_1", "microbios_t1_1"];
         const randomKey = keys[Math.floor(Math.random() * keys.length)];
+        const base = window.CREATURES_DB[randomKey] || window.CREATURES_DB["tierra_t1_1"];
         const newCard = {
           instanceId: "card_" + Math.random().toString(36).substr(2, 9),
-          ...window.CREATURES_DB[randomKey]
+          ...base
         };
         this.cards.push(newCard);
         this.render();
@@ -195,11 +228,13 @@ class BackpackGrid {
   removeCards(instanceIds) {
     this.cards = this.cards.filter(c => !instanceIds.includes(c.instanceId));
     this.selectedFusionCards = [null, null];
+    this.isFusing = false;
     this.render();
   }
 
   addCard(newCard) {
     this.cards.push(newCard);
+    this.isFusing = false;
     this.render();
     if (this.rewardModal) this.rewardModal.show(newCard);
   }

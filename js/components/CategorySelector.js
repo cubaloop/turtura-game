@@ -1,4 +1,4 @@
-// Component for Chapter and Category Selection
+// Component for 4 Thematic Chapter Gates in Turtura
 class CategorySelector {
   constructor(containerId, onSelectCategory) {
     this.container = document.getElementById(containerId);
@@ -14,81 +14,130 @@ class CategorySelector {
 
   render() {
     this.container.innerHTML = `
-      <div style="margin-bottom: 1.5rem;">
-        <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">Capítulos & Módulos de Mundo</h2>
-        <p style="color: var(--text-secondary);">Selecciona un capítulo activo o explora las próximas expansiones globales.</p>
+      <div style="margin-bottom: 1.5rem; text-align: center;">
+        <h2 style="font-size: 1.8rem; font-weight: 900; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 2px; text-shadow: 2px 2px 0 #000;">
+          🚪 Compuertas de Capítulos & Expansiones Mundiales
+        </h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+          Selecciona una compuerta activa para ingresar al mundo o explora los próximos capítulos mundiales.
+        </p>
       </div>
 
-      <div class="chapters-grid">
-        <!-- CAPÍTULO 1: PLANETA TIERRA (ACTIVO) -->
-        <div class="chapter-card active-chapter" id="chapter-earth">
-          <div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-              <span class="card-category-badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">DISPONIBLE EN VIVO</span>
-              <span style="font-size: 1.25rem;">🌍</span>
-            </div>
-            <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem;">Capítulo I: Planeta Tierra</h3>
-            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4;">
-              El ecosistema biológico original. Combina especies de <strong>Tierra 🌿, Aire 🦅, Agua 🦈 y Microbios 🦠</strong> para descubrir criaturas avanzadas y defender el planeta.
-            </p>
+      <div class="chapters-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
+        
+        <!-- COMPUERTA I: PLANETA TIERRA (ACTIVA Y VIBRANTE) -->
+        <div class="chapter-card active-chapter" id="chapter-earth" style="
+          background: linear-gradient(180deg, #1c2b18 0%, #0f1a0e 100%);
+          border: 3px solid #10b981;
+          box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+          border-radius: 24px;
+          padding: 1.5rem;
+          cursor: pointer;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        ">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+            <span style="background: rgba(16, 185, 129, 0.25); color: #34d399; font-size: 0.7rem; font-weight: 900; padding: 4px 10px; border-radius: 8px; border: 1px solid #10b981;">
+              ● COMPUERTA ACTIVA
+            </span>
+            <span style="font-size: 1.6rem;">🌍</span>
           </div>
 
-          <div style="margin-top: 1.5rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; font-size: 0.75rem; font-weight: 700;">
-            <div style="background: rgba(255,255,255,0.05); padding: 6px; border-radius: 8px; text-align: center;">🌿 Tierra</div>
-            <div style="background: rgba(255,255,255,0.05); padding: 6px; border-radius: 8px; text-align: center;">🦅 Aire</div>
-            <div style="background: rgba(255,255,255,0.05); padding: 6px; border-radius: 8px; text-align: center;">🦈 Agua</div>
-            <div style="background: rgba(255,255,255,0.05); padding: 6px; border-radius: 8px; text-align: center;">🦠 Microbios</div>
+          <h3 style="font-size: 1.4rem; font-weight: 900; color: #fff; margin-bottom: 0.5rem; text-shadow: 1px 1px 0 #000;">
+            Compuerta I: Planeta Tierra
+          </h3>
+          <p style="font-size: 0.85rem; color: #a7f3d0; line-height: 1.4;">
+            El ecosistema biológico original. Combina especies de <strong>Tierra 🌿, Aire 🦅, Agua 🦈 y Microbios 🦠</strong> para sintetizar criaturas legendarias.
+          </p>
+
+          <div style="margin-top: 1.5rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; font-size: 0.75rem; font-weight: 800;">
+            <div style="background: rgba(0,0,0,0.5); padding: 8px; border-radius: 10px; text-align: center; border: 1px solid #10b981;">🌿 Tierra</div>
+            <div style="background: rgba(0,0,0,0.5); padding: 8px; border-radius: 10px; text-align: center; border: 1px solid #3b82f6;">🦅 Aire</div>
+            <div style="background: rgba(0,0,0,0.5); padding: 8px; border-radius: 10px; text-align: center; border: 1px solid #06b6d4;">🦈 Agua</div>
+            <div style="background: rgba(0,0,0,0.5); padding: 8px; border-radius: 10px; text-align: center; border: 1px solid #ec4899;">🦠 Microbios</div>
           </div>
 
-          <button class="fusion-action-btn" style="margin-top: 1.25rem; width: 100%; font-size: 0.9rem; padding: 0.6rem;">
+          <button class="rpg-btn-green" style="margin-top: 1.5rem; width: 100%; font-size: 1rem; padding: 0.8rem;">
             ENTRAR AL MUNDO ➔
           </button>
         </div>
 
-        <!-- CAPÍTULO 2: SOMBRA MISTERIOSA (TEASER + COUNTDOWN) -->
-        <div class="chapter-card teaser-chapter">
-          <div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-              <span class="card-category-badge" style="background: rgba(139, 92, 246, 0.2); color: #8b5cf6;">PRÓXIMAMENTE</span>
-              <span style="font-size: 1.25rem;">⏳</span>
+        <!-- COMPUERTA II: MISTERIOSA CON CONTADOR PROMINENTE -->
+        <div class="chapter-card teaser-chapter" style="
+          background: linear-gradient(180deg, #2b183b 0%, #150b21 100%);
+          border: 3px solid #a855f7;
+          box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+          border-radius: 24px;
+          padding: 1.5rem;
+        ">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+            <span style="background: rgba(168, 85, 247, 0.25); color: #c084fc; font-size: 0.7rem; font-weight: 900; padding: 4px 10px; border-radius: 8px; border: 1px solid #a855f7;">
+              ⏳ PROXIMAMENTE
+            </span>
+            <span style="font-size: 1.6rem;">🔮</span>
+          </div>
+
+          <h3 style="font-size: 1.4rem; font-weight: 900; color: #fff; margin-bottom: 0.5rem; text-shadow: 1px 1px 0 #000;">
+            Compuerta II: La Mutación Abisal
+          </h3>
+          <p style="font-size: 0.85rem; color: #e9d5ff; line-height: 1.4;">
+            Una silueta desconocida aguarda en las sombras abisales. Las fusiones globales alimentan la apertura del portal.
+          </p>
+
+          <div style="text-align: center; margin: 1.25rem 0;">
+            <div style="font-size: 4.5rem; filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.8));">👤</div>
+          </div>
+
+          <!-- PROMINENT COUNTDOWN TIMER BOX -->
+          <div style="background: rgba(0,0,0,0.7); border: 2px solid #a855f7; border-radius: 14px; padding: 0.85rem; text-align: center;">
+            <div style="font-size: 0.65rem; color: #c084fc; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 1px;">
+              DESBLOQUEO GLOBAL PROMINENTE EN
             </div>
-            <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem;">Capítulo II: La Mutación Abisal</h3>
-            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4;">
-              Una silueta desconocida aguarda en las sombras. Todas las fusiones globales alimentan la llegada de la nueva era.
-            </p>
-          </div>
-
-          <div style="text-align: center; margin: 1rem 0;">
-            <div style="font-size: 4rem; filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.6));">👤</div>
-          </div>
-
-          <div class="countdown-box">
-            <div style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 4px;">DESBLOQUEO GLOBAL EN</div>
-            <div class="countdown-digits" id="global-countdown">05m 29d 23h 59m 59s</div>
+            <div id="global-countdown" style="font-family: monospace; font-size: 1.3rem; font-weight: 900; color: var(--accent-gold); letter-spacing: 2px;">
+              05m 29d 23h 59m 59s
+            </div>
           </div>
         </div>
 
-        <!-- CAPÍTULO 3: PUERTAS DE ACERO REFORZADO -->
-        <div class="chapter-card steel-door">
+        <!-- COMPUERTA III: PUERTA DE METAL SELLADA -->
+        <div class="chapter-card steel-door" style="
+          background: linear-gradient(135deg, #1f2937, #111827);
+          border: 3px solid #4b5563;
+          border-radius: 24px;
+          position: relative;
+          min-height: 380px;
+          overflow: hidden;
+        ">
           <div class="steel-doors-overlay">
-            <div class="padlock-icon">🔒</div>
-            <div class="steel-door-text">CAPÍTULO III BLOQUEADO</div>
-            <p style="font-size: 0.75rem; color: #94a3b8; text-align: center; padding: 0 1rem;">
-              Sellado herméticamente bajo puertas de acero reforzado. Requiere vencer al Jefe Final.
+            <div class="padlock-icon" style="font-size: 4rem;">🔒</div>
+            <div class="steel-door-text" style="font-size: 1.1rem; font-weight: 900; color: #f32e2e; text-shadow: 0 0 10px rgba(243,46,46,0.6);">
+              COMPUERTA III SELLADA
+            </div>
+            <p style="font-size: 0.8rem; color: #9ca3af; text-align: center; padding: 0 1.25rem; line-height: 1.4;">
+              Compuerta de metal industrial sellada con remaches de acero. Vence al Jefe Final para desbloquear la llave.
             </p>
           </div>
         </div>
 
-        <!-- CAPÍTULO 4: PUERTAS DE ACERO REFORZADO -->
-        <div class="chapter-card steel-door">
+        <!-- COMPUERTA IV: PUERTA DE METAL SELLADA -->
+        <div class="chapter-card steel-door" style="
+          background: linear-gradient(135deg, #1f2937, #111827);
+          border: 3px solid #4b5563;
+          border-radius: 24px;
+          position: relative;
+          min-height: 380px;
+          overflow: hidden;
+        ">
           <div class="steel-doors-overlay">
-            <div class="padlock-icon">🔒</div>
-            <div class="steel-door-text">CAPÍTULO IV BLOQUEADO</div>
-            <p style="font-size: 0.75rem; color: #94a3b8; text-align: center; padding: 0 1rem;">
-              Cámara de aislamiento sellada. Reservado para los Maestros Fusionadores.
+            <div class="padlock-icon" style="font-size: 4rem;">🔒</div>
+            <div class="steel-door-text" style="font-size: 1.1rem; font-weight: 900; color: #f32e2e; text-shadow: 0 0 10px rgba(243,46,46,0.6);">
+              COMPUERTA IV SELLADA
+            </div>
+            <p style="font-size: 0.8rem; color: #9ca3af; text-align: center; padding: 0 1.25rem; line-height: 1.4;">
+              Búnker de contención extrema. Reservado exclusivamente para Maestros Fusionadores Legendarios.
             </p>
           </div>
         </div>
+
       </div>
     `;
 
@@ -98,7 +147,6 @@ class CategorySelector {
   }
 
   startCountdown() {
-    // 5 months, 29 days, 23 hours from now
     let targetTime = Date.now() + ((5 * 30 * 24 * 3600) + (29 * 24 * 3600) + (23 * 3600)) * 1000;
 
     const update = () => {
