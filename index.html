@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Turtura - Juego de Fusión, Colección & Batallas de Cartas</title>
+  <meta name="description" content="Turtura: Juego de fusión de criaturas, colección de escasez y batallas online con apuestas de cartas.">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/backpack.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- HEADER NAVIGATION BAR -->
+  <header class="game-header">
+    <div class="game-title">
+      <span>🐢</span>
+      <span>Turtura</span>
+    </div>
+
+    <nav class="nav-tabs">
+      <button class="tab-btn active" id="tab-chapters">
+        <span>🗺️</span> Capítulos
+      </button>
+      <button class="tab-btn" id="tab-backpack">
+        <span>🎒</span> Mochila & Fusión
+      </button>
+      <button class="tab-btn" id="tab-combat">
+        <span>⚔️</span> Combate & PvP
+      </button>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="main-container">
+    <!-- VIEW 1: CHAPTERS & CATEGORIES -->
+    <section class="view-section active" id="view-chapters">
+      <div id="container-category-selector"></div>
+    </section>
+
+    <!-- VIEW 2: BACKPACK & FUSION CHAMBER -->
+    <section class="view-section" id="view-backpack">
+      <div id="container-backpack"></div>
+    </section>
+
+    <!-- VIEW 3: COMBAT & PVP WAGER ARENA -->
+    <section class="view-section" id="view-combat">
+      <div id="container-combat"></div>
+    </section>
+  </main>
+
+  <!-- JAVASCRIPT FILES -->
+  <script src="js/data/creatures.js"></script>
+  <script src="js/data/recipes.js"></script>
+  <script src="js/components/CategorySelector.js"></script>
+  <script src="js/components/FusionEngine.js"></script>
+  <script src="js/components/BackpackGrid.js"></script>
+  <script src="js/components/CombatEngine.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
