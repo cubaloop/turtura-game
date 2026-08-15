@@ -1,8 +1,8 @@
-/* CraftPix.net Fantasy Vector GUI Style Sheet for Turtura */
+/* CraftPix.net Fantasy Vector GUI & Nature Background Style Sheet for Turtura */
 :root {
   --bg-dark: #0a0f1d;
-  --bg-panel: #141e33;
-  --bg-panel-light: #1e2c4a;
+  --bg-panel: rgba(20, 30, 51, 0.88);
+  --bg-panel-light: rgba(30, 44, 74, 0.9);
   --border-gold: #fbbf24;
   --border-cyan: #38bdf8;
   --accent-gold: #f59e0b;
@@ -22,8 +22,10 @@
   user-select: none;
 }
 
+/* LUSH FANTASY NATURE BACKGROUND FOR ALL MENUS */
 body {
-  background: radial-gradient(circle at center, #1b2845 0%, #090e1a 100%);
+  background: linear-gradient(rgba(10, 15, 29, 0.75), rgba(10, 15, 29, 0.85)), url('../assets/nature_bg.jpg') no-repeat center center fixed;
+  background-size: cover;
   color: var(--text-primary);
   font-family: var(--font-family);
   min-height: 100vh;
@@ -31,9 +33,10 @@ body {
   flex-direction: column;
 }
 
-/* CraftPix Style Vector Header Bar */
+/* CraftPix Style Vector Header Bar with Nature Tint */
 .game-header {
-  background: linear-gradient(180deg, #1e293b, #0f172a);
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+  backdrop-filter: blur(10px);
   border-bottom: 4px solid var(--border-gold);
   padding: 0.85rem 1.75rem;
   display: flex;
@@ -63,7 +66,8 @@ body {
 
 /* CraftPix Glossy Vector Tab Buttons */
 .tab-btn {
-  background: linear-gradient(180deg, #334155, #1e293b);
+  background: linear-gradient(180deg, rgba(51, 65, 85, 0.9), rgba(30, 41, 59, 0.9));
+  backdrop-filter: blur(6px);
   border: 2px solid #64748b;
   color: #e2e8f0;
   padding: 0.65rem 1.35rem;
