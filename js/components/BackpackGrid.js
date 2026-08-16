@@ -1,16 +1,12 @@
-// 21-Slot Inventory Grid Component & Pop-out Side Fusion Drawer for Turtura
+// 1:1 Turtura Inventory Component: "Mis Cartas - Turtura" (Imagen 2)
 class BackpackGrid {
   constructor(containerId, initialCards, onFuseTrigger, cardModal, rewardModal) {
     this.container = document.getElementById(containerId);
     this.cards = initialCards || [];
-    this.maxSlots = 21; // Exactly 21 Inventory Slots
     this.onFuseTrigger = onFuseTrigger;
     this.cardModal = cardModal;
     this.rewardModal = rewardModal;
-    this.selectedCardIndex = 0;
-    this.selectedFusionCards = [null, null];
-    this.isDrawerOpen = false;
-    this.isFusing = false;
+    this.selectedIndex = 0;
     this.init();
   }
 
@@ -18,123 +14,152 @@ class BackpackGrid {
     this.render();
   }
 
-  playSynthSound(freq = 440, type = 'sine', duration = 0.1) {
-    try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = type;
-      osc.frequency.setValueAtTime(freq, ctx.currentTime);
-      gain.gain.setValueAtTime(0.15, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + duration);
-    } catch(e) {}
-  }
-
-  renderCardHtml(card) {
+  renderCardHtml(card, idx) {
     if (!card) return '';
-    const frameClass = card.frameStyle || (card.rarity === 'common' ? 'common' : card.rarity === 'rare' ? 'rare' : card.rarity === 'epic' ? 'epic' : 'legendary');
-    const gemColor = card.gemColor || '#10b981';
+    const isSelected = idx === this.selectedIndex;
+    const rarityClass = card.rarity === 'legendary' ? 'Leyenda - Oro' : card.rarity === 'epic' ? 'Épico - Morado' : card.rarity === 'rare' ? 'Raro - Azul' : 'Común - Verde';
+    const rarityColor = card.rarity === 'legendary' ? '#fbbf24' : card.rarity === 'epic' ? '#c084fc' : card.rarity === 'rare' ? '#38bdf8' : '#4ade80';
 
     return `
-      <div class="creature-card ${frameClass}" data-instance-id="${card.instanceId}">
-        <div class="card-header">
-          <div style="display: flex; align-items: center; gap: 4px;">
-            <div class="card-type-gem" style="background: ${gemColor};"></div>
-            <span class="card-category-badge">${card.category}</span>
-          </div>
-          <span class="card-tier-badge">T${card.tier}</span>
+      <div class="inventory-card-item ${isSelected ? 'selected' : ''}" data-idx="${idx}" style="
+        background: linear-gradient(180deg, #1c2e1f, #0f1c11);
+        border: 2px solid ${isSelected ? '#fbbf24' : '#2e5a35'};
+        border-radius: 14px;
+        padding: 0.4rem;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: ${isSelected ? '0 0 15px #fbbf24' : '0 4px 10px rgba(0,0,0,0.6)'};
+        position: relative;
+        transition: transform 0.2s ease;
+      ">
+        <div style="width: 100%; height: 90px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); position: relative;">
+          <img src="${card.image || 'assets/rhino_beetle.jpg'}" style="width: 100%; height: 100%; object-fit: cover;" alt="${card.name}">
+          <span style="position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,0.85); color: ${card.gemColor || '#10b981'}; font-size: 0.6rem; font-weight: 900; padding: 2px 6px; border-radius: 6px; border: 1px solid ${card.gemColor || '#10b981'};">
+            ${card.category}
+          </span>
         </div>
 
-        <div class="card-art-container">
-          ${card.image ? `<img src="${card.image}" class="card-art-img" alt="${card.name}">` : `<span class="card-art-fallback">${card.icon}</span>`}
+        <div style="font-size: 0.72rem; font-weight: 900; color: #fff; text-align: center; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+          Nivel ${card.tier || 1}
         </div>
 
-        <div class="card-name">${card.name}</div>
-        <div style="font-size: 0.62rem; color: var(--text-muted); text-align: center; height: 24px; overflow: hidden; text-overflow: ellipsis; line-height: 1.1;">
-          ${card.ability}
+        <div style="font-size: 0.62rem; font-weight: 800; color: ${rarityColor}; text-align: center;">
+          ${rarityClass}
         </div>
 
-        <div class="card-stats">
-          <span class="stat-atk">⚔️ ${card.atk}</span>
-          <span class="stat-def">🛡️ ${card.def}</span>
-          <span class="stat-spd">⚡ ${card.spd}</span>
+        <div style="font-size: 0.62rem; color: #cbd5e1; text-align: center;">
+          ${card.atk || 150} HP, ${card.def || 90} ATK
         </div>
 
-        <button class="btn-add-fusion" data-instance-id="${card.instanceId}" style="width: 100%; margin-top: 4px; background: linear-gradient(180deg,#fbbf24,#d97706); border: 1px solid #fff; color: #000; font-size: 0.65rem; font-weight: 900; border-radius: 6px; cursor: pointer; padding: 2px 0;">
-          + Fusionar
-        </button>
+        <!-- DUPLICATE PROGRESS BAR -->
+        <div style="width: 100%; background: #000; border: 1px solid #4ade80; border-radius: 6px; height: 10px; overflow: hidden; margin-top: 3px; position: relative;">
+          <div style="width: 75%; background: #22c55e; height: 100%;"></div>
+          <span style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; text-align: center; font-size: 0.55rem; font-weight: 900; color: #fff; line-height: 10px;">75 / 100</span>
+        </div>
       </div>
     `;
   }
 
+  renderRadarChartSvg(card) {
+    return `
+      <svg viewBox="0 0 100 100" style="width: 110px; height: 110px;">
+        <!-- Polygon Grid -->
+        <polygon points="50,10 85,30 85,70 50,90 15,70 15,30" fill="none" stroke="#2e6037" stroke-width="1.5" />
+        <polygon points="50,25 72,38 72,62 50,75 28,62 28,38" fill="none" stroke="#2e6037" stroke-width="1" />
+        <!-- Stat Poly -->
+        <polygon points="50,18 78,32 70,64 50,82 22,66 25,35" fill="rgba(74, 222, 128, 0.4)" stroke="#4ade80" stroke-width="2" />
+      </svg>
+    `;
+  }
+
   render() {
-    const filledCards = [...this.cards];
-    const totalSlotsArray = Array.from({ length: this.maxSlots });
+    const selectedCard = this.cards[this.selectedIndex] || this.cards[0] || window.CREATURES_DB["tierra_t1_1"];
 
     this.container.innerHTML = `
-      <div class="backpack-flex-container">
+      <div style="display: flex; flex-direction: column; gap: 1rem; max-width: 1240px; margin: 0 auto;">
         
-        <!-- 21-SLOT INVENTORY CONTAINER -->
-        <div class="inventory-21-container">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-size: 1.2rem; font-weight: 900; color: var(--accent-gold);">
-              🎒 Mochila de Criaturas (21 Casillas de Inventario)
-            </div>
-            <div style="font-size: 0.85rem; font-weight: 900; color: #4ade80; background: rgba(34,197,94,0.2); padding: 4px 12px; border-radius: 14px; border: 1px solid #4ade80;">
-              ${this.cards.length} / 21 Ocupadas
-            </div>
-          </div>
-
-          <!-- 21 GRID SLOTS (7 COLUMNS x 3 ROWS) -->
-          <div class="grid-21-slots">
-            ${totalSlotsArray.map((_, idx) => {
-              const card = filledCards[idx];
-              return `
-                <div class="slot-21-item ${card ? 'occupied' : ''}">
-                  ${card ? this.renderCardHtml(card) : `<span style="color:#64748b; font-size:0.75rem; font-weight:800; margin:auto;">Slot ${idx+1}</span>`}
-                </div>
-              `;
-            }).join('')}
-          </div>
-
-          <div style="margin-top: 1.25rem; display: flex; gap: 1rem;">
-            <button class="rpg-btn-gold" id="btn-draw-card" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
-              🎲 Recibir Nueva Carta (+1)
-            </button>
+        <!-- HEADER TABS (1:1 IMAGEN 2) -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(20,40,25,0.92); border: 2px solid var(--border-gold-3d); border-radius: 18px; padding: 0.5rem 1rem;">
+          <h2 style="font-size: 1.25rem; font-weight: 900; color: var(--accent-gold);">Mis Cartas - Turtura</h2>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="tab-btn" style="padding: 0.4rem 0.85rem; font-size: 0.8rem;">📚 Álbumes</button>
+            <button class="tab-btn" style="padding: 0.4rem 0.85rem; font-size: 0.8rem;">🎴 Barajas</button>
+            <button class="tab-btn active" style="padding: 0.4rem 0.85rem; font-size: 0.8rem;">🐚 Colección Completa</button>
           </div>
         </div>
 
-        <!-- POP-OUT SIDE FUSION DRAWER -->
-        <div class="side-fusion-drawer ${this.isDrawerOpen ? '' : 'closed'}" id="fusion-side-drawer">
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-gold-3d); padding-bottom: 0.5rem;">
-            <span style="font-weight: 900; color: var(--accent-gold); font-size: 1rem;">🧪 CÁMARA DE FUSIÓN</span>
-            <button id="btn-close-drawer" style="background: none; border: none; color: #f43f5e; font-size: 1.2rem; cursor: pointer; font-weight: 900;">✖</button>
+        <!-- SEARCH & FILTER BAR -->
+        <div style="display: flex; gap: 0.75rem; align-items: center;">
+          <input type="text" placeholder="Buscar elemento..." style="flex: 1; background: rgba(0,0,0,0.7); border: 2px solid #2e5a35; border-radius: 12px; padding: 0.6rem 1rem; color: #fff; font-weight: 800; font-size: 0.85rem;">
+          <select style="background: rgba(0,0,0,0.7); border: 2px solid #2e5a35; border-radius: 12px; padding: 0.6rem 1rem; color: #fbbf24; font-weight: 900; font-size: 0.85rem;">
+            <option>Rareza 🔻</option>
+            <option>Nivel</option>
+            <option>Ataque</option>
+          </select>
+          <button class="tab-btn" style="padding: 0.6rem 1rem; font-size: 0.85rem;">⚙️ Filtro</button>
+        </div>
+
+        <!-- TWO-PANEL LAYOUT (CARDS GRID LEFT + SUMMARY SHEET RIGHT) -->
+        <div style="display: flex; gap: 1.25rem; align-items: flex-start;">
+          
+          <!-- LEFT PANEL: CARDS GRID (3x4) -->
+          <div style="flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; background: rgba(14,30,17,0.94); border: 3px solid #2e5a35; border-radius: 20px; padding: 1rem; min-height: 480px;">
+            ${this.cards.map((card, idx) => this.renderCardHtml(card, idx)).join('')}
           </div>
 
-          <div style="font-size: 0.85rem; color: #cbd5e1; text-align: center;">
-            Selecciona 2 cartas de tus 21 casillas para combinarlas en una criatura única.
-          </div>
-
-          <!-- DRAWER FUSION SLOTS -->
-          <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
-            <div class="drawer-slot-box" id="drawer-slot-0">
-              ${this.selectedFusionCards[0] ? this.renderCardHtml(this.selectedFusionCards[0]) : '<span style="color:#fbbf24; font-weight:900;">+ Carta 1</span>'}
+          <!-- RIGHT PANEL: SELECTED CREATURE SUMMARY SHEET (1:1 IMAGEN 2) -->
+          <div style="width: 340px; background: linear-gradient(180deg, rgba(22,48,27,0.96), rgba(12,28,15,0.98)); border: 3px solid var(--border-gold-3d); border-radius: 20px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.85rem; box-shadow: 0 10px 30px rgba(0,0,0,0.9);">
+            
+            <div style="width: 100%; height: 160px; border-radius: 14px; overflow: hidden; border: 2px solid #fbbf24; position: relative;">
+              <img src="${selectedCard.image || 'assets/rhino_beetle.jpg'}" style="width: 100%; height: 100%; object-fit: cover;" alt="${selectedCard.name}">
+              <span style="position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.85); color: #fff; font-weight: 900; font-size: 0.8rem; padding: 3px 10px; border-radius: 8px;">
+                Nivel ${selectedCard.tier * 5}
+              </span>
             </div>
-            <div style="font-size: 1.5rem; font-weight: 900; color: var(--accent-gold);">+</div>
-            <div class="drawer-slot-box" id="drawer-slot-1">
-              ${this.selectedFusionCards[1] ? this.renderCardHtml(this.selectedFusionCards[1]) : '<span style="color:#fbbf24; font-weight:900;">+ Carta 2</span>'}
+
+            <!-- ELEMENTAL GEM ORBS -->
+            <div style="display: flex; justify-content: center; gap: 0.75rem; font-size: 1.2rem;">
+              <span>🌿</span>
+              <span>💧</span>
+              <span>🔥</span>
+              <span>🪨</span>
+            </div>
+
+            <!-- RADAR STAT CHART -->
+            <div style="display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.6); border-radius: 14px; padding: 0.5rem; border: 1px solid #2e5a35;">
+              ${this.renderRadarChartSvg(selectedCard)}
+            </div>
+
+            <!-- ABILITY LIST -->
+            <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.75rem;">
+              <div style="color: #f43f5e; font-weight: 900;">🔥 ${selectedCard.name} G+</div>
+              <div style="color: #cbd5e1; line-height: 1.2; font-size: 0.7rem;">${selectedCard.ability}</div>
+              <div style="color: #38bdf8; font-weight: 900; margin-top: 4px;">💧 Tsayomansefish G+</div>
+              <div style="color: #4ade80; font-weight: 900; margin-top: 4px;">🌿 Leaf Blunt</div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- BOTTOM FUSION CRAFTING BAR (1:1 IMAGEN 2) -->
+        <div style="background: linear-gradient(180deg, rgba(28,58,32,0.95), rgba(14,32,16,0.98)); border: 3px solid var(--border-gold-3d); border-radius: 20px; padding: 0.85rem 1.25rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 24px rgba(0,0,0,0.9);">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <span style="font-size: 0.85rem; font-weight: 900; color: var(--accent-gold);">Fusión Recompensa:</span>
+            <div style="display: flex; gap: 0.6rem; align-items: center;">
+              <div style="background: #142817; border: 1px solid #4ade80; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 900; color: #fff;">2/4</div>
+              <div style="background: #142817; border: 1px solid #4ade80; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 900; color: #fff;">2/4</div>
+              <div style="background: #142817; border: 1px solid #4ade80; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 900; color: #fff;">3/4</div>
+              <div style="background: #142817; border: 1px solid #4ade80; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 900; color: #fff;">4/4</div>
+              <span style="font-size: 1.2rem; color: #fbbf24;">➔</span>
+              <div style="background: #78350f; border: 2px solid #fbbf24; padding: 4px 10px; border-radius: 10px; font-size: 0.75rem; font-weight: 900; color: #fff;">Fusión Recompensa 🏆</div>
             </div>
           </div>
 
-          <button class="rpg-btn-green" id="btn-start-fusion" ${(!this.selectedFusionCards[0] || !this.selectedFusionCards[1]) ? 'disabled' : ''} style="width: 100%; font-size: 0.95rem; padding: 0.75rem;">
-            SINTETIZAR FUSIÓN 🔥
-          </button>
-          <button class="tab-btn" id="btn-clear-fusion" style="padding: 0.5rem; justify-content: center;">
-            Limpiar Selección
+          <button class="rpg-btn-gold" id="btn-go-fusion" style="padding: 0.6rem 1.25rem; font-size: 0.85rem;">
+            Ir a Fusión 🎫
           </button>
         </div>
 
@@ -145,89 +170,32 @@ class BackpackGrid {
   }
 
   attachEvents() {
-    // Add Fusion Buttons
-    const addFusionBtns = this.container.querySelectorAll('.btn-add-fusion');
-    addFusionBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.playSynthSound(587.33, 'sine', 0.08);
-        const instanceId = btn.getAttribute('data-instance-id');
-        const cardObj = this.cards.find(c => c.instanceId === instanceId);
-        if (!cardObj) return;
-
-        this.isDrawerOpen = true; // Auto pop open side drawer!
-
-        if (!this.selectedFusionCards[0]) {
-          this.selectedFusionCards[0] = cardObj;
-        } else if (!this.selectedFusionCards[1] && this.selectedFusionCards[0].instanceId !== cardObj.instanceId) {
-          this.selectedFusionCards[1] = cardObj;
-        }
-
+    const cardItems = this.container.querySelectorAll('.inventory-card-item');
+    cardItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const idx = parseInt(item.getAttribute('data-idx'));
+        this.selectedIndex = idx;
         this.render();
       });
     });
 
-    const btnCloseDrawer = this.container.querySelector('#btn-close-drawer');
-    if (btnCloseDrawer) {
-      btnCloseDrawer.addEventListener('click', () => {
-        this.isDrawerOpen = false;
-        this.selectedFusionCards = [null, null];
-        this.render();
-      });
-    }
-
-    const btnClear = this.container.querySelector('#btn-clear-fusion');
-    if (btnClear) {
-      btnClear.addEventListener('click', () => {
-        this.playSynthSound(330, 'triangle', 0.1);
-        this.selectedFusionCards = [null, null];
-        this.render();
-      });
-    }
-
-    const btnStart = this.container.querySelector('#btn-start-fusion');
-    if (btnStart) {
-      btnStart.addEventListener('click', () => {
-        this.playSynthSound(880, 'square', 0.2);
-        if (this.onFuseTrigger && this.selectedFusionCards[0] && this.selectedFusionCards[1]) {
-          this.isFusing = true;
-          this.onFuseTrigger(this.selectedFusionCards[0], this.selectedFusionCards[1]);
+    const btnGoFusion = this.container.querySelector('#btn-go-fusion');
+    if (btnGoFusion) {
+      btnGoFusion.addEventListener('click', () => {
+        if (this.onFuseTrigger && this.cards.length >= 2) {
+          this.onFuseTrigger(this.cards[0], this.cards[1]);
         }
-      });
-    }
-
-    const btnDraw = this.container.querySelector('#btn-draw-card');
-    if (btnDraw) {
-      btnDraw.addEventListener('click', () => {
-        if (this.cards.length >= 21) {
-          alert("🎒 Tu mochila está llena (21/21 casillas). Fusiona cartas para liberar espacio.");
-          return;
-        }
-        this.playSynthSound(659.25, 'sine', 0.12);
-        const keys = Object.keys(window.CREATURES_DB);
-        const randomKey = keys[Math.floor(Math.random() * keys.length)];
-        const base = window.CREATURES_DB[randomKey] || window.CREATURES_DB["tierra_t1_1"];
-        const newCard = {
-          instanceId: "card_" + Math.random().toString(36).substr(2, 9),
-          ...base
-        };
-        this.cards.push(newCard);
-        this.render();
-        if (this.rewardModal) this.rewardModal.show(newCard);
       });
     }
   }
 
   removeCards(instanceIds) {
     this.cards = this.cards.filter(c => !instanceIds.includes(c.instanceId));
-    this.selectedFusionCards = [null, null];
-    this.isFusing = false;
     this.render();
   }
 
   addCard(newCard) {
     this.cards.push(newCard);
-    this.isFusing = false;
     this.render();
     if (this.rewardModal) this.rewardModal.show(newCard);
   }

@@ -1,184 +1,150 @@
-// Component for Turtura Chapter Hub & Backpack Brawl Style Main Menu (Imagen 1 & 2)
+// 1:1 Turtura Main Menu Component: "Turtura: La Torre del Poder" (Imagen 1)
 class CategorySelector {
   constructor(containerId, onSelectCategory) {
     this.container = document.getElementById(containerId);
     this.onSelectCategory = onSelectCategory;
-    this.countdownInterval = null;
     this.init();
   }
 
   init() {
     this.render();
-    this.startCountdown();
   }
 
   render() {
     this.container.innerHTML = `
-      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <div style="position: relative; width: 100%; max-width: 680px; margin: 0 auto; min-height: 840px; background: url('assets/ref_menu_main.jpg') center/cover no-repeat; border-radius: 28px; border: 4px solid var(--border-gold-3d); box-shadow: 0 15px 40px rgba(0,0,0,0.9); overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 1rem;">
         
-        <!-- TOP CURRENCY BAR (BACKPACK BRAWL IMAGEN 1 STYLE) -->
-        <div style="background: linear-gradient(180deg, #241710, #140d08); border: 3px solid var(--border-gold-3d); border-radius: 20px; padding: 0.75rem 1.25rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.8);">
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div style="background: #0284c7; color: #fff; font-weight: 900; font-size: 1rem; width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 2px solid #fff;">
+        <!-- TOP CURRENCY BAR (1:1 IMAGEN 1) -->
+        <div style="background: linear-gradient(180deg, rgba(36,23,16,0.92), rgba(20,13,8,0.96)); border: 2px solid var(--border-gold-3d); border-radius: 18px; padding: 0.6rem 1rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 6px 16px rgba(0,0,0,0.8);">
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <div style="background: #0284c7; color: #fff; font-weight: 900; font-size: 0.95rem; width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 2px solid #fff;">
               11
             </div>
-            <div style="font-weight: 900; color: var(--accent-gold); font-size: 1.1rem; text-shadow: 1px 1px 0 #000;">
-              Valor y Gloria 🏆
+            <div style="font-weight: 900; color: #fff; font-size: 1.15rem; letter-spacing: 1px; text-shadow: 2px 2px 0 #000;">
+              TURTURA
             </div>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 1.25rem; font-weight: 900; font-size: 0.95rem;">
-            <span style="color: #4ade80; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 10px; border: 1px solid #4ade80;">💎 123</span>
-            <span style="color: #fbbf24; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 10px; border: 1px solid #fbbf24;">🪙 74,851</span>
+          <div style="display: flex; align-items: center; gap: 1rem; font-weight: 900; font-size: 0.9rem;">
+            <span style="color: #4ade80; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 10px; border: 1px solid #4ade80;">123 💎</span>
+            <span style="color: #fbbf24; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 10px; border: 1px solid #fbbf24;">74851 🪙</span>
           </div>
         </div>
 
-        <!-- CHAPTER GATES & TOWER OF BABEL HUB -->
-        <div style="text-align: center; margin-top: 0.5rem;">
-          <h2 style="font-size: 2.2rem; font-weight: 900; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 3px; text-shadow: 3px 3px 0 #000;">
-            🚪 COMPUERTAS MUNDIALES DE CAPÍTULOS
-          </h2>
-          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">
-            Selecciona un capítulo activo para desafiar a los guardianes o explora las próximas eras.
-          </p>
-        </div>
-
-        <div class="chapters-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(265px, 1fr)); gap: 1.75rem;">
+        <!-- MAIN MIDDLE AREA WITH SIDE BUTTONS & CENTER CREST -->
+        <div style="position: relative; flex: 1; display: flex; justify-content: space-between; align-items: center; margin: 1rem 0;">
           
-          <!-- SLOT 1: CAPÍTULO I - PLANETA TIERRA (ACTIVA) -->
-          <div class="chapter-card active-chapter" id="chapter-earth" style="
-            background: radial-gradient(circle at top, #263820, #0d170b);
-            border: 4px solid #4ade80;
-            box-shadow: inset 0 0 20px rgba(74, 222, 128, 0.4), 0 10px 30px rgba(0, 0, 0, 0.8);
-            border-radius: 24px;
-            padding: 1.5rem;
-            cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-          ">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-              <span style="background: rgba(74, 222, 128, 0.3); color: #86efac; font-size: 0.7rem; font-weight: 900; padding: 5px 12px; border-radius: 8px; border: 1px solid #4ade80;">
-                ● COMPUERTA EN VIVO
-              </span>
-              <span style="font-size: 1.8rem; filter: drop-shadow(0 0 10px #4ade80);">🌍</span>
+          <!-- LEFT SIDE BUTTONS -->
+          <div style="display: flex; flex-direction: column; gap: 0.75rem; z-index: 10;">
+            <div style="width: 52px; height: 52px; background: rgba(30,20,15,0.85); border: 2px solid #fbbf24; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.8);">
+              🐉
             </div>
-
-            <h3 style="font-size: 1.45rem; font-weight: 900; color: #fff; margin-bottom: 0.5rem; text-shadow: 2px 2px 0 #000;">
-              Capítulo I: Planeta Tierra
-            </h3>
-            <p style="font-size: 0.85rem; color: #a7f3d0; line-height: 1.4;">
-              El ecosistema biológico primordial. Desafía a los 100 Pisos de la Torre de Babel con especies de <strong>Tierra 🌿, Aire 🦅, Agua 🦈 y Microbios 🦠</strong>.
-            </p>
-
-            <button class="rpg-btn-green" style="margin-top: 1.5rem; width: 100%; font-size: 1.05rem; padding: 0.85rem;">
-              ENTRAR AL MUNDO ➔
-            </button>
-          </div>
-
-          <!-- SLOT 2: CAPÍTULO II - LA MUTACIÓN ABISAL (MISTERIO & COUNTDOWN) -->
-          <div class="chapter-card teaser-chapter" style="
-            background: radial-gradient(circle at top, #3b1b4a, #12071a);
-            border: 4px solid #c084fc;
-            box-shadow: inset 0 0 20px rgba(192, 132, 252, 0.4), 0 10px 30px rgba(0, 0, 0, 0.8);
-            border-radius: 24px;
-            padding: 1.5rem;
-          ">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-              <span style="background: rgba(192, 132, 252, 0.3); color: #c084fc; font-size: 0.7rem; font-weight: 900; padding: 5px 12px; border-radius: 8px; border: 1px solid #c084fc;">
-                🔮 PRÓXIMA ERA
-              </span>
-              <span style="font-size: 1.8rem;">🌌</span>
+            <div style="width: 52px; height: 52px; background: rgba(30,20,15,0.85); border: 2px solid #fbbf24; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.8);">
+              🎁
             </div>
-
-            <h3 style="font-size: 1.45rem; font-weight: 900; color: #fff; margin-bottom: 0.5rem;">
-              Capítulo II: La Mutación Abisal
-            </h3>
-            <p style="font-size: 0.85rem; color: #e9d5ff; line-height: 1.4;">
-              Una entidad misteriosa en penumbra aguarda la apertura del portal global.
-            </p>
-
-            <div style="background: rgba(0,0,0,0.85); border: 2px solid #c084fc; border-radius: 14px; padding: 0.85rem; text-align: center; margin-top: 1rem;">
-              <div style="font-size: 0.65rem; color: #c084fc; font-weight: 900; text-transform: uppercase;">DESBLOQUEO PROMINENTE EN</div>
-              <div id="global-countdown" style="font-family: monospace; font-size: 1.35rem; font-weight: 900; color: #fef08a;">
-                05m 29d 22h 59m 59s
-              </div>
+            <div style="background: rgba(30,20,15,0.85); border: 2px solid #fbbf24; border-radius: 14px; padding: 6px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.8);">
+              <span style="font-size: 1.2rem;">📜</span>
+              <span style="font-size: 0.6rem; font-weight: 900; color: #fef08a;">Colección</span>
+            </div>
+            <div style="background: #5865f2; border: 2px solid #fff; border-radius: 14px; padding: 6px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.8);">
+              <span style="font-size: 1.2rem;">💬</span>
+              <span style="font-size: 0.58rem; font-weight: 900; color: #fff;">Turtura Discord</span>
+            </div>
+            <div style="width: 52px; height: 52px; background: rgba(30,20,15,0.85); border: 2px solid #fbbf24; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.8);">
+              👑
             </div>
           </div>
 
-          <!-- SLOTS 3 Y 4: PUERTAS DE ACERO SELLADAS CON CINTA AMARILLA Y ARAÑAZOS -->
-          <div class="chapter-card steel-door" style="
-            background: linear-gradient(135deg, #1f2937, #111827);
-            border: 4px solid #dc2626;
-            border-radius: 24px;
-            position: relative;
-            min-height: 360px;
-            overflow: hidden;
-          ">
-            <div style="position: absolute; top: 15px; left: -30px; background: #facc15; color: #000; font-weight: 900; font-size: 0.7rem; padding: 4px 40px; transform: rotate(-25deg); border: 1px solid #000;">
-              ⚠️ DANGER / PELIGRO ⚠️
+          <!-- CENTER CREST & EMBLEM -->
+          <div style="display: flex; flex-direction: column; align-items: center; text-align: center; margin: 0 auto; z-index: 10;">
+            
+            <!-- ELEMENTAL CREST ORBS -->
+            <div style="position: relative; width: 180px; height: 160px; display: flex; align-items: center; justify-content: center;">
+              <div style="font-size: 4.8rem; filter: drop-shadow(0 0 20px #fbbf24);">🐢</div>
+              <!-- Orbs -->
+              <span style="position: absolute; top: 0; left: 10px; font-size: 1.6rem; background: rgba(0,0,0,0.7); border: 2px solid #f43f5e; border-radius: 50%; padding: 4px;">🔥</span>
+              <span style="position: absolute; top: 0; right: 10px; font-size: 1.6rem; background: rgba(0,0,0,0.7); border: 2px solid #0284c7; border-radius: 50%; padding: 4px;">💧</span>
+              <span style="position: absolute; bottom: 10px; left: 10px; font-size: 1.6rem; background: rgba(0,0,0,0.7); border: 2px solid #22c55e; border-radius: 50%; padding: 4px;">🌿</span>
+              <span style="position: absolute; bottom: 10px; right: 10px; font-size: 1.6rem; background: rgba(0,0,0,0.7); border: 2px solid #b45309; border-radius: 50%; padding: 4px;">🪨</span>
             </div>
-            <div class="steel-doors-overlay" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 0.75rem;">
-              <div style="font-size: 4rem; filter: drop-shadow(0 0 20px rgba(220,38,38,0.8));">🔒</div>
-              <div style="background: #dc2626; color: #fff; font-size: 0.8rem; font-weight: 900; padding: 4px 14px; border-radius: 6px;">
-                ¡PELIGRO! ZONA RESTRINGIDA
-              </div>
-              <p style="font-size: 0.8rem; color: #9ca3af; text-align: center; padding: 0 1rem; line-height: 1.3;">
-                Sellada con cintas de precaución y cadenas oxidadas. Requiere derrotar al Jefe Final de Babel.
-              </p>
+
+            <h1 style="font-size: 2.2rem; font-weight: 900; color: #fff; text-shadow: 3px 4px 0 #000, 0 0 15px rgba(251,191,36,0.8); margin-top: -10px;">
+              Turtura
+            </h1>
+            <div style="background: linear-gradient(180deg, #d97706, #78350f); border: 2px solid #fef08a; padding: 4px 20px; border-radius: 12px; font-size: 0.95rem; font-weight: 900; color: #fff; text-shadow: 1px 1px 0 #000; margin-top: 2px;">
+              La Torre del Poder
             </div>
+
+            <!-- DAILY BOOST BADGE -->
+            <div style="background: rgba(0,0,0,0.82); border: 1px solid #fbbf24; border-radius: 10px; padding: 6px 14px; margin-top: 1rem;">
+              <div style="font-size: 0.65rem; color: #fbbf24; font-weight: 900;">🪖 Impulso Diario de Fusión</div>
+              <div style="font-size: 0.75rem; color: #cbd5e1; font-weight: 800;">Se reinicia en 1 h 12 min</div>
+            </div>
+
+            <!-- MAIN ACTION BUTTONS (1:1 IMAGEN 1) -->
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+              <button class="rpg-btn-gold" id="btn-turn-duel" style="padding: 0.75rem 1.25rem; font-size: 0.95rem;">
+                🎴 Duelo por Turnos
+              </button>
+              <button class="rpg-btn-green" id="btn-challenge-tower" style="padding: 0.75rem 1.25rem; font-size: 0.95rem;">
+                🏰 Desafiar la Torre
+              </button>
+            </div>
+
           </div>
 
-          <div class="chapter-card steel-door" style="
-            background: linear-gradient(135deg, #1f2937, #111827);
-            border: 4px solid #dc2626;
-            border-radius: 24px;
-            position: relative;
-            min-height: 360px;
-            overflow: hidden;
-          ">
-            <div style="position: absolute; top: 15px; right: -30px; background: #facc15; color: #000; font-weight: 900; font-size: 0.7rem; padding: 4px 40px; transform: rotate(25deg); border: 1px solid #000;">
-              ⚠️ DANGER / NO ENTER ⚠️
+          <!-- RIGHT SIDE BUTTONS -->
+          <div style="display: flex; flex-direction: column; gap: 0.75rem; z-index: 10;">
+            <div style="width: 52px; height: 52px; background: rgba(30,20,15,0.85); border: 2px solid #fbbf24; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.8);">
+              ☰
             </div>
-            <div class="steel-doors-overlay" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 0.75rem;">
-              <div style="font-size: 4rem; filter: drop-shadow(0 0 20px rgba(220,38,38,0.8));">🔒</div>
-              <div style="background: #dc2626; color: #fff; font-size: 0.8rem; font-weight: 900; padding: 4px 14px; border-radius: 6px;">
-                CÁMARA TITÁNICA BLOQUEADA
-              </div>
-              <p style="font-size: 0.8rem; color: #9ca3af; text-align: center; padding: 0 1rem; line-height: 1.3;">
-                Aislamiento por amenaza biológica. Reservada para Maestros Fusionadores.
-              </p>
+            <div style="width: 52px; height: 52px; background: rgba(30,20,15,0.85); border: 2px solid #fbbf24; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.8);">
+              📜
+            </div>
+            <div style="width: 52px; height: 52px; background: rgba(30,20,15,0.85); border: 2px solid #fbbf24; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.8);">
+              🌳
             </div>
           </div>
 
         </div>
+
+        <!-- BOTTOM PROGRESS BANNER (1:1 IMAGEN 1) -->
+        <div style="background: linear-gradient(180deg, rgba(30,20,15,0.92), rgba(15,10,7,0.96)); border: 2px solid var(--border-gold-3d); border-radius: 16px; padding: 0.75rem 1.25rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 6px 16px rgba(0,0,0,0.8);">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div style="background: #78350f; border: 1px solid #fbbf24; color: #fff; font-weight: 900; font-size: 0.85rem; padding: 4px 10px; border-radius: 8px;">
+              🛡️ 6
+            </div>
+            <div style="font-size: 1rem; font-weight: 900; color: #fff;">
+              Maestría de Fusión
+            </div>
+          </div>
+
+          <div style="width: 180px; background: #000; border: 1px solid #fbbf24; border-radius: 8px; height: 16px; overflow: hidden; position: relative;">
+            <div style="width: 50%; background: linear-gradient(90deg, #fbbf24, #d97706); height: 100%;"></div>
+            <span style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; text-align: center; font-size: 0.68rem; font-weight: 900; color: #fff; line-height: 16px;">10 / 20</span>
+          </div>
+        </div>
+
       </div>
     `;
 
-    document.getElementById("chapter-earth").addEventListener("click", () => {
-      if (this.onSelectCategory) this.onSelectCategory("Planeta Tierra");
-    });
+    this.attachEvents();
   }
 
-  startCountdown() {
-    let targetTime = Date.now() + ((5 * 30 * 24 * 3600) + (29 * 24 * 3600) + (23 * 3600)) * 1000;
+  attachEvents() {
+    const btnTower = this.container.querySelector('#btn-challenge-tower');
+    if (btnTower) {
+      btnTower.addEventListener('click', () => {
+        if (this.onSelectCategory) this.onSelectCategory('combat');
+      });
+    }
 
-    const update = () => {
-      const diff = targetTime - Date.now();
-      if (diff <= 0) return;
-
-      const months = Math.floor(diff / (1000 * 3600 * 24 * 30));
-      const days = Math.floor((diff % (1000 * 3600 * 24 * 30)) / (1000 * 3600 * 24));
-      const hours = Math.floor((diff % (1000 * 3600 * 24)) / (1000 * 3600));
-      const mins = Math.floor((diff % (1000 * 3600)) / (1000 * 60));
-      const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-      const el = document.getElementById("global-countdown");
-      if (el) {
-        el.innerText = `${String(months).padStart(2, '0')}m ${String(days).padStart(2, '0')}d ${String(hours).padStart(2, '0')}h ${String(mins).padStart(2, '0')}m ${String(secs).padStart(2, '0')}s`;
-      }
-    };
-
-    update();
-    this.countdownInterval = setInterval(update, 1000);
+    const btnDuel = this.container.querySelector('#btn-turn-duel');
+    if (btnDuel) {
+      btnDuel.addEventListener('click', () => {
+        if (this.onSelectCategory) this.onSelectCategory('combat');
+      });
+    }
   }
 }
 
