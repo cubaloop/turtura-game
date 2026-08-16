@@ -17,7 +17,7 @@
 
   <!-- HEADER NAVIGATION (1:1 CURRENCY BAR) -->
   <header class="game-header">
-    <div class="game-title">
+    <div class="game-title" id="btn-header-home">
       <span>🐢</span> TURTURA
     </div>
     <div style="display: flex; align-items: center; gap: 1rem; font-weight: 900; font-size: 0.9rem;">
@@ -29,8 +29,13 @@
   <!-- MAIN GAME CONTAINER SHELL -->
   <main class="main-container">
     
+    <!-- VIEW 0: LANDING PAGE (WELCOME HERO SCREEN) -->
+    <section id="view-landing" class="view-section active">
+      <div id="landing-page-container"></div>
+    </section>
+
     <!-- VIEW 1: CALABOZO (MAIN HUB 1:1 IMAGEN 1) -->
-    <section id="view-world" class="view-section active">
+    <section id="view-world" class="view-section">
       <div id="category-selector-container"></div>
     </section>
 
@@ -93,6 +98,7 @@
   </nav>
 
   <!-- SCRIPT INTEGRATION -->
+  <script src="js/components/LandingPage.js"></script>
   <script src="js/components/CategorySelector.js"></script>
   <script src="js/app.js"></script>
 </body>
