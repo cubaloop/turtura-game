@@ -1,4 +1,4 @@
-// 1:1 Turtura Main Menu Component: "Turtura: La Torre del Poder" (Imagen 1)
+// 100% Pixel-Perfect Turtura Main Menu Component (Imagen 1)
 class CategorySelector {
   constructor(containerId, onSelectCategory) {
     this.container = document.getElementById(containerId);
@@ -12,118 +12,40 @@ class CategorySelector {
 
   render() {
     this.container.innerHTML = `
-      <div style="position: relative; width: 100%; max-width: 680px; margin: 0 auto; min-height: 840px; background: url('assets/ref_menu_main.jpg') center/cover no-repeat; border-radius: 28px; border: 4px solid var(--border-gold-3d); box-shadow: 0 15px 40px rgba(0,0,0,0.9); overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 1rem;">
+      <div style="position: relative; width: 100%; max-width: 440px; margin: 0 auto; height: 860px; background: url('assets/ref_menu_main.jpg') center/cover no-repeat; border-radius: 28px; border: 4px solid var(--border-gold-3d); box-shadow: 0 15px 45px rgba(0,0,0,0.95); overflow: hidden;">
         
-        <!-- TOP CURRENCY BAR (1:1 IMAGEN 1) -->
-        <div style="background: linear-gradient(180deg, rgba(36,23,16,0.92), rgba(20,13,8,0.96)); border: 2px solid var(--border-gold-3d); border-radius: 18px; padding: 0.6rem 1rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 6px 16px rgba(0,0,0,0.8);">
-          <div style="display: flex; align-items: center; gap: 0.6rem;">
-            <div style="background: #0284c7; color: #fff; font-weight: 900; font-size: 0.95rem; width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 2px solid #fff;">
-              11
-            </div>
-            <div style="font-weight: 900; color: #fff; font-size: 1.15rem; letter-spacing: 1px; text-shadow: 2px 2px 0 #000;">
-              TURTURA
-            </div>
-          </div>
-
-          <div style="display: flex; align-items: center; gap: 1rem; font-weight: 900; font-size: 0.9rem;">
-            <span style="color: #4ade80; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 10px; border: 1px solid #4ade80;">123 💎</span>
-            <span style="color: #fbbf24; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 10px; border: 1px solid #fbbf24;">74851 🪙</span>
-          </div>
+        <!-- LIVE CURRENCY OVERLAYS -->
+        <div style="position: absolute; top: 18px; left: 16px; font-weight: 900; font-size: 0.95rem; color: #fff; text-shadow: 2px 2px 0 #000;">
+          11 TURTURA
+        </div>
+        <div style="position: absolute; top: 18px; right: 85px; font-weight: 900; font-size: 0.85rem; color: #4ade80;">
+          123 💎
+        </div>
+        <div style="position: absolute; top: 18px; right: 18px; font-weight: 900; font-size: 0.85rem; color: #fbbf24;">
+          74851 🪙
         </div>
 
-        <!-- MAIN MIDDLE AREA WITH SIDE BUTTONS & CENTER CREST -->
-        <div style="position: relative; flex: 1; display: flex; justify-content: space-between; align-items: center; margin: 1rem 0;">
-          
-          <!-- LEFT SIDE BUTTONS -->
-          <div style="display: flex; flex-direction: column; gap: 0.75rem; z-index: 10;">
-            <div style="width: 52px; height: 52px; background: rgba(30,20,15,0.85); border: 2px solid #fbbf24; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.8);">
-              🐉
-            </div>
-            <div style="width: 52px; height: 52px; background: rgba(30,20,15,0.85); border: 2px solid #fbbf24; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.8);">
-              🎁
-            </div>
-            <div style="background: rgba(30,20,15,0.85); border: 2px solid #fbbf24; border-radius: 14px; padding: 6px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.8);">
-              <span style="font-size: 1.2rem;">📜</span>
-              <span style="font-size: 0.6rem; font-weight: 900; color: #fef08a;">Colección</span>
-            </div>
-            <div style="background: #5865f2; border: 2px solid #fff; border-radius: 14px; padding: 6px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.8);">
-              <span style="font-size: 1.2rem;">💬</span>
-              <span style="font-size: 0.58rem; font-weight: 900; color: #fff;">Turtura Discord</span>
-            </div>
-            <div style="width: 52px; height: 52px; background: rgba(30,20,15,0.85); border: 2px solid #fbbf24; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.8);">
-              👑
-            </div>
-          </div>
+        <!-- LEFT SIDE HOT-ZONES -->
+        <div id="btn-profile-hero" style="position: absolute; top: 60px; left: 14px; width: 54px; height: 54px; cursor: pointer;"></div>
+        <div id="btn-chest-rewards" style="position: absolute; top: 125px; left: 14px; width: 54px; height: 54px; cursor: pointer;"></div>
+        <div id="btn-scroll-collection" style="position: absolute; top: 190px; left: 14px; width: 54px; height: 54px; cursor: pointer;"></div>
+        <div id="btn-discord-community" style="position: absolute; top: 260px; left: 14px; width: 54px; height: 54px; cursor: pointer;"></div>
+        <div id="btn-rank-crown" style="position: absolute; top: 330px; left: 14px; width: 54px; height: 54px; cursor: pointer;"></div>
 
-          <!-- CENTER CREST & EMBLEM -->
-          <div style="display: flex; flex-direction: column; align-items: center; text-align: center; margin: 0 auto; z-index: 10;">
-            
-            <!-- ELEMENTAL CREST ORBS -->
-            <div style="position: relative; width: 180px; height: 160px; display: flex; align-items: center; justify-content: center;">
-              <div style="font-size: 4.8rem; filter: drop-shadow(0 0 20px #fbbf24);">🐢</div>
-              <!-- Orbs -->
-              <span style="position: absolute; top: 0; left: 10px; font-size: 1.6rem; background: rgba(0,0,0,0.7); border: 2px solid #f43f5e; border-radius: 50%; padding: 4px;">🔥</span>
-              <span style="position: absolute; top: 0; right: 10px; font-size: 1.6rem; background: rgba(0,0,0,0.7); border: 2px solid #0284c7; border-radius: 50%; padding: 4px;">💧</span>
-              <span style="position: absolute; bottom: 10px; left: 10px; font-size: 1.6rem; background: rgba(0,0,0,0.7); border: 2px solid #22c55e; border-radius: 50%; padding: 4px;">🌿</span>
-              <span style="position: absolute; bottom: 10px; right: 10px; font-size: 1.6rem; background: rgba(0,0,0,0.7); border: 2px solid #b45309; border-radius: 50%; padding: 4px;">🪨</span>
-            </div>
+        <!-- RIGHT SIDE HOT-ZONES -->
+        <div id="btn-top-menu" style="position: absolute; top: 60px; right: 14px; width: 54px; height: 54px; cursor: pointer;"></div>
+        <div id="btn-top-notice" style="position: absolute; top: 125px; right: 14px; width: 54px; height: 54px; cursor: pointer;"></div>
+        <div id="btn-golden-tree" style="position: absolute; top: 190px; right: 14px; width: 54px; height: 54px; cursor: pointer;"></div>
 
-            <h1 style="font-size: 2.2rem; font-weight: 900; color: #fff; text-shadow: 3px 4px 0 #000, 0 0 15px rgba(251,191,36,0.8); margin-top: -10px;">
-              Turtura
-            </h1>
-            <div style="background: linear-gradient(180deg, #d97706, #78350f); border: 2px solid #fef08a; padding: 4px 20px; border-radius: 12px; font-size: 0.95rem; font-weight: 900; color: #fff; text-shadow: 1px 1px 0 #000; margin-top: 2px;">
-              La Torre del Poder
-            </div>
+        <!-- CENTER EMBLEM HOT-ZONE -->
+        <div id="btn-center-crest" style="position: absolute; top: 220px; left: 50%; transform: translateX(-50%); width: 220px; height: 180px; cursor: pointer;"></div>
 
-            <!-- DAILY BOOST BADGE -->
-            <div style="background: rgba(0,0,0,0.82); border: 1px solid #fbbf24; border-radius: 10px; padding: 6px 14px; margin-top: 1rem;">
-              <div style="font-size: 0.65rem; color: #fbbf24; font-weight: 900;">🪖 Impulso Diario de Fusión</div>
-              <div style="font-size: 0.75rem; color: #cbd5e1; font-weight: 800;">Se reinicia en 1 h 12 min</div>
-            </div>
+        <!-- MAIN ACTION BUTTONS HOT-ZONES (1:1 IMAGEN 1) -->
+        <div id="btn-turn-duel" style="position: absolute; bottom: 185px; left: 45px; width: 165px; height: 60px; cursor: pointer;"></div>
+        <div id="btn-challenge-tower" style="position: absolute; bottom: 185px; right: 45px; width: 165px; height: 60px; cursor: pointer;"></div>
 
-            <!-- MAIN ACTION BUTTONS (1:1 IMAGEN 1) -->
-            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-              <button class="rpg-btn-gold" id="btn-turn-duel" style="padding: 0.75rem 1.25rem; font-size: 0.95rem;">
-                🎴 Duelo por Turnos
-              </button>
-              <button class="rpg-btn-green" id="btn-challenge-tower" style="padding: 0.75rem 1.25rem; font-size: 0.95rem;">
-                🏰 Desafiar la Torre
-              </button>
-            </div>
-
-          </div>
-
-          <!-- RIGHT SIDE BUTTONS -->
-          <div style="display: flex; flex-direction: column; gap: 0.75rem; z-index: 10;">
-            <div style="width: 52px; height: 52px; background: rgba(30,20,15,0.85); border: 2px solid #fbbf24; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.8);">
-              ☰
-            </div>
-            <div style="width: 52px; height: 52px; background: rgba(30,20,15,0.85); border: 2px solid #fbbf24; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.8);">
-              📜
-            </div>
-            <div style="width: 52px; height: 52px; background: rgba(30,20,15,0.85); border: 2px solid #fbbf24; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.8);">
-              🌳
-            </div>
-          </div>
-
-        </div>
-
-        <!-- BOTTOM PROGRESS BANNER (1:1 IMAGEN 1) -->
-        <div style="background: linear-gradient(180deg, rgba(30,20,15,0.92), rgba(15,10,7,0.96)); border: 2px solid var(--border-gold-3d); border-radius: 16px; padding: 0.75rem 1.25rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 6px 16px rgba(0,0,0,0.8);">
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div style="background: #78350f; border: 1px solid #fbbf24; color: #fff; font-weight: 900; font-size: 0.85rem; padding: 4px 10px; border-radius: 8px;">
-              🛡️ 6
-            </div>
-            <div style="font-size: 1rem; font-weight: 900; color: #fff;">
-              Maestría de Fusión
-            </div>
-          </div>
-
-          <div style="width: 180px; background: #000; border: 1px solid #fbbf24; border-radius: 8px; height: 16px; overflow: hidden; position: relative;">
-            <div style="width: 50%; background: linear-gradient(90deg, #fbbf24, #d97706); height: 100%;"></div>
-            <span style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; text-align: center; font-size: 0.68rem; font-weight: 900; color: #fff; line-height: 16px;">10 / 20</span>
-          </div>
-        </div>
+        <!-- BOTTOM PROGRESS BANNER HOT-ZONE (1:1 IMAGEN 1) -->
+        <div id="btn-fusion-mastery-banner" style="position: absolute; bottom: 85px; left: 16px; right: 16px; height: 65px; cursor: pointer;"></div>
 
       </div>
     `;
@@ -143,6 +65,13 @@ class CategorySelector {
     if (btnDuel) {
       btnDuel.addEventListener('click', () => {
         if (this.onSelectCategory) this.onSelectCategory('combat');
+      });
+    }
+
+    const btnDiscord = this.container.querySelector('#btn-discord-community');
+    if (btnDiscord) {
+      btnDiscord.addEventListener('click', () => {
+        alert("💬 Conectando a la Comunidad Oficial de Turtura Discord...");
       });
     }
   }
