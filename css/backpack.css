@@ -1,135 +1,115 @@
-/* 21-Slot Inventory Grid & Pop-out Side Fusion Drawer Styles */
+/* Clean 2-Panel Inventory & Radar Chart System (Imagen 2) */
 
-/* Main Backpack Wrapper with Flex Layout for Side Drawer */
-.backpack-flex-container {
+.inventory-two-panel-wrapper {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.25rem;
   align-items: flex-start;
-  position: relative;
+  max-width: 1150px;
+  margin: 0 auto;
 }
 
-/* 21-Slot Grid Container (7 Columns x 3 Rows) */
-.inventory-21-container {
-  flex: 1;
-  background: linear-gradient(135deg, rgba(20, 50, 25, 0.94), rgba(12, 32, 16, 0.97));
-  border: 3px solid #22c55e;
-  border-radius: 24px;
-  padding: 1.5rem;
-  box-shadow: 0 12px 35px rgba(34, 197, 94, 0.35), inset 0 0 30px rgba(0, 0, 0, 0.85);
-  position: relative;
-  overflow: hidden;
+@media (max-width: 850px) {
+  .inventory-two-panel-wrapper {
+    flex-direction: column;
+  }
 }
 
-.grid-21-slots {
+/* LEFT PANEL: 3x4 CARDS GRID */
+.inventory-left-panel {
+  flex: 1.2;
+  background: rgba(18, 36, 22, 0.94);
+  border: 3px solid #2e5a35;
+  border-radius: 20px;
+  padding: 1rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.85);
+}
+
+.cards-grid-3x4 {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
-  margin-top: 1rem;
+  margin-top: 0.75rem;
 }
 
-@media (max-width: 1100px) {
-  .grid-21-slots {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (max-width: 650px) {
-  .grid-21-slots {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.slot-21-item {
-  aspect-ratio: 1 / 1.35;
-  background: #142817;
-  border: 2px solid #2e6037;
-  outline: 1px dashed #4e8552;
-  outline-offset: -4px;
-  border-radius: 14px;
+.card-item-slot {
+  background: linear-gradient(180deg, #1c2e1f, #0f1c11);
+  border: 2px solid #2e5a35;
+  border-radius: 12px;
+  padding: 0.4rem;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
-  padding: 0.35rem;
-  position: relative;
-  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.slot-21-item.occupied {
-  background: linear-gradient(180deg, #1c3d22, #102614);
-  border-color: #4ade80;
-}
-
-.slot-21-item:hover {
-  transform: translateY(-4px) scale(1.04);
+.card-item-slot:hover, .card-item-slot.selected {
   border-color: #fbbf24;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.8);
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
+  transform: translateY(-3px) scale(1.02);
 }
 
-/* Pop-out Side Fusion Drawer (Desplegable Lateral) */
-.side-fusion-drawer {
-  width: 320px;
-  background: linear-gradient(180deg, rgba(28, 62, 33, 0.96), rgba(14, 34, 17, 0.98));
-  border: 3px solid var(--border-gold-3d);
-  border-radius: 24px;
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  box-shadow: -10px 15px 35px rgba(0, 0, 0, 0.9);
-  position: relative;
-  transform: translateX(0);
-  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.side-fusion-drawer.closed {
-  width: 0;
-  padding: 0;
-  opacity: 0;
-  overflow: hidden;
-  border: none;
-  transform: translateX(50px);
-}
-
-/* Fusion Slot Items inside Drawer */
-.drawer-slot-box {
+.card-art-box {
   width: 100%;
-  height: 120px;
-  background: rgba(0,0,0,0.5);
-  border: 2px dashed #fbbf24;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  height: 90px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.25);
+  position: relative;
+  background: #0f1710;
 }
 
-/* Stitched Wooden/Leather Grid Container Fallback */
-.backpack-grid-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.85rem;
-  background: #142616;
-  border: 3px solid #366039;
+.card-art-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* RIGHT PANEL: SELECTED CREATURE SUMMARY SHEET & RADAR CHART */
+.inventory-right-panel {
+  width: 320px;
+  background: linear-gradient(180deg, rgba(24, 52, 28, 0.96), rgba(12, 28, 15, 0.98));
+  border: 3px solid var(--border-gold-3d);
   border-radius: 20px;
   padding: 1.25rem;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-  min-height: 250px;
-  align-items: center;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.9);
 }
 
-.grid-slot {
-  width: 145px;
-  height: 215px;
-  background: repeating-linear-gradient(0deg, #1f3d22, #1f3d22 10px, #18301a 10px, #18301a 20px);
-  border: 2px solid #366039;
-  outline: 1px dashed #4e8552;
-  outline-offset: -5px;
-  border-radius: 16px;
+@media (max-width: 850px) {
+  .inventory-right-panel {
+    width: 100%;
+  }
+}
+
+.summary-portrait-box {
+  width: 100%;
+  height: 150px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #fbbf24;
+  position: relative;
+  background: #0f1710;
+}
+
+.summary-portrait-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* BOTTOM FUSION CRAFTING BAR */
+.fusion-crafting-bar {
+  background: linear-gradient(180deg, rgba(28, 58, 32, 0.95), rgba(14, 32, 16, 0.98));
+  border: 3px solid var(--border-gold-3d);
+  border-radius: 20px;
+  padding: 0.85rem 1.25rem;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  box-shadow: inset 0 2px 6px rgba(0,0,0,0.7);
-  transition: all 0.2s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.9);
+  margin-top: 1rem;
 }
