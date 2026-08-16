@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Turtura: La Torre del Poder - RPG de Criaturas & Fusión</title>
+  <title>Turtura: La Torre del Poder - RPG de Criaturas 3D & Fusión</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+  <!-- Google Model-Viewer for Real Interactive 3D Models (.glb/.gltf) -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="css/main.css">
@@ -42,16 +45,22 @@
     <!-- VIEW 2: CRIATURAS (INVENTARIO) -->
     <section id="view-deck" class="view-section">
       <div style="text-align: center; padding: 2rem; background: rgba(18, 38, 22, 0.85); border: 2px solid var(--border-gold-3d); border-radius: 20px; color: #fff;">
-        <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">🎴 Colección de Criaturas</h2>
-        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Área contenedora del Inventario (Paso 3).</p>
+        <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">🎴 Colección de Criaturas 3D</h2>
+        
+        <!-- INTERACTIVE 3D MODEL VIEWER TEST -->
+        <div style="width: 100%; height: 380px; margin: 1.5rem 0; border: 2px solid #fbbf24; border-radius: 20px; overflow: hidden; background: radial-gradient(circle, rgba(20,40,25,0.9), rgba(5,15,8,0.95));">
+          <model-viewer src="assets/models/fox_3d.glb" alt="Criatura 3D Interactiva" auto-rotate camera-controls autoplay shadow-intensity="1" style="width: 100%; height: 100%;"></model-viewer>
+        </div>
+
+        <p style="color: #cbd5e1; font-size: 0.9rem;">Prueba en vivo: Criatura 3D animada interactiva con rotación 360°, sombras e iluminación en tiempo real.</p>
       </div>
     </section>
 
     <!-- VIEW 3: JVSJ / BATALLA -->
     <section id="view-combat" class="view-section">
       <div style="text-align: center; padding: 2rem; background: rgba(18, 38, 22, 0.85); border: 2px solid var(--border-gold-3d); border-radius: 20px; color: #fff;">
-        <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">⚔️ Arena JvsJ</h2>
-        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Área contenedora del Combate por Turnos (Paso 4).</p>
+        <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">⚔️ Arena JvsJ 3D</h2>
+        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Área contenedora del Combate por Turnos 3D.</p>
       </div>
     </section>
 
