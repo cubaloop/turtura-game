@@ -1,6 +1,10 @@
-// Turtura Step 1: Clean Application Controller & Navigation Dock Engine
+// Turtura Step 2: Main Menu "La Torre del Poder" Application Controller
 class TurturaApp {
   constructor() {
+    this.categorySelector = new CategorySelector(
+      'category-selector-container',
+      (category) => this.switchTab('combat')
+    );
     this.initBottomNav();
   }
 
@@ -17,7 +21,6 @@ class TurturaApp {
   }
 
   switchTab(tabId) {
-    // Dynamically assign background class to body based on tab
     const bgMap = {
       world: 'bg-world',
       deck: 'bg-deck',
@@ -31,6 +34,8 @@ class TurturaApp {
 
     const targetSection = document.getElementById(`view-${tabId}`);
     if (targetSection) targetSection.classList.add('active');
+
+    if (tabId === 'world') this.categorySelector.render();
   }
 }
 

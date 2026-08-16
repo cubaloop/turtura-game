@@ -29,19 +29,16 @@
   <!-- MAIN GAME CONTAINER SHELL -->
   <main class="main-container">
     
-    <!-- VIEW 1: CALABOZO (MAIN HUB) -->
+    <!-- VIEW 1: CALABOZO (MAIN HUB 1:1 IMAGEN 1) -->
     <section id="view-world" class="view-section active">
-      <div style="text-align: center; padding: 2rem; background: rgba(18, 38, 22, 0.85); border: 2px solid var(--border-gold-3d); border-radius: 20px; color: #fff;">
-        <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">🏰 Calabozo & La Torre del Poder</h2>
-        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Estructura contenedora limpia del Paso 1 lista para implementar el Menú Principal 1:1 en el Paso 2.</p>
-      </div>
+      <div id="category-selector-container"></div>
     </section>
 
     <!-- VIEW 2: CRIATURAS (INVENTARIO) -->
     <section id="view-deck" class="view-section">
       <div style="text-align: center; padding: 2rem; background: rgba(18, 38, 22, 0.85); border: 2px solid var(--border-gold-3d); border-radius: 20px; color: #fff;">
         <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">🎴 Colección de Criaturas</h2>
-        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Área contenedora del Inventario de 2 Paneles.</p>
+        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Área contenedora del Inventario (Paso 3).</p>
       </div>
     </section>
 
@@ -49,7 +46,7 @@
     <section id="view-combat" class="view-section">
       <div style="text-align: center; padding: 2rem; background: rgba(18, 38, 22, 0.85); border: 2px solid var(--border-gold-3d); border-radius: 20px; color: #fff;">
         <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">⚔️ Arena JvsJ</h2>
-        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Área contenedora del Combate por Turnos.</p>
+        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Área contenedora del Combate por Turnos (Paso 4).</p>
       </div>
     </section>
 
@@ -71,7 +68,7 @@
 
   </main>
 
-  <!-- STICKY 5-BUTTON MOBILE DOCK NAVIGATION BAR (MATCHING IMAGEN 1 & 2) -->
+  <!-- STICKY 5-BUTTON MOBILE DOCK NAVIGATION BAR -->
   <nav class="bottom-nav-bar">
     <div class="bottom-nav-item" data-target-tab="shop">
       <span class="nav-icon">🛖</span>
@@ -96,6 +93,7 @@
   </nav>
 
   <!-- SCRIPT INTEGRATION -->
+  <script src="js/components/CategorySelector.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
