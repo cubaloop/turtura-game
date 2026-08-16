@@ -1,6 +1,8 @@
-// Turtura Application Controller with Landing Page & Main Menu Integration
+// Turtura Application Controller with Live Gemini AI Assistant Integration
 class TurturaApp {
   constructor() {
+    this.aiAssistant = new AIAssistant();
+    
     this.landingPage = new LandingPage(
       'landing-page-container',
       () => this.switchTab('world')
