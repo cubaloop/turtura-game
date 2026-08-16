@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Turtura: La Torre del Poder - RPG de Criaturas & Fusión</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="bg-world">
+
+  <!-- HEADER NAVIGATION (1:1 CURRENCY BAR) -->
+  <header class="game-header">
+    <div class="game-title">
+      <span>🐢</span> TURTURA
+    </div>
+    <div style="display: flex; align-items: center; gap: 1rem; font-weight: 900; font-size: 0.9rem;">
+      <span style="color: #4ade80; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 10px; border: 1px solid #4ade80;">123 💎</span>
+      <span style="color: #fbbf24; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 10px; border: 1px solid #fbbf24;">74851 🪙</span>
+    </div>
+  </header>
+
+  <!-- MAIN GAME CONTAINER SHELL -->
+  <main class="main-container">
+    
+    <!-- VIEW 1: CALABOZO (MAIN HUB) -->
+    <section id="view-world" class="view-section active">
+      <div style="text-align: center; padding: 2rem; background: rgba(18, 38, 22, 0.85); border: 2px solid var(--border-gold-3d); border-radius: 20px; color: #fff;">
+        <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">🏰 Calabozo & La Torre del Poder</h2>
+        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Estructura contenedora limpia del Paso 1 lista para implementar el Menú Principal 1:1 en el Paso 2.</p>
+      </div>
+    </section>
+
+    <!-- VIEW 2: CRIATURAS (INVENTARIO) -->
+    <section id="view-deck" class="view-section">
+      <div style="text-align: center; padding: 2rem; background: rgba(18, 38, 22, 0.85); border: 2px solid var(--border-gold-3d); border-radius: 20px; color: #fff;">
+        <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">🎴 Colección de Criaturas</h2>
+        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Área contenedora del Inventario de 2 Paneles.</p>
+      </div>
+    </section>
+
+    <!-- VIEW 3: JVSJ / BATALLA -->
+    <section id="view-combat" class="view-section">
+      <div style="text-align: center; padding: 2rem; background: rgba(18, 38, 22, 0.85); border: 2px solid var(--border-gold-3d); border-radius: 20px; color: #fff;">
+        <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">⚔️ Arena JvsJ</h2>
+        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Área contenedora del Combate por Turnos.</p>
+      </div>
+    </section>
+
+    <!-- VIEW 4: TIENDA -->
+    <section id="view-shop" class="view-section">
+      <div style="text-align: center; padding: 2rem; background: rgba(18, 38, 22, 0.85); border: 2px solid var(--border-gold-3d); border-radius: 20px; color: #fff;">
+        <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">🛖 Mercado de Cartas</h2>
+        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Área contenedora del Mercado.</p>
+      </div>
+    </section>
+
+    <!-- VIEW 5: EVENTOS -->
+    <section id="view-events" class="view-section">
+      <div style="text-align: center; padding: 2rem; background: rgba(18, 38, 22, 0.85); border: 2px solid var(--border-gold-3d); border-radius: 20px; color: #fff;">
+        <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">🛡️ Eventos Especiales</h2>
+        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Área contenedora de Eventos.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- STICKY 5-BUTTON MOBILE DOCK NAVIGATION BAR (MATCHING IMAGEN 1 & 2) -->
+  <nav class="bottom-nav-bar">
+    <div class="bottom-nav-item" data-target-tab="shop">
+      <span class="nav-icon">🛖</span>
+      <span>Tienda</span>
+    </div>
+    <div class="bottom-nav-item" data-target-tab="deck">
+      <span class="nav-icon">🎴</span>
+      <span>Criaturas</span>
+    </div>
+    <div class="bottom-nav-item center-battle-btn active" data-target-tab="world">
+      <span class="nav-icon">🏰</span>
+      <span>Calabozo</span>
+    </div>
+    <div class="bottom-nav-item" data-target-tab="combat">
+      <span class="nav-icon">⚔️</span>
+      <span>JvsJ</span>
+    </div>
+    <div class="bottom-nav-item" data-target-tab="events">
+      <span class="nav-icon">🛡️</span>
+      <span>Eventos</span>
+    </div>
+  </nav>
+
+  <!-- SCRIPT INTEGRATION -->
+  <script src="js/app.js"></script>
+</body>
+</html>

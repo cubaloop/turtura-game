@@ -1,0 +1,156 @@
+/* Turtura Step 1: Clean Layout Shell & Centered Dock Navigation System */
+:root {
+  --bg-dark: #081409;
+  --border-gold-3d: #fbbf24;
+  --accent-gold: #fef08a;
+  --accent-green: #22c55e;
+  --text-gold: #fef08a;
+  --text-primary: #ffffff;
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+/* FULL-BLEED BACKGROUND LAYER ON BODY */
+body {
+  background-color: #0d2110;
+  background-image: radial-gradient(circle at center, rgba(14, 34, 17, 0.35), rgba(8, 20, 9, 0.85)), url('../assets/bg_meadow.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 90px;
+  overflow-x: hidden;
+}
+
+/* CLEAN HEADER */
+.game-header {
+  background: linear-gradient(180deg, rgba(26, 48, 28, 0.95), rgba(12, 26, 14, 0.98));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 3px solid var(--border-gold-3d);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.85);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+
+.game-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #fef08a;
+  text-shadow: 2px 3px 0 #000, 0 0 15px rgba(251,191,36,0.8);
+  letter-spacing: 2px;
+}
+
+/* MAIN CONTENT SHELL CONTAINER */
+.main-container {
+  flex: 1;
+  padding: 1.25rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.view-section {
+  display: none;
+  width: 100%;
+}
+
+.view-section.active {
+  display: block;
+  animation: fadeInClean 0.3s ease-out forwards;
+}
+
+@keyframes fadeInClean {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* STICKY 5-BUTTON MOBILE DOCK NAVIGATION BAR */
+.bottom-nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 640px;
+  height: 75px;
+  background: linear-gradient(180deg, #241710, #140d08);
+  border: 3px solid var(--border-gold-3d);
+  border-bottom: none;
+  border-radius: 22px 22px 0 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 0.5rem;
+  box-shadow: 0 -10px 35px rgba(0,0,0,0.95);
+  z-index: 500;
+}
+
+.bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #a89f91;
+  font-weight: 800;
+  font-size: 0.75rem;
+  gap: 2px;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  flex: 1;
+  text-align: center;
+}
+
+.bottom-nav-item .nav-icon {
+  font-size: 1.45rem;
+  transition: transform 0.2s ease;
+}
+
+.bottom-nav-item.active {
+  color: var(--accent-gold);
+  background: rgba(245, 158, 11, 0.2);
+  border: 1px solid var(--border-gold-3d);
+}
+
+.bottom-nav-item.active .nav-icon {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 8px #fbbf24);
+}
+
+.bottom-nav-item.center-battle-btn {
+  background: linear-gradient(180deg, #fbbf24, #d97706);
+  color: #1e1b4b;
+  border: 2px solid #fff;
+  border-radius: 16px;
+  padding: 4px 14px;
+  transform: translateY(-10px);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.6), 0 6px 15px rgba(0,0,0,0.8);
+  flex: 1.15;
+}
+
+.bottom-nav-item.center-battle-btn .nav-icon {
+  font-size: 1.6rem;
+}
