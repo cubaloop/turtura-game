@@ -1,4 +1,4 @@
-// Turtura Step 2 Upgrade: Seamless Floating 3D PNG Icons over Nature Background
+// Turtura Step 2 Upgrade: Seamless 3D PNG Buttons & Floating Icons without White Boxes
 class CategorySelector {
   constructor(containerId, onSelectCategory) {
     this.container = document.getElementById(containerId);
@@ -12,12 +12,12 @@ class CategorySelector {
 
   render() {
     this.container.innerHTML = `
-      <div style="display: flex; flex-direction: column; gap: 1.5rem; width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 1rem;">
+      <div style="display: flex; flex-direction: column; gap: 1.75rem; width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 1rem;">
         
-        <!-- PROPORTIONAL DESKTOP STAGE WITH SEAMLESS FLOATING 3D PNG ICONS -->
-        <div style="background: rgba(18, 38, 22, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 3px solid var(--border-gold-3d); border-radius: 28px; padding: 2.5rem; display: flex; justify-content: space-between; align-items: center; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.95); min-height: 580px; width: 100%;">
+        <!-- PROPORTIONAL STAGE WITHOUT WHITE BOXES WITH FLOATING SEAMLESS 3D PNG ICONS -->
+        <div style="background: rgba(18, 38, 22, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 3px solid var(--border-gold-3d); border-radius: 28px; padding: 2.5rem; display: flex; justify-content: space-between; align-items: center; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.95); min-height: 600px; width: 100%;">
           
-          <!-- LEFT SIDE STACK: SEAMLESS FLOATING 3D PNG ICONS -->
+          <!-- LEFT SIDE STACK: FLOATING 3D PNG ICONS (NO WHITE BOXES) -->
           <div style="display: flex; flex-direction: column; gap: 1.5rem; z-index: 10;">
             <div style="width: 72px; height: 72px; cursor: pointer; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.85)); transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);" onmouseover="this.style.transform='scale(1.2) translateY(-4px)'" onmouseout="this.style.transform='scale(1) translateY(0)'">
               <img src="assets/icon_dragon_3d.png" style="width: 100%; height: 100%; object-fit: contain;" alt="Dragon Profile">
@@ -33,36 +33,44 @@ class CategorySelector {
             </div>
           </div>
 
-          <!-- CENTER STAGE LOGO & MAJESTIC 3D BUTTONS -->
+          <!-- CENTER STAGE LOGO & MAJESTIC TRANSPARENT 3D PNG ACTION BUTTONS -->
           <div style="display: flex; flex-direction: column; align-items: center; text-align: center; flex: 1; margin: 0 2rem; z-index: 10;">
             
             <!-- MAJESTIC FLOATING 3D EMBLEM LOGO (TRANSPARENT PNG) -->
-            <div style="width: 320px; height: 260px; filter: drop-shadow(0 0 35px rgba(251,191,36,0.8)) drop-shadow(0 15px 30px rgba(0,0,0,0.9)); position: relative; margin-bottom: 0.5rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="width: 340px; height: 280px; filter: drop-shadow(0 0 35px rgba(251,191,36,0.85)) drop-shadow(0 15px 30px rgba(0,0,0,0.9)); position: relative; margin-bottom: 0.5rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
               <img src="assets/logo_3d.png" style="width: 100%; height: 100%; object-fit: contain;" alt="Turtura 3D Emblem Logo">
             </div>
 
             <!-- DAILY BOOST BADGE -->
             <div style="background: rgba(0,0,0,0.85); border: 2px solid #fbbf24; border-radius: 16px; padding: 8px 24px; margin-top: 0.5rem; box-shadow: 0 6px 16px rgba(0,0,0,0.85);">
-              <div style="font-size: 0.82rem; color: #fbbf24; font-weight: 900; letter-spacing: 0.5px;">🪖 Impulso Diario de Fusión</div>
-              <div style="font-size: 0.85rem; color: #cbd5e1; font-weight: 800;">Se reinicia en 1 h 12 min</div>
+              <div style="font-size: 0.85rem; color: #fbbf24; font-weight: 900; letter-spacing: 0.5px;">🪖 Impulso Diario de Fusión</div>
+              <div style="font-size: 0.88rem; color: #cbd5e1; font-weight: 800;">Se reinicia en 1 h 12 min</div>
             </div>
 
-            <!-- MAJESTIC 3D ACTION BUTTONS WITH TRANSPARENT 3D PNG ICONS -->
-            <div style="display: flex; gap: 1.75rem; margin-top: 1.75rem;">
-              <button class="rpg-btn-gold" id="btn-turn-duel" style="padding: 1rem 2.2rem; font-size: 1.15rem; display: flex; align-items: center; gap: 0.85rem;">
-                <img src="assets/icon_duel_3d.png" style="width: 42px; height: 42px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.7));" alt="Duel Icon">
-                <span>Duelo por Turnos</span>
-              </button>
+            <!-- MAJESTIC TRANSPARENT 3D PNG ACTION BUTTONS (NO WHITE RECTANGLES) -->
+            <div style="display: flex; gap: 2rem; margin-top: 2rem;">
+              
+              <!-- 3D PNG BUTTON 1: DUELO POR TURNOS -->
+              <div id="btn-turn-duel" style="cursor: pointer; position: relative; width: 230px; height: 85px; filter: drop-shadow(0 10px 22px rgba(0,0,0,0.9)); transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.08) translateY(-3px)'" onmouseout="this.style.transform='scale(1) translateY(0)'">
+                <img src="assets/btn_duel_3d.png" style="width: 100%; height: 100%; object-fit: contain;" alt="Duelo por Turnos Button">
+                <span style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 1.05rem; font-weight: 900; color: #fef08a; text-shadow: 2px 2px 4px #000; padding-left: 45px;">
+                  Duelo por Turnos
+                </span>
+              </div>
 
-              <button class="rpg-btn-green" id="btn-challenge-tower" style="padding: 1rem 2.2rem; font-size: 1.15rem; display: flex; align-items: center; gap: 0.85rem;">
-                <img src="assets/icon_tower_3d.png" style="width: 42px; height: 42px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.7));" alt="Tower Icon">
-                <span>Desafiar la Torre</span>
-              </button>
+              <!-- 3D PNG BUTTON 2: DESAFIAR LA TORRE -->
+              <div id="btn-challenge-tower" style="cursor: pointer; position: relative; width: 230px; height: 85px; filter: drop-shadow(0 10px 22px rgba(0,0,0,0.9)); transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.08) translateY(-3px)'" onmouseout="this.style.transform='scale(1) translateY(0)'">
+                <img src="assets/btn_tower_3d.png" style="width: 100%; height: 100%; object-fit: contain;" alt="Desafiar la Torre Button">
+                <span style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 1.05rem; font-weight: 900; color: #bbf7d0; text-shadow: 2px 2px 4px #000; padding-left: 45px;">
+                  Desafiar la Torre
+                </span>
+              </div>
+
             </div>
 
           </div>
 
-          <!-- RIGHT SIDE STACK: SEAMLESS FLOATING 3D PNG ICONS -->
+          <!-- RIGHT SIDE STACK: FLOATING 3D PNG ICONS (NO WHITE BOXES) -->
           <div style="display: flex; flex-direction: column; gap: 1.5rem; z-index: 10;">
             <div style="width: 72px; height: 72px; cursor: pointer; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.85)); transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);" onmouseover="this.style.transform='scale(1.2) translateY(-4px)'" onmouseout="this.style.transform='scale(1) translateY(0)'">
               <img src="assets/icon_menu_3d.png" style="width: 100%; height: 100%; object-fit: contain;" alt="Menu Gear">
@@ -88,7 +96,7 @@ class CategorySelector {
             </div>
           </div>
 
-          <div style="width: 320px; background: #000; border: 2px solid #fbbf24; border-radius: 14px; height: 26px; overflow: hidden; position: relative;">
+          <div style="width: 340px; background: #000; border: 2px solid #fbbf24; border-radius: 14px; height: 26px; overflow: hidden; position: relative;">
             <div style="width: 50%; background: linear-gradient(90deg, #fbbf24, #d97706); height: 100%;"></div>
             <span style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; font-size: 0.9rem; font-weight: 900; color: #fff; line-height: 26px; display: flex; align-items: center; justify-content: center;">10 / 20</span>
           </div>

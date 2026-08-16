@@ -1,4 +1,4 @@
-/* Turtura Step 1: Clean Layout Shell & Centered Dock Navigation System */
+/* Turtura Clean & Proportional Layout Overhaul System */
 :root {
   --bg-dark: #081409;
   --border-gold-3d: #fbbf24;
@@ -19,7 +19,7 @@
 /* FULL-BLEED BACKGROUND LAYER ON BODY */
 body {
   background-color: #0d2110;
-  background-image: radial-gradient(circle at center, rgba(14, 34, 17, 0.35), rgba(8, 20, 9, 0.85)), url('../assets/bg_meadow.png');
+  background-image: radial-gradient(circle at center, rgba(14, 34, 17, 0.25), rgba(8, 20, 9, 0.85)), url('../assets/bg_meadow.png');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -30,7 +30,7 @@ body {
   width: 100vw;
   display: flex;
   flex-direction: column;
-  padding-bottom: 90px;
+  padding-bottom: 95px;
   overflow-x: hidden;
 }
 
@@ -62,11 +62,11 @@ body {
   letter-spacing: 2px;
 }
 
-/* MAIN CONTENT SHELL CONTAINER */
+/* MAIN CONTENT SHELL CONTAINER - RESPONSIVE PC & MOBILE PROPORTIONS */
 .main-container {
   flex: 1;
-  padding: 1.25rem;
-  max-width: 1200px;
+  padding: 1.25rem 1.5rem;
+  max-width: 1380px;
   margin: 0 auto;
   width: 100%;
 }
@@ -93,12 +93,12 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 640px;
-  height: 75px;
+  max-width: 680px;
+  height: 78px;
   background: linear-gradient(180deg, #241710, #140d08);
   border: 3px solid var(--border-gold-3d);
   border-bottom: none;
-  border-radius: 22px 22px 0 0;
+  border-radius: 24px 24px 0 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
