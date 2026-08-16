@@ -1,4 +1,4 @@
-/* AAA 100% Professional 3D Graphics & Centered Dock Navigation Design System */
+/* AAA 100% Professional 3D Graphics & Section-Specific Nature Backgrounds System */
 :root {
   --bg-dark: #081409;
   --bg-glass: rgba(14, 34, 17, 0.92);
@@ -22,7 +22,7 @@
   user-select: none;
 }
 
-/* FULL-SCREEN PURE FANTASY NATURE BACKGROUND ON BODY */
+/* FULL-SCREEN DYNAMIC BACKGROUND ON BODY USING USER PIXEL-ART ASSETS */
 body {
   background-color: #0d2110;
   background-position: center center;
@@ -43,19 +43,19 @@ body {
 
 /* SECTION-SPECIFIC FULL-SCREEN BACKGROUNDS */
 body.bg-world {
-  background-image: radial-gradient(circle at center, rgba(14, 34, 17, 0.5), rgba(8, 20, 9, 0.92)), url('../assets/bengal_tiger.jpg');
+  background-image: radial-gradient(circle at center, rgba(14, 34, 17, 0.4), rgba(8, 20, 9, 0.85)), url('../assets/bg_meadow.png');
 }
 
 body.bg-deck {
-  background-image: radial-gradient(circle at center, rgba(20, 50, 25, 0.55), rgba(6, 18, 8, 0.92)), url('../assets/rock_behemoth.jpg');
+  background-image: radial-gradient(circle at center, rgba(20, 50, 25, 0.4), rgba(6, 18, 8, 0.85)), url('../assets/bg_mountain.png');
 }
 
 body.bg-combat {
-  background-image: radial-gradient(circle at center, rgba(30, 20, 10, 0.65), rgba(10, 6, 3, 0.95)), url('../assets/celestial_phoenix.jpg');
+  background-image: radial-gradient(circle at center, rgba(30, 20, 10, 0.4), rgba(10, 6, 3, 0.85)), url('../assets/bg_monolith.png');
 }
 
 body.bg-shop {
-  background-image: radial-gradient(circle at center, rgba(40, 20, 50, 0.65), rgba(12, 5, 18, 0.95)), url('../assets/kraken.jpg');
+  background-image: radial-gradient(circle at center, rgba(40, 20, 50, 0.4), rgba(12, 5, 18, 0.85)), url('../assets/bg_hills.png');
 }
 
 /* 3D Glassmorphic Vector Header */
