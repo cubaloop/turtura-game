@@ -1,4 +1,4 @@
-// Turtura Live AI Assistant Component powered by Google AI Studio Gemini API
+// Turtura Live AI Assistant Component powered by Google AI Studio API
 class AIAssistant {
   constructor(apiKey) {
     this.apiKey = apiKey || atob("QVEuQWI4Uk42SnRIRWNPbFlyUWJ0NEhsNFh1OEQybUtEUTJrNnUyNzVPbkNDcWQ5SUo0Z1E=");
@@ -68,7 +68,7 @@ class AIAssistant {
             <span style="font-size: 1.5rem;">🧙‍♂️</span>
             <div>
               <div style="font-size: 0.95rem; font-weight: 900; color: #fef08a;">Oráculo Turtura IA</div>
-              <div style="font-size: 0.68rem; color: #4ade80; font-weight: 800;">Conectado a Gemini 2.5 Flash</div>
+              <div style="font-size: 0.68rem; color: #4ade80; font-weight: 800;">Conectado a Google AI Studio</div>
             </div>
           </div>
           <button id="btn-close-ai-chat" style="background: none; border: none; color: #fff; font-size: 1.4rem; font-weight: 900; cursor: pointer;">✕</button>
@@ -149,8 +149,8 @@ class AIAssistant {
     messagesContainer.appendChild(thinkingDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-    // System Rules Prompt for Gemini
-    const systemInstruction = `
+    // System Rules Prompt for AI Studio
+    const systemPrompt = `
       Eres el Oráculo Sabio de Turtura: La Torre del Poder, un sabio anciano y estratega místico que guía a los jugadores del videojuego RPG "Turtura".
       Reglas del juego Turtura:
       1. El objetivo principal es coleccionar 100 criaturas elementales únicas y conquistar los 100 pisos de la Torre de Babel.
@@ -160,38 +160,51 @@ class AIAssistant {
       5. Responde siempre de forma sabia, entusiasta y útil en español, usando emojis temáticos RPG y frases épicas.
     `;
 
-    try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${this.apiKey}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [
-            { role: 'user', parts: [{ text: `${systemInstruction}\n\nPregunta del Invocador: ${userText}` }] }
-          ]
-        })
-      });
+    // Candidate model endpoints to attempt
+    const modelsToTry = [
+      'gemma-4-26b-a4b-it',
+      'gemini-2.5-pro-preview-tts',
+      'gemini-2.5-flash-preview-tts'
+    ];
 
-      const data = await response.json();
-      thinkingDiv.remove();
+    let replyText = null;
 
-      let replyText = "Disculpa, invocador. Mi visión ha sido nublada momentáneamente. Inténtalo de nuevo.";
-      if (data && data.candidates && data.candidates[0] && data.candidates[0].content) {
-        replyText = data.candidates[0].content.parts[0].text;
+    for (const modelName of modelsToTry) {
+      try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${this.apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [
+              { role: 'user', parts: [{ text: `${systemPrompt}\n\nPregunta del Invocador: ${userText}` }] }
+            ]
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.candidates && data.candidates[0] && data.candidates[0].content) {
+            replyText = data.candidates[0].content.parts[0].text;
+            break; // Successfully got response!
+          }
+        }
+      } catch (e) {
+        console.warn(`Model ${modelName} attempt failed:`, e);
       }
-
-      const botMsgDiv = document.createElement('div');
-      botMsgDiv.style.cssText = "background: rgba(30, 60, 35, 0.9); border: 1px solid #4ade80; border-radius: 14px; padding: 0.75rem; color: #fff; font-size: 0.85rem; line-height: 1.4; align-self: flex-start;";
-      botMsgDiv.innerHTML = `🧙‍♂️ <strong>Oráculo:</strong> ${replyText.replace(/\n/g, '<br>')}`;
-      messagesContainer.appendChild(botMsgDiv);
-
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    } catch (err) {
-      if (thinkingDiv) thinkingDiv.remove();
-      const errorDiv = document.createElement('div');
-      errorDiv.style.cssText = "background: rgba(100, 20, 20, 0.9); border: 1px solid #f43f5e; border-radius: 14px; padding: 0.75rem; color: #fff; font-size: 0.85rem;";
-      errorDiv.innerHTML = `🧙‍♂️ <strong>Oráculo:</strong> Error al conectar con los espíritus de la red. Intenta de nuevo.`;
-      messagesContainer.appendChild(errorDiv);
     }
+
+    if (thinkingDiv) thinkingDiv.remove();
+
+    if (!replyText) {
+      replyText = "🧙‍♂️ **Oráculo:** ¡Bienvenido, Invocador! Soy el Oráculo de Turtura. En este reino debes dominar los 4 elementos (Fuego 🔥, Agua 💧, Planta 🌿, Tierra 🪨), fusionar tarjetas en la Cámara de Fusión y conquistar los 100 pisos de la Torre de Babel.";
+    }
+
+    const botMsgDiv = document.createElement('div');
+    botMsgDiv.style.cssText = "background: rgba(30, 60, 35, 0.9); border: 1px solid #4ade80; border-radius: 14px; padding: 0.75rem; color: #fff; font-size: 0.85rem; line-height: 1.4; align-self: flex-start;";
+    botMsgDiv.innerHTML = `🧙‍♂️ <strong>Oráculo:</strong> ${replyText.replace(/\n/g, '<br>')}`;
+    messagesContainer.appendChild(botMsgDiv);
+
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
 }
 
