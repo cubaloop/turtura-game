@@ -1,4 +1,4 @@
-// Turtura Application Controller with Live Gemini AI Assistant Integration
+// Turtura Application Controller with Live 3D DeckManager Integration
 class TurturaApp {
   constructor() {
     this.aiAssistant = new AIAssistant();
@@ -12,6 +12,8 @@ class TurturaApp {
       'category-selector-container',
       (category) => this.switchTab('combat')
     );
+
+    this.deckManager = new DeckManager('deck-manager-container');
 
     this.initBottomNav();
     this.initHeaderHome();
@@ -54,6 +56,7 @@ class TurturaApp {
 
     if (tabId === 'landing') this.landingPage.render();
     if (tabId === 'world') this.categorySelector.render();
+    if (tabId === 'deck') this.deckManager.render();
   }
 }
 

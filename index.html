@@ -42,18 +42,9 @@
       <div id="category-selector-container"></div>
     </section>
 
-    <!-- VIEW 2: CRIATURAS (INVENTARIO) -->
+    <!-- VIEW 2: CRIATURAS (INVENTARIO DE 2 PANELES CON VISOR 3D INTERACTIVO) -->
     <section id="view-deck" class="view-section">
-      <div style="text-align: center; padding: 2rem; background: rgba(18, 38, 22, 0.85); border: 2px solid var(--border-gold-3d); border-radius: 20px; color: #fff;">
-        <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">🎴 Colección de Criaturas 3D</h2>
-        
-        <!-- INTERACTIVE 3D MODEL VIEWER TEST -->
-        <div style="width: 100%; height: 380px; margin: 1.5rem 0; border: 2px solid #fbbf24; border-radius: 20px; overflow: hidden; background: radial-gradient(circle, rgba(20,40,25,0.9), rgba(5,15,8,0.95));">
-          <model-viewer src="assets/models/fox_3d.glb" alt="Criatura 3D Interactiva" auto-rotate camera-controls autoplay shadow-intensity="1" style="width: 100%; height: 100%;"></model-viewer>
-        </div>
-
-        <p style="color: #cbd5e1; font-size: 0.9rem;">Prueba en vivo: Criatura 3D animada interactiva con rotación 360°, sombras e iluminación en tiempo real.</p>
-      </div>
+      <div id="deck-manager-container"></div>
     </section>
 
     <!-- VIEW 3: JVSJ / BATALLA -->
@@ -107,9 +98,11 @@
   </nav>
 
   <!-- SCRIPT INTEGRATION -->
+  <script src="js/data/creatures.js"></script>
   <script src="js/components/AIAssistant.js"></script>
   <script src="js/components/LandingPage.js"></script>
   <script src="js/components/CategorySelector.js"></script>
+  <script src="js/components/DeckManager.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
