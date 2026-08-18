@@ -1,4 +1,4 @@
-// Turtura Paso 3: 2-Panel Deck & Creature Inventory Manager Component with Clean Studio White 3D Model Viewer
+// Turtura Paso 3: 2-Panel Deck & Creature Inventory Manager Component with Rich RPG Green 3D Model Viewer
 class DeckManager {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
@@ -83,7 +83,7 @@ class DeckManager {
                       box-shadow: 0 4px 12px rgba(0,0,0,0.8);
                       transition: transform 0.2s ease;
                     " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                      <div style="width: 44px; height: 44px; border-radius: 10px; overflow: hidden; border: 1.5px solid #4ade80; flex-shrink: 0; background: #fff;">
+                      <div style="width: 44px; height: 44px; border-radius: 10px; overflow: hidden; border: 1.5px solid #4ade80; flex-shrink: 0; background: #000;">
                         <img src="${creature.icon}" style="width: 100%; height: 100%; object-fit: cover;" alt="${creature.name}">
                       </div>
                       <div style="overflow: hidden;">
@@ -96,7 +96,7 @@ class DeckManager {
               </div>
             </div>
 
-            <!-- LIVE 3D CREATURE INSPECTOR PANEL WITH CLEAN STUDIO WHITE BACKGROUND -->
+            <!-- LIVE 3D CREATURE INSPECTOR PANEL WITH RICH RPG GREEN BACKGROUND -->
             ${this.selectedCreature ? `
               <div style="background: rgba(18, 38, 22, 0.95); border: 3.5px solid var(--border-gold-3d); border-radius: 28px; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; box-shadow: 0 15px 40px rgba(0,0,0,0.9);">
                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
@@ -108,9 +108,9 @@ class DeckManager {
                   </span>
                 </div>
 
-                <!-- CLEAN STUDIO WHITE BACKGROUND FOR 3D MODEL DISPLAY -->
-                <div style="width: 100%; height: 270px; border-radius: 20px; overflow: hidden; border: 3px solid #fbbf24; background: radial-gradient(circle, #ffffff 0%, #f1f5f9 100%); box-shadow: 0 8px 25px rgba(0,0,0,0.6);">
-                  <model-viewer src="${this.selectedCreature.model}" alt="${this.selectedCreature.name}" auto-rotate camera-controls shadow-intensity="1.8" exposure="1.0" style="width: 100%; height: 100%; background-color: #ffffff;"></model-viewer>
+                <!-- RICH RPG GREEN BACKGROUND FOR HIGH-CONTRAST 3D MODEL DISPLAY -->
+                <div style="width: 100%; height: 270px; border-radius: 20px; overflow: hidden; border: 3px solid #fbbf24; background: radial-gradient(circle, rgba(20,45,25,0.95), rgba(5,15,8,0.98)); box-shadow: inset 0 0 25px rgba(0,0,0,0.9);">
+                  <model-viewer src="${this.selectedCreature.model}" alt="${this.selectedCreature.name}" auto-rotate camera-controls shadow-intensity="1.8" exposure="1.1" style="width: 100%; height: 100%;"></model-viewer>
                 </div>
 
                 <h3 style="font-size: 1.4rem; font-weight: 900; color: #fff; text-shadow: 0 2px 4px #000;">
@@ -163,7 +163,7 @@ class DeckManager {
                       <span style="position: absolute; top: 6px; right: 6px; background: #22c55e; color: #fff; font-size: 0.6rem; font-weight: 900; padding: 2px 6px; border-radius: 8px;">EQUIPADO</span>
                     ` : ''}
 
-                    <div style="width: 70px; height: 70px; border-radius: 14px; overflow: hidden; border: 1.5px solid #fbbf24; background: #fff;">
+                    <div style="width: 70px; height: 70px; border-radius: 14px; overflow: hidden; border: 1.5px solid #fbbf24; background: #000;">
                       <img src="${creature.icon}" style="width: 100%; height: 100%; object-fit: cover;" alt="${creature.name}">
                     </div>
 
