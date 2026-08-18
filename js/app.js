@@ -1,65 +1,87 @@
-// Turtura Application Controller with Live 3D DeckManager Integration
+// Turtura Core Game Application Orchestrator
 class TurturaApp {
   constructor() {
-    this.aiAssistant = new AIAssistant();
-    
-    this.landingPage = new LandingPage(
-      'landing-page-container',
-      () => this.switchTab('world')
-    );
-    
-    this.categorySelector = new CategorySelector(
-      'category-selector-container',
-      (category) => this.switchTab('combat')
-    );
-
-    this.deckManager = new DeckManager('deck-manager-container');
-
-    this.initBottomNav();
-    this.initHeaderHome();
+    this.currentTab = 'world';
+    this.init();
   }
 
-  initHeaderHome() {
-    const headerHomeBtn = document.getElementById('btn-header-home');
-    if (headerHomeBtn) {
-      headerHomeBtn.addEventListener('click', () => this.switchTab('landing'));
-    }
-  }
-
-  initBottomNav() {
-    const bottomNavItems = document.querySelectorAll('.bottom-nav-bar .bottom-nav-item');
-    bottomNavItems.forEach(item => {
-      item.addEventListener('click', () => {
-        bottomNavItems.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-        const targetTab = item.getAttribute('data-target-tab');
-        this.switchTab(targetTab);
-      });
+  init() {
+    document.addEventListener('DOMContentLoaded', () => {
+      this.initComponents();
+      this.attachNavigation();
     });
   }
 
+  initComponents() {
+    // 0. Landing Page Hero
+    if (document.getElementById('landing-page-container')) {
+      this.landingPage = new window.LandingPage('landing-page-container', () => this.switchTab('world'));
+    }
+
+    // 1. World / Calabozo Main Menu Hub
+    if (document.getElementById('category-selector-container')) {
+      this.categorySelector = new window.CategorySelector('category-selector-container', (targetTab) => this.switchTab(targetTab));
+    }
+
+    // 2. Criaturas / Pokémon TCG Style Card Inventory
+    if (document.getElementById('deck-manager-container')) {
+      this.deckManager = new window.DeckManager('deck-manager-container');
+    }
+
+    // 3. JvsJ / Combat Engine & 100-Floor Babel Tower
+    if (document.getElementById('view-combat')) {
+      this.combatEngine = new window.CombatEngine('view-combat');
+    }
+
+    // 4. Fusion Chamber
+    if (document.getElementById('view-shop')) {
+      this.fusionSynthesizer = new window.FusionSynthesizer('view-shop');
+    }
+
+    // 5. Live AI Assistant Chatbot
+    this.aiAssistant = new window.AIAssistant();
+  }
+
+  attachNavigation() {
+    const navItems = document.querySelectorAll('.bottom-nav-item');
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const targetTab = item.getAttribute('data-target-tab');
+        if (targetTab) this.switchTab(targetTab);
+      });
+    });
+
+    const btnHeaderHome = document.getElementById('btn-header-home');
+    if (btnHeaderHome) {
+      btnHeaderHome.addEventListener('click', () => this.switchTab('world'));
+    }
+  }
+
   switchTab(tabId) {
-    const bgMap = {
-      landing: 'bg-world',
-      world: 'bg-world',
-      deck: 'bg-deck',
-      combat: 'bg-combat',
-      shop: 'bg-shop',
-      events: 'bg-world'
-    };
-    document.body.className = bgMap[tabId] || 'bg-world';
+    this.currentTab = tabId;
 
-    document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+    // Hide all view sections
+    const sections = document.querySelectorAll('.view-section');
+    sections.forEach(sec => sec.classList.remove('active'));
 
+    // Show target view section
     const targetSection = document.getElementById(`view-${tabId}`);
-    if (targetSection) targetSection.classList.add('active');
+    if (targetSection) {
+      targetSection.classList.add('active');
+    }
 
-    if (tabId === 'landing') this.landingPage.render();
-    if (tabId === 'world') this.categorySelector.render();
-    if (tabId === 'deck') this.deckManager.render();
+    // Update bottom nav active state
+    const navItems = document.querySelectorAll('.bottom-nav-item');
+    navItems.forEach(item => {
+      if (item.getAttribute('data-target-tab') === tabId) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  window.app = new TurturaApp();
-});
+window.app = new TurturaApp();

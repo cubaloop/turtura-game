@@ -13,8 +13,8 @@
   <!-- Google Model-Viewer for Real Interactive 3D Models (.glb/.gltf) -->
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
-  <!-- CSS Stylesheets (with Cache Busting v=1.1.1) -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.1">
+  <!-- CSS Stylesheets (with Cache Busting v=1.2.0) -->
+  <link rel="stylesheet" href="css/main.css?v=1.2.0">
 </head>
 <body class="bg-world">
 
@@ -47,27 +47,17 @@
       <div id="deck-manager-container"></div>
     </section>
 
-    <!-- VIEW 3: JVSJ / BATALLA -->
-    <section id="view-combat" class="view-section">
-      <div style="text-align: center; padding: 2rem; background: rgba(18, 38, 22, 0.85); border: 2px solid var(--border-gold-3d); border-radius: 20px; color: #fff;">
-        <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">⚔️ Arena JvsJ 3D</h2>
-        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Área contenedora del Combate por Turnos 3D.</p>
-      </div>
-    </section>
+    <!-- VIEW 3: JVSJ / BATALLA DE LA TORRE DE BABEL 100 PISOS -->
+    <section id="view-combat" class="view-section"></section>
 
-    <!-- VIEW 4: TIENDA -->
-    <section id="view-shop" class="view-section">
-      <div style="text-align: center; padding: 2rem; background: rgba(18, 38, 22, 0.85); border: 2px solid var(--border-gold-3d); border-radius: 20px; color: #fff;">
-        <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">🛖 Mercado de Cartas</h2>
-        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Área contenedora del Mercado.</p>
-      </div>
-    </section>
+    <!-- VIEW 4: CÁMARA DE FUSIÓN 3D -->
+    <section id="view-shop" class="view-section"></section>
 
-    <!-- VIEW 5: EVENTOS -->
+    <!-- VIEW 5: EVENTOS ESPECIALES -->
     <section id="view-events" class="view-section">
       <div style="text-align: center; padding: 2rem; background: rgba(18, 38, 22, 0.85); border: 2px solid var(--border-gold-3d); border-radius: 20px; color: #fff;">
-        <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">🛡️ Eventos Especiales</h2>
-        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Área contenedora de Eventos.</p>
+        <h2 style="color: var(--accent-gold); font-size: 1.6rem; font-weight: 900;">🛡️ Eventos Especiales de Temporada</h2>
+        <p style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Desafíos semanales con modificadores climáticos especiales.</p>
       </div>
     </section>
 
@@ -76,8 +66,8 @@
   <!-- STICKY 5-BUTTON MOBILE DOCK NAVIGATION BAR -->
   <nav class="bottom-nav-bar">
     <div class="bottom-nav-item" data-target-tab="shop">
-      <span class="nav-icon">🛖</span>
-      <span>Tienda</span>
+      <span class="nav-icon">🔮</span>
+      <span>Fusión</span>
     </div>
     <div class="bottom-nav-item" data-target-tab="deck">
       <span class="nav-icon">🎴</span>
@@ -97,12 +87,14 @@
     </div>
   </nav>
 
-  <!-- SCRIPT INTEGRATION (WITH CACHE BUSTING v=1.1.1) -->
-  <script src="js/data/creatures.js?v=1.1.1"></script>
-  <script src="js/components/AIAssistant.js?v=1.1.1"></script>
-  <script src="js/components/LandingPage.js?v=1.1.1"></script>
-  <script src="js/components/CategorySelector.js?v=1.1.1"></script>
-  <script src="js/components/DeckManager.js?v=1.1.1"></script>
-  <script src="js/app.js?v=1.1.1"></script>
+  <!-- SCRIPT INTEGRATION (WITH CACHE BUSTING v=1.2.0) -->
+  <script src="js/data/creatures.js?v=1.2.0"></script>
+  <script src="js/components/AIAssistant.js?v=1.2.0"></script>
+  <script src="js/components/LandingPage.js?v=1.2.0"></script>
+  <script src="js/components/CategorySelector.js?v=1.2.0"></script>
+  <script src="js/components/DeckManager.js?v=1.2.0"></script>
+  <script src="js/components/CombatEngine.js?v=1.2.0"></script>
+  <script src="js/components/FusionSynthesizer.js?v=1.2.0"></script>
+  <script src="js/app.js?v=1.2.0"></script>
 </body>
 </html>
