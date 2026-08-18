@@ -96,7 +96,7 @@ class DeckManager {
               </div>
             </div>
 
-            <!-- LIVE 3D CREATURE INSPECTOR PANEL WITH RICH RPG GREEN BACKGROUND -->
+            <!-- LIVE 3D CREATURE INSPECTOR PANEL WITH HIGH CONTRAST DARK GREEN BACKGROUND -->
             ${this.selectedCreature ? `
               <div style="background: rgba(18, 38, 22, 0.95); border: 3.5px solid var(--border-gold-3d); border-radius: 28px; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; box-shadow: 0 15px 40px rgba(0,0,0,0.9);">
                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
@@ -108,9 +108,9 @@ class DeckManager {
                   </span>
                 </div>
 
-                <!-- RICH RPG GREEN BACKGROUND FOR HIGH-CONTRAST 3D MODEL DISPLAY -->
-                <div style="width: 100%; height: 270px; border-radius: 20px; overflow: hidden; border: 3px solid #fbbf24; background: radial-gradient(circle, rgba(20,45,25,0.95), rgba(5,15,8,0.98)); box-shadow: inset 0 0 25px rgba(0,0,0,0.9);">
-                  <model-viewer src="${this.selectedCreature.model}" alt="${this.selectedCreature.name}" auto-rotate camera-controls shadow-intensity="1.8" exposure="1.1" style="width: 100%; height: 100%;"></model-viewer>
+                <!-- HIGH CONTRAST DARK GREEN BACKGROUND FOR 3D MODEL DISPLAY -->
+                <div style="width: 100%; height: 270px; border-radius: 20px; overflow: hidden; border: 3px solid #fbbf24; background: radial-gradient(circle, #102a18 0%, #051409 100%) !important; box-shadow: inset 0 0 25px rgba(0,0,0,0.9);">
+                  <model-viewer src="${this.selectedCreature.model}" alt="${this.selectedCreature.name}" auto-rotate camera-controls shadow-intensity="1.8" exposure="1.1" style="width: 100%; height: 100%; background-color: #051409 !important;"></model-viewer>
                 </div>
 
                 <h3 style="font-size: 1.4rem; font-weight: 900; color: #fff; text-shadow: 0 2px 4px #000;">
