@@ -1,11 +1,12 @@
-// Turtura Paso 3: 2-Panel Deck & Creature Inventory Manager Component with Rich RPG Green 3D Model Viewer
+// Turtura Pokémon TCG Style Card Inventory & 3D Interactive Card Inspector Component
 class DeckManager {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
     this.creatures = window.CREATURES_DATA || [];
-    this.equippedIds = [1, 2, 5, 9]; // Active squad of 4 creatures
+    this.equippedIds = [1, 2, 3, 4]; // Active squad of 4 cards
     this.selectedCreature = this.creatures[0] || null;
     this.currentFilter = 'All';
+    this.isCardFlipped = false;
     this.init();
   }
 
@@ -28,16 +29,16 @@ class DeckManager {
         <div style="background: rgba(14, 30, 16, 0.92); border: 3px solid var(--border-gold-3d); border-radius: 24px; padding: 1.25rem 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.85);">
           <div>
             <h2 style="font-size: 1.8rem; font-weight: 900; color: #fef08a; text-shadow: 0 2px 5px rgba(0,0,0,0.9);">
-              🎴 Colección de Criaturas & Escuadrón 3D
+              🎴 Colección de Cartas Turtura (Pokémon TCG Style)
             </h2>
             <p style="font-size: 0.88rem; color: #cbd5e1; font-weight: 600;">
-              Equipa hasta 4 criaturas en tu escuadrón activo para la Torre de Babel.
+              Equipa hasta 4 cartas en tu mazo activo para la Torre de Babel.
             </p>
           </div>
 
           <!-- ELEMENTAL FILTER BUTTONS -->
           <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;" id="deck-filter-bar">
-            ${['All', 'Fuego', 'Agua', 'Planta', 'Tierra'].map(elem => `
+            ${['All', 'Aire', 'Fuego', 'Agua', 'Tierra'].map(elem => `
               <button class="filter-btn ${this.currentFilter === elem ? 'active' : ''}" data-elem="${elem}" style="
                 background: ${this.currentFilter === elem ? 'linear-gradient(180deg, #fbbf24, #d97706)' : 'rgba(0,0,0,0.6)'};
                 color: ${this.currentFilter === elem ? '#1e1b4b' : '#fff'};
@@ -49,22 +50,22 @@ class DeckManager {
                 cursor: pointer;
                 transition: all 0.2s ease;
               ">
-                ${elem === 'All' ? '🌐 Todos' : elem === 'Fuego' ? '🔥 Fuego' : elem === 'Agua' ? '💧 Agua' : elem === 'Planta' ? '🌿 Planta' : '🪨 Tierra'}
+                ${elem === 'All' ? '🌐 Todos' : elem === 'Aire' ? '🌪️ Aire' : elem === 'Fuego' ? '🔥 Fuego' : elem === 'Agua' ? '💧 Agua' : '🪨 Tierra'}
               </button>
             `).join('')}
           </div>
         </div>
 
         <!-- 2-PANEL LAYOUT CONTAINER -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; align-items: start;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.5rem; align-items: start;">
           
-          <!-- LEFT PANEL: ACTIVE SQUAD (4 EQUIPPED SLOTS) & LIVE 3D INSPECTOR -->
+          <!-- LEFT PANEL: ACTIVE SQUAD (4 EQUIPPED SLOTS) & 3D FLOATING CARD INSPECTOR -->
           <div style="display: flex; flex-direction: column; gap: 1.25rem;">
             
             <!-- ACTIVE SQUAD CARD SLOTS -->
             <div style="background: rgba(18, 38, 22, 0.92); border: 3px solid var(--border-gold-3d); border-radius: 24px; padding: 1.25rem; box-shadow: 0 10px 30px rgba(0,0,0,0.85);">
               <h3 style="font-size: 1.2rem; font-weight: 900; color: #fbbf24; margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.5rem;">
-                ⚔️ Escuadrón Activo (4/4)
+                ⚔️ Mazo Activo (4/4 Cartas)
               </h3>
               <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem;">
                 ${this.equippedIds.map((id, index) => {
@@ -83,8 +84,8 @@ class DeckManager {
                       box-shadow: 0 4px 12px rgba(0,0,0,0.8);
                       transition: transform 0.2s ease;
                     " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                      <div style="width: 44px; height: 44px; border-radius: 10px; overflow: hidden; border: 1.5px solid #4ade80; flex-shrink: 0; background: #000;">
-                        <img src="${creature.icon}" style="width: 100%; height: 100%; object-fit: cover;" alt="${creature.name}">
+                      <div style="width: 44px; height: 58px; border-radius: 6px; overflow: hidden; border: 1.5px solid #fbbf24; flex-shrink: 0; background: #000;">
+                        <img src="${creature.cardArt}" style="width: 100%; height: 100%; object-fit: cover;" alt="${creature.name}">
                       </div>
                       <div style="overflow: hidden;">
                         <div style="font-size: 0.82rem; font-weight: 900; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${creature.name}</div>
@@ -96,21 +97,59 @@ class DeckManager {
               </div>
             </div>
 
-            <!-- LIVE 3D CREATURE INSPECTOR PANEL WITH HIGH CONTRAST DARK GREEN BACKGROUND -->
+            <!-- 3D FLOATING HOLOGRAPHIC CARD INSPECTOR PANEL (DARK GREEN BACKGROUND) -->
             ${this.selectedCreature ? `
               <div style="background: rgba(18, 38, 22, 0.95); border: 3.5px solid var(--border-gold-3d); border-radius: 28px; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; box-shadow: 0 15px 40px rgba(0,0,0,0.9);">
+                
                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                   <span style="background: #78350f; color: #fbbf24; font-size: 0.75rem; font-weight: 900; padding: 4px 12px; border-radius: 12px; border: 1px solid #fbbf24;">
                     ${this.selectedCreature.rarity}
                   </span>
                   <span style="color: #4ade80; font-size: 0.85rem; font-weight: 900;">
-                    ${this.selectedCreature.element === 'Fuego' ? '🔥 Fuego' : this.selectedCreature.element === 'Agua' ? '💧 Agua' : this.selectedCreature.element === 'Planta' ? '🌿 Planta' : '🪨 Tierra'}
+                    ${this.selectedCreature.element === 'Aire' ? '🌪️ Aire' : this.selectedCreature.element === 'Fuego' ? '🔥 Fuego' : this.selectedCreature.element === 'Agua' ? '💧 Agua' : '🪨 Tierra'}
                   </span>
                 </div>
 
-                <!-- HIGH CONTRAST DARK GREEN BACKGROUND FOR 3D MODEL DISPLAY -->
-                <div style="width: 100%; height: 270px; border-radius: 20px; overflow: hidden; border: 3px solid #fbbf24; background: radial-gradient(circle, #102a18 0%, #051409 100%) !important; box-shadow: inset 0 0 25px rgba(0,0,0,0.9);">
-                  <model-viewer src="${this.selectedCreature.model}" alt="${this.selectedCreature.name}" auto-rotate camera-controls shadow-intensity="1.8" exposure="1.1" style="width: 100%; height: 100%; background-color: #051409 !important;"></model-viewer>
+                <!-- 3D FLOATING CARD STAGE WITH MOUSE GYRO PERSPECTIVE & FOIL SHINE -->
+                <div id="card-3d-stage" style="
+                  width: 100%;
+                  height: 380px;
+                  border-radius: 20px;
+                  overflow: hidden;
+                  border: 3px solid #fbbf24;
+                  background: radial-gradient(circle, #102a18 0%, #051409 100%);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  perspective: 1000px;
+                  box-shadow: inset 0 0 35px rgba(0,0,0,0.9);
+                  cursor: pointer;
+                ">
+                  
+                  <!-- 3D CARD OBJECT (CSS 3D TRANSFORM WITH DEPTH & SHINE) -->
+                  <div id="card-3d-object" style="
+                    width: 220px;
+                    height: 310px;
+                    border-radius: 14px;
+                    box-shadow: 0 20px 40px rgba(0,0,0,0.9), 0 0 25px rgba(251,191,36,0.6);
+                    border: 3px solid #fbbf24;
+                    position: relative;
+                    transition: transform 0.15s ease-out;
+                    transform-style: preserve-3d;
+                    overflow: hidden;
+                    background: #000;
+                  ">
+                    <!-- CARD FRONT FACE (2D POKEMON TCG ARTWORK) -->
+                    <img src="${this.selectedCreature.cardArt}" style="width: 100%; height: 100%; object-fit: cover;" alt="${this.selectedCreature.name}">
+                    
+                    <!-- HOLOGRAPHIC SHINE OVERLAY -->
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 60%); pointer-events: none;"></div>
+                  </div>
+
+                </div>
+
+                <div style="font-size: 0.8rem; color: #fbbf24; font-weight: 800;">
+                  💡 Mueve el ratón sobre el recuadro para girar la carta en 3D
                 </div>
 
                 <h3 style="font-size: 1.4rem; font-weight: 900; color: #fff; text-shadow: 0 2px 4px #000;">
@@ -125,7 +164,7 @@ class DeckManager {
                 <!-- EQUIP / FUSION ACTION BUTTONS -->
                 <div style="display: flex; gap: 0.75rem; width: 100%;">
                   <button id="btn-toggle-equip" class="rpg-btn-gold" style="flex: 1; padding: 0.75rem; font-size: 0.9rem; font-weight: 900;">
-                    ${this.equippedIds.includes(this.selectedCreature.id) ? 'Desequipar' : '⚔️ Equipar'}
+                    ${this.equippedIds.includes(this.selectedCreature.id) ? 'Desequipar del Mazo' : '⚔️ Equipar en Mazo'}
                   </button>
                 </div>
               </div>
@@ -133,45 +172,46 @@ class DeckManager {
 
           </div>
 
-          <!-- RIGHT PANEL: FULL CREATURE COLLECTION GRID -->
+          <!-- RIGHT PANEL: FULL 2D POKEMON TCG CARD COLLECTION GRID -->
           <div style="background: rgba(18, 38, 22, 0.92); border: 3px solid var(--border-gold-3d); border-radius: 28px; padding: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.85);">
             <h3 style="font-size: 1.3rem; font-weight: 900; color: #fbbf24; margin-bottom: 1rem;">
-              📜 Inventario de Bestias (${filteredCreatures.length})
+              📜 Inventario de Cartas (${filteredCreatures.length})
             </h3>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 1rem; max-height: 620px; overflow-y: auto; padding-right: 0.5rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 1.1rem; max-height: 640px; overflow-y: auto; padding-right: 0.5rem;">
               ${filteredCreatures.map(creature => {
                 const isSelected = this.selectedCreature && this.selectedCreature.id === creature.id;
                 const isEquipped = this.equippedIds.includes(creature.id);
                 return `
                   <div class="creature-card-item" data-id="${creature.id}" style="
                     background: ${isSelected ? 'rgba(120, 53, 15, 0.95)' : 'rgba(10, 25, 14, 0.9)'};
-                    border: 2px solid ${isSelected ? '#fbbf24' : isEquipped ? '#4ade80' : '#2e5a35'};
-                    border-radius: 18px;
-                    padding: 0.75rem;
+                    border: 2.5px solid ${isSelected ? '#fbbf24' : isEquipped ? '#4ade80' : '#2e5a35'};
+                    border-radius: 14px;
+                    padding: 0.5rem;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    gap: 0.5rem;
+                    gap: 0.4rem;
                     cursor: pointer;
                     box-shadow: 0 6px 15px rgba(0,0,0,0.8);
                     transition: transform 0.2s ease, border-color 0.2s ease;
                     position: relative;
-                  " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+                  " onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
                     
                     ${isEquipped ? `
-                      <span style="position: absolute; top: 6px; right: 6px; background: #22c55e; color: #fff; font-size: 0.6rem; font-weight: 900; padding: 2px 6px; border-radius: 8px;">EQUIPADO</span>
+                      <span style="position: absolute; top: 4px; right: 4px; background: #22c55e; color: #fff; font-size: 0.55rem; font-weight: 900; padding: 2px 5px; border-radius: 6px; z-index: 5;">EQUIPADO</span>
                     ` : ''}
 
-                    <div style="width: 70px; height: 70px; border-radius: 14px; overflow: hidden; border: 1.5px solid #fbbf24; background: #000;">
-                      <img src="${creature.icon}" style="width: 100%; height: 100%; object-fit: cover;" alt="${creature.name}">
+                    <!-- 2D POKEMON TCG CARD IMAGE -->
+                    <div style="width: 100%; height: 160px; border-radius: 10px; overflow: hidden; border: 1.5px solid #fbbf24; background: #000;">
+                      <img src="${creature.cardArt}" style="width: 100%; height: 100%; object-fit: cover;" alt="${creature.name}">
                     </div>
 
-                    <div style="font-size: 0.8rem; font-weight: 900; color: #fff; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">
+                    <div style="font-size: 0.78rem; font-weight: 900; color: #fff; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">
                       ${creature.name}
                     </div>
 
-                    <div style="font-size: 0.7rem; color: #fbbf24; font-weight: 800;">
+                    <div style="font-size: 0.68rem; color: #fbbf24; font-weight: 800;">
                       Nvl ${creature.level}
                     </div>
                   </div>
@@ -228,6 +268,24 @@ class DeckManager {
           }
         }
         this.render();
+      });
+    }
+
+    // 3D Card Stage Mouse Gyro Perspective Interaction
+    const cardStage = this.container.querySelector('#card-3d-stage');
+    const cardObject = this.container.querySelector('#card-3d-object');
+    if (cardStage && cardObject) {
+      cardStage.addEventListener('mousemove', (e) => {
+        const rect = cardStage.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        const rotateX = (-y / rect.height) * 35;
+        const rotateY = (x / rect.width) * 35;
+        cardObject.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+      });
+
+      cardStage.addEventListener('mouseleave', () => {
+        cardObject.style.transform = `rotateX(0deg) rotateY(0deg) scale(1)`;
       });
     }
   }
