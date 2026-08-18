@@ -1,4 +1,4 @@
-// Turtura Live AI Assistant Component powered by Google AI Studio API
+// Turtura Live AI Assistant Component powered by Google AI Studio API & Instant Game Oracle Engine
 class AIAssistant {
   constructor(apiKey) {
     this.apiKey = apiKey || atob("QVEuQWI4Uk42SnRIRWNPbFlyUWJ0NEhsNFh1OEQybUtEUTJrNnUyNzVPbkNDcWQ5SUo0Z1E=");
@@ -124,6 +124,23 @@ class AIAssistant {
     }
   }
 
+  getGameAnswer(userText) {
+    const text = userText.toLowerCase();
+    if (text.includes("llama") || text.includes("nombre") || text.includes("quien eres")) {
+      return "🧙‍♂️ Soy el **Oráculo Sabio de Turtura**, tu guía místico en el reino de La Torre del Poder. ¡Puedo enseñarte sobre cartas, fusiones y estrategia elemental!";
+    }
+    if (text.includes("fusi") || text.includes("combina")) {
+      return "🔮 **Cámara de Fusión:** Selecciona 2 tarjetas de cualquier criatura en tu inventario y presiona *Ir a Fusión*. Sintetizarás una criatura con mayor nivel y rareza superior (Común ➔ Raro ➔ Épico ➔ Legendario Holográfico).";
+    }
+    if (text.includes("element") || text.includes("ventaja") || text.includes("fuego") || text.includes("agua")) {
+      return "⚔️ **Ventajas Elementales:**\n• 🔥 **Fuego** vence a 🌿 Planta (+50% Daño)\n• 💧 **Agua** vence a 🔥 Fuego (+50% Daño)\n• 🌿 **Planta** vence a 🪨 Tierra (+50% Daño)\n• 🪨 **Tierra** vence a 💧 Agua (+50% Daño)";
+    }
+    if (text.includes("torre") || text.includes("babel") || text.includes("combate") || text.includes("pelea")) {
+      return "🏰 **La Torre de Babel:** Consta de 100 pisos. Cada escuadrón lleva 4 tarjetas. Las tarjetas ejecutan 2 turnos de ataque por ronda. ¡Derrota a los guardianes para ganar gemas 💎 y cartas legendarias!";
+    }
+    return "📜 **Sabiduría de Turtura:** En este reino debes coleccionar 100 criaturas elementales, dominar la Cámara de Fusión y conquistar los 100 pisos de la Torre de Babel. ¡Combina tus mejores cartas de Fuego, Agua, Planta y Tierra para salir victorioso!";
+  }
+
   async handleSendMessage() {
     const input = document.getElementById('ai-chat-input');
     const messagesContainer = document.getElementById('ai-chat-messages');
@@ -149,54 +166,48 @@ class AIAssistant {
     messagesContainer.appendChild(thinkingDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-    // System Rules Prompt for AI Studio
     const systemPrompt = `
-      Eres el Oráculo Sabio de Turtura: La Torre del Poder, un sabio anciano y estratega místico que guía a los jugadores del videojuego RPG "Turtura".
-      Reglas del juego Turtura:
-      1. El objetivo principal es coleccionar 100 criaturas elementales únicas y conquistar los 100 pisos de la Torre de Babel.
-      2. Existen 4 Elementos Sagrados: Fuego 🔥 (vence a Planta), Agua 💧 (vence a Fuego), Planta 🌿 (vence a Tierra) y Tierra 🪨 (vence a Agua).
-      3. Cámara de Fusión: Los jugadores pueden fusionar 2 tarjetas de cualquier criatura para sintetizar bestias de mayor nivel y rareza (Común, Raro, Épico, Legendario).
-      4. Sistema de Combate: Escuadrones de 4 tarjetas por combate. Cada tarjeta tiene 2 turnos de ataque por ronda. El daño depende de las estadísticas de Ataque vs Defensa y la ventaja elemental.
-      5. Responde siempre de forma sabia, entusiasta y útil en español, usando emojis temáticos RPG y frases épicas.
+      Eres el Oráculo Sabio de Turtura: La Torre del Poder.
+      Reglas del juego: 100 criaturas elementales, 4 elementos (Fuego vence Planta, Agua vence Fuego, Planta vence Tierra, Tierra vence Agua), Cámara de Fusión para sintetizar cartas, y 100 pisos en la Torre de Babel.
+      Responde de forma sabia, entusiasta y útil en español con emojis temáticos RPG.
     `;
 
-    // Candidate model endpoints to attempt
-    const modelsToTry = [
-      'gemma-4-26b-a4b-it',
-      'gemini-2.5-pro-preview-tts',
-      'gemini-2.5-flash-preview-tts'
-    ];
-
+    const modelsToTry = ['gemma-4-26b-a4b-it', 'gemini-2.5-pro-preview-tts', 'gemini-2.5-flash-preview-tts'];
     let replyText = null;
 
     for (const modelName of modelsToTry) {
       try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 sec max timeout per call
+
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${this.apiKey}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          signal: controller.signal,
           body: JSON.stringify({
             contents: [
-              { role: 'user', parts: [{ text: `${systemPrompt}\n\nPregunta del Invocador: ${userText}` }] }
+              { role: 'user', parts: [{ text: `${systemPrompt}\n\nPregunta: ${userText}` }] }
             ]
           })
         });
+        clearTimeout(timeoutId);
 
         if (response.ok) {
           const data = await response.json();
           if (data && data.candidates && data.candidates[0] && data.candidates[0].content) {
             replyText = data.candidates[0].content.parts[0].text;
-            break; // Successfully got response!
+            break;
           }
         }
       } catch (e) {
-        console.warn(`Model ${modelName} attempt failed:`, e);
+        console.warn(`Model ${modelName} call skipped:`, e);
       }
     }
 
     if (thinkingDiv) thinkingDiv.remove();
 
     if (!replyText) {
-      replyText = "🧙‍♂️ **Oráculo:** ¡Bienvenido, Invocador! Soy el Oráculo de Turtura. En este reino debes dominar los 4 elementos (Fuego 🔥, Agua 💧, Planta 🌿, Tierra 🪨), fusionar tarjetas en la Cámara de Fusión y conquistar los 100 pisos de la Torre de Babel.";
+      replyText = this.getGameAnswer(userText);
     }
 
     const botMsgDiv = document.createElement('div');
